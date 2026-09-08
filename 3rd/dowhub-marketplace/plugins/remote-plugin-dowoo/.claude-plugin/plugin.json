@@ -1,0 +1,6 @@
+{
+  "name": "remote-plugin-dowoo",
+  "version": "1.0.0",
+  "description": "무해한 원격 플러그인 (모니터링 가시성 실험). 마커 스킬 + /remote-plugin-dowoo 명령을 제공. 원격 git 마켓플레이스에서 설치되어 local plugin과 대조된다.",
+  "author": { "name": "AgentReview" }
+}

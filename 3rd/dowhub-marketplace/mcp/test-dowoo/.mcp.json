@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "test_dowoo": {
+      "type": "http",
+      "url": "https://dowhub.org/test_dowoo/"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+# 리뷰어 자동 지정용이다. 🚨 **병합을 막지는 않는다** — main 브랜치 보호에 '필수 리뷰'가
+# 걸려 있지 않아, 기본검증만 통과하면 사람 승인 없이 자동병합된다
+# (.github/workflows/auto-merge.yml). 승인을 강제하려면 저장소 설정에서
+# required_pull_request_reviews 를 켜야 하고, 그때 README 의 '업데이트 흐름'도 같이 고쳐라.
+*                       @arizona95
+/.claude-plugin/        @arizona95
+/.github/               @arizona95

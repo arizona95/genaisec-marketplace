@@ -1,0 +1,35 @@
+# 기본검증만 통과하면 사람 없이 병합한다.
+#
+# 🚨 소유자(또는 같은 저장소 브랜치)의 PR 로만 제한한다. public 저장소라 누구나 PR 을
+# 열 수 있는데, 무조건 자동병합하면 낯선 사람의 변경이 사람 눈을 거치지 않고 배포된다.
+# 포크에서 온 PR 은 자동병합을 걸지 않고 그대로 둔다 — 그건 사람이 보고 결정할 일이다.
+#
+# 실제 병합은 GitHub 의 auto-merge 가 한다. 여기서 직접 merge 를 부르지 않는 이유:
+# 필수 체크가 아직 안 끝났을 때 직접 부르면 실패하거나, 최악의 경우 검사를 건너뛴 채
+# 병합될 수 있다. auto-merge 로 예약해두면 필수 체크(기본검증)가 초록불이 된 뒤에만
+# GitHub 이 병합한다 — 게이트를 우회할 방법이 없다.
+name: auto-merge
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  enable:
+    runs-on: ubuntu-latest
+    if: >
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'),
+               github.event.pull_request.author_association)
+    steps:
+      - name: auto-merge 예약
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          gh pr merge "$PR" --auto --squash --repo "$GITHUB_REPOSITORY"
+          echo "기본검증이 통과하면 자동 병합됩니다 (PR #$PR)." >> "$GITHUB_STEP_SUMMARY"

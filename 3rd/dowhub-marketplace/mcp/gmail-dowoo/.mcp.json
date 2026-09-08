@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "gmail_dowoo": {
+      "type": "http",
+      "url": "https://dowhub.org/gmail_dowoo/"
+    }
+  }
+}

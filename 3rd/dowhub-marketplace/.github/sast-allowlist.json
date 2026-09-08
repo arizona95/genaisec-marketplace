@@ -1,0 +1,21 @@
+{
+  "_comment": [
+    "SAST 오탐 예외. 규칙별로 '이 줄은 세지 않는다'를 정한다.",
+    "",
+    "baseline 으로 덮는 것과 다르다 — baseline 은 '위험하지만 승인함'이고, 여기는",
+    "'애초에 위험이 아님'이다. 둘을 섞으면 진짜 위험이 승인 목록에 묻힌다.",
+    "",
+    "이 파일을 늘리는 것도 PR 에 diff 로 남으므로 리뷰어가 본다."
+  ],
+  "first_party_hosts": ["dowhub.org", "dowmain.org", "github.com/arizona95"],
+  "rules": {
+    "TP3_MALICIOUS_URL": {
+      "why": "규칙이 URL 형태만 보고 판정한다. 우리가 공개한 자기 엔드포인트까지 '악성 URL'이 된다.",
+      "ignore_if_only_first_party": true
+    },
+    "DOCKERFILE_CONTEXT": {
+      "why": "'#!/usr/bin/env python3' 나 'from __future__ import' 같은 평범한 줄에 걸린다. 도커와 무관.",
+      "ignore_always": true
+    }
+  }
+}

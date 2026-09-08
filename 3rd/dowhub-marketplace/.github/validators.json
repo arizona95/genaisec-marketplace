@@ -1,0 +1,55 @@
+{
+  "_comment": [
+    "검증자 등록표. 새 검사를 붙이려면 여기에 항목만 추가한다 — 워크플로는 안 건드린다.",
+    "",
+    "tier=basic : 통과해야 병합된다. 실패 = CI 빨간불.",
+    "tier=deep  : 실패해도 CI 는 초록불. 대신 그 태그가 안 붙는다.",
+    "",
+    "version_cmd 의 출력에서 버전을 뽑아 태그에 같이 박는다 — '무엇이 검사했나' 만큼",
+    "'어느 버전이 검사했나'가 중요하다. 도구가 올라가면 판정도 달라질 수 있기 때문이다.",
+    "",
+    "{target} 은 검사 대상 폴더로 치환된다."
+  ],
+  "validators": [
+    {
+      "name": "ruff",
+      "tier": "basic",
+      "scope": "target",
+      "description": "문법 오류·정의되지 않은 이름 (E9,F63,F7,F82) — 실행 시점에야 터지면 늦다",
+      "cmd": ["ruff", "check", "--select", "E9,F63,F7,F82", "--quiet", "{target}"],
+      "version_cmd": ["ruff", "--version"]
+    },
+    {
+      "name": "detect-secrets",
+      "tier": "basic",
+      "scope": "target",
+      "description": "자격증명 유출 — public 저장소라 한 번 새면 폐기 말고 방법이 없다",
+      "cmd": ["python", ".github/scripts/run_detect_secrets.py", "{target}"],
+      "version_cmd": ["detect-secrets", "--version"]
+    },
+    {
+      "name": "pip-audit",
+      "tier": "basic",
+      "scope": "target",
+      "description": "끌어오는 패키지의 알려진 취약점(OSV) + 버전 미고정 자동실행 런처",
+      "cmd": ["python", ".github/scripts/sca_scan.py", "{target}"],
+      "version_cmd": ["pip-audit", "--version"]
+    },
+    {
+      "name": "black",
+      "tier": "deep",
+      "scope": "target",
+      "description": "코드 포맷이 black 규칙에 맞는지",
+      "cmd": ["black", "--check", "--quiet", "{target}"],
+      "version_cmd": ["black", "--version"]
+    },
+    {
+      "name": "skillspector",
+      "tier": "deep",
+      "scope": "target",
+      "description": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
+      "cmd": ["python", ".github/scripts/sast_scan.py", "{target}"],
+      "version_cmd": ["python", ".github/scripts/sast_scan.py", "--print-version"]
+    }
+  ]
+}

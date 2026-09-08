@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "aar-mcp": {
+      "type": "http",
+      "url": "https://dowhub.org/aar-mcp/"
+    }
+  }
+}

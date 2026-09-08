@@ -1,0 +1,9 @@
+{
+  "name": "mcp-test-dowoo",
+  "description": "Test MCP (dowoo) - minimal read/write note server at dowhub.org. OAuth 2.0, no credential stored. [v1.0.1 - auto-update probe]",
+  "version": "1.0.1",
+  "author": {
+    "name": "dowoo"
+  },
+  "homepage": "https://dowhub.org/mcp_hub/"
+}

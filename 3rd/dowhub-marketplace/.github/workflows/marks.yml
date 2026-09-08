@@ -1,0 +1,46 @@
+# 검증 태그(marks)는 사람이 쓰지 않는다 — 이 워크플로가 main 이 바뀔 때마다 전수로 다시 재고
+# `marks` 브랜치에 marks.json 하나만 밀어넣는다. 허브는 그 브랜치를 읽는다.
+#
+# 왜 main 에 안 두나: main 은 기본검증 필수라 CI 봇이 직접 못 민다. 사람이 --write 로 커밋하면
+# 그 순간부터 사본이라 반드시 어긋난다(aas-plugin 이 5/5 인데 카드엔 빈칸이던 게 그것).
+name: marks
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '47 4 * * 1'        # ci.yml 전수(17 4 * * 1) 뒤 — 도구·DB 갱신으로 판정이 바뀌면 태그도 따라간다
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: marks
+  cancel-in-progress: true
+
+jobs:
+  write:
+    name: 태그 재계산 → marks 브랜치
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install --quiet ruff detect-secrets pip-audit black
+      # 전수. 기본검증 실패는 이미 병합 전에 막혔고, 심화 실패는 태그가 안 붙는 것으로 드러난다.
+      - name: 전 자산 검증 (태그 계산)
+        run: python .github/scripts/run_validators.py --tier all --write || true
+      - name: marks 브랜치에 게시 (파일 하나짜리 브랜치, 매번 덮어씀)
+        run: |
+          set -e
+          cp .github/marks.json /tmp/marks.json
+          git config user.name  github-actions
+          git config user.email github-actions@users.noreply.github.com
+          git checkout -q --orphan marks-next
+          git rm -rfq . >/dev/null
+          cp /tmp/marks.json marks.json
+          git add marks.json
+          git commit -qm "marks: ${GITHUB_SHA::7} ($(date -u +%Y-%m-%dT%H:%MZ))"
+          git push -f origin HEAD:marks
+          echo "marks 브랜치 갱신: https://raw.githubusercontent.com/$GITHUB_REPOSITORY/marks/marks.json" >> "$GITHUB_STEP_SUMMARY"
