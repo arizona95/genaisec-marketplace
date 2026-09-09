@@ -33,19 +33,32 @@ class OllamaEndpoint(LLMEndpoint):
         return {"Authorization": f"Bearer {self.api_key}"} if self.api_key else {}
 
     def chat(self, messages, *, temperature=0.0, max_tokens=1024, json_mode=False) -> str:
-        body = {
-            "model": self.model,
-            "messages": messages,
-            "stream": False,
-            "options": {"temperature": temperature, "num_predict": max_tokens},
-        }
-        if json_mode:
-            body["format"] = "json"
-        out = http_json("POST", f"{self.base_url}/api/chat", self._headers(), body, self.timeout)
-        try:
-            return out["message"]["content"]
-        except (KeyError, TypeError) as exc:
-            raise LLMError(f"ollama 응답 형식이 다릅니다: {str(out)[:200]}") from exc
+        def _call(nt, think):
+            body = {
+                "model": self.model,
+                "messages": messages,
+                "stream": False,
+                # glm-5.3 같은 추론 모델은 think 를 끄지 않으면 예산을 추론에 다 쓰고 content 가
+                # 빈다(''). 끄면 바로 답을 낸다. 로컬 비추론 모델은 이 필드를 무시한다.
+                "think": think,
+                "options": {"temperature": temperature, "num_predict": nt},
+            }
+            if json_mode:
+                body["format"] = "json"
+            out = http_json("POST", f"{self.base_url}/api/chat", self._headers(), body, self.timeout)
+            try:
+                return (out["message"].get("content") or "").strip()
+            except (KeyError, TypeError) as exc:
+                raise LLMError(f"ollama 응답 형식이 다릅니다: {str(out)[:200]}") from exc
+
+        content = _call(max_tokens, False)
+        if content:
+            return content
+        # 여전히 비면(추론이 예산을 삼킨 경우) 예산을 늘려 한 번 더.
+        content = _call(max(max_tokens, 4096), False)
+        if content:
+            return content
+        raise LLMError("ollama 가 빈 응답을 돌려줬습니다 (추론 모델이 content 를 안 냄)")
 
     def ping(self) -> str:
         out = http_json("GET", f"{self.base_url}/api/tags", self._headers(), None, min(self.timeout, 15))
