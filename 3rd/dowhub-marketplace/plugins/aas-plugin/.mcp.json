@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "aas-mcp": {
-      "type": "http",
-      "url": "https://dowhub.org/aas-mcp/"
-    }
-  }
-}

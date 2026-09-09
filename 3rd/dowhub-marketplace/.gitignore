@@ -1,6 +1,0 @@
-__pycache__/
-*.pyc
-.sca-requirements.txt
-sast-report.json
-# 검증 태그는 CI 만 쓴다 → marks 브랜치 (marks.yml). 여기 두면 사본.
-.github/marks.json

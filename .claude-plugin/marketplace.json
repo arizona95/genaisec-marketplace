@@ -1,0 +1,11 @@
+{
+  "name": "genaisec-marketplace",
+  "owner": {
+    "name": "dowoo",
+    "email": "dowoo.baik@samsungsds.com"
+  },
+  "metadata": {
+    "description": "genaisec 마켓플레이스 — 스킬·플러그인·MCP 정본. 프로브 픽스처는 여기 등록하지 않는다."
+  },
+  "plugins": []
+}

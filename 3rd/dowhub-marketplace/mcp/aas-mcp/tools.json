@@ -1,8 +1,0 @@
-{
-  "generated_from": "/home/dowoo/desktop/dowoo/SDS-RED/SDSreviewBLUE/agentsensing/aas_mcp.py",
-  "generated_at": "2026-09-07",
-  "note": "진실원은 살아있는 서버다. 이 파일은 그 서버 소스에서 뜬 스냅샷이고, 카탈로그 카드는 여기서만 값을 가져온다.",
-  "tools": [
-    "sensing"
-  ]
-}
