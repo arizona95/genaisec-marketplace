@@ -4,19 +4,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "skills/probe-skill-mal-inst": {
@@ -24,19 +24,19 @@
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "skills/probe-skill-mal-url": {
@@ -44,19 +44,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "skills/probe-skill-norm-1": {
@@ -64,19 +64,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "skills/probe-skill-norm-2": {
@@ -84,19 +84,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "skills/probe-skill-norm-3": {
@@ -104,19 +104,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-desktop-local-mal-inst": {
@@ -124,19 +124,19 @@
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-desktop-local-norm-1": {
@@ -144,19 +144,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-localhost-external-mal-inst": {
@@ -164,19 +164,19 @@
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-localhost-external-norm-1": {
@@ -184,19 +184,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-localhost-internal-mal-inst": {
@@ -204,19 +204,19 @@
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-localhost-internal-norm-1": {
@@ -224,19 +224,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-localhost-local-mal-inst": {
@@ -244,19 +244,19 @@
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-localhost-local-norm-1": {
@@ -264,19 +264,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-localhost-loopback-mal-inst": {
@@ -284,19 +284,19 @@
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-localhost-loopback-norm-1": {
@@ -304,19 +304,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-mal-code": {
@@ -324,19 +324,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-mal-inst": {
@@ -344,19 +344,19 @@
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-mal-url": {
@@ -364,19 +364,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-norm-1": {
@@ -384,19 +384,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-norm-2": {
@@ -404,19 +404,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-norm-3": {
@@ -424,19 +424,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-remotehost-external-mal-inst": {
@@ -444,19 +444,19 @@
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-remotehost-external-norm-1": {
@@ -464,19 +464,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-remotehost-internal-mal-inst": {
@@ -484,19 +484,19 @@
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "plugins/probe-plugin-remotehost-internal-norm-1": {
@@ -504,19 +504,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "mcp/probe-desktop-local-mal-inst": {
@@ -524,19 +524,19 @@
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "mcp/probe-desktop-local-norm-1": {
@@ -544,19 +544,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "mcp/probe-localhost-external-mal-inst": {
@@ -564,19 +564,19 @@
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "mcp/probe-localhost-external-norm-1": {
@@ -584,19 +584,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "mcp/probe-localhost-internal-mal-inst": {
@@ -604,19 +604,19 @@
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "mcp/probe-localhost-internal-norm-1": {
@@ -624,19 +624,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "mcp/probe-localhost-local-mal-code": {
@@ -644,19 +644,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "mcp/probe-localhost-local-mal-inst": {
@@ -664,19 +664,19 @@
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "mcp/probe-localhost-local-mal-url": {
@@ -684,19 +684,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "mcp/probe-localhost-local-norm-1": {
@@ -704,19 +704,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "mcp/probe-localhost-local-norm-2": {
@@ -724,19 +724,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "mcp/probe-localhost-local-norm-3": {
@@ -744,19 +744,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "mcp/probe-localhost-loopback-mal-inst": {
@@ -764,19 +764,19 @@
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "mcp/probe-localhost-loopback-norm-1": {
@@ -784,19 +784,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "mcp/probe-remotehost-external-mal-inst": {
@@ -804,19 +804,19 @@
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "mcp/probe-remotehost-external-norm-1": {
@@ -824,19 +824,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "mcp/probe-remotehost-internal-mal-inst": {
@@ -844,19 +844,19 @@
       "ok": false,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   },
   "mcp/probe-remotehost-internal-norm-1": {
@@ -864,19 +864,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "5924147"
+      "sha": "038f32a"
     }
   }
 }
