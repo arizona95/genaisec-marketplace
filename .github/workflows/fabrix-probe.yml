@@ -63,12 +63,13 @@ jobs:
           BASE: https://nsds-api.fabrix-s.samsungsds.com/sds/trial/api-llm
           X_FABRIX_CLIENT: ${{ secrets.X_FABRIX_CLIENT }}
           X_OPENAPI_TOKEN: ${{ secrets.X_OPENAPI_TOKEN }}
+          FABRIX_USER_EMAIL: ${{ vars.FABRIX_USER_EMAIL }}
         run: |
           test -n "$X_FABRIX_CLIENT" || { echo "secret X_FABRIX_CLIENT 가 비어 있습니다"; exit 1; }
           code=$(curl -s -o /tmp/models.json -w '%{http_code}' --max-time 40 \
             -H "x-fabrix-client: $X_FABRIX_CLIENT" \
             -H "x-openapi-token: $X_OPENAPI_TOKEN" \
-            -H "x-generative-ai-user-email: dowoo.baik@samsung.com" \
+            -H "x-generative-ai-user-email: ${FABRIX_USER_EMAIL}" \
             -H 'Content-Type: application/json' \
             "$BASE/v1/models")
           echo "status=$code"
@@ -101,6 +102,7 @@ except Exception:
           BASE: https://nsds-api.fabrix-s.samsungsds.com/sds/trial/api-llm
           X_FABRIX_CLIENT: ${{ secrets.X_FABRIX_CLIENT }}
           X_OPENAPI_TOKEN: ${{ secrets.X_OPENAPI_TOKEN }}
+          FABRIX_USER_EMAIL: ${{ vars.FABRIX_USER_EMAIL }}
           MODEL_ID: ${{ steps.models.outputs.model_id }}
         run: |
           code=$(curl -s -o /tmp/chat.json -w '%{http_code}' --max-time 90 \

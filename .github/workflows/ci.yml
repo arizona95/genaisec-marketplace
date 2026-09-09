@@ -1,0 +1,91 @@
+# 검증자는 action/validators.json 에 등록한다 — 새 검사를 붙일 때 이 파일은 안 고친다.
+#
+# 잡을 둘로 나눈 건 실패의 뜻이 다르기 때문이다.
+#   기본 : 내보내면 안 되는 것(악성지시문·악성코드·유출) → 병합을 막는다.
+#   심화 : 판단이 섞이는 영역 → 막지 않고, 태그가 안 붙는 것으로 드러낸다.
+#
+# LLM 감시자(llm-review)는 심화에 있고 Ollama 로 돈다. 사내 FabriX 는 접근 IP 를 /32 로
+# 잠가서 GitHub 호스티드 러너(egress IP 가 매번 바뀜)에서는 못 부른다 — fabrix-probe.yml 이
+# 그걸 확인한 워크플로다. 사내 self-hosted 러너를 붙이면 LLM_PROVIDER=fabrix 로 바꾸기만 하면 된다.
+#
+# 매번 전 자산을 돌리지 않는다. 단 action/ · .github/ 가 바뀌면 판정 기준이 바뀐 것이라
+# 러너가 알아서 전수로 올린다.
+name: ci
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 4 * * 1'        # 주 1회 전수 — 도구·모델이 올라가면 판정이 바뀐다
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # PR 은 base 와 비교, push 는 직전 커밋과 비교. 그 외(스케줄·수동)는 빈 값 = 전수.
+  BASE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha
+         || (github.event_name == 'push' && github.event.before || '') }}
+
+jobs:
+  basic:
+    name: 기본검증
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }      # 변경 비교·rebase-guard 에 이력이 필요하다
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install --quiet ruff detect-secrets
+      # dev → main PR 은 main 최신 위에 rebase 되어 있어야 한다. 아니면 초록불이
+      # 병합될 코드에 대한 판정이 아니다.
+      - name: rebase-guard
+        if: github.event_name == 'pull_request'
+        run: python action/scripts/rebase_guard.py --base "origin/${{ github.base_ref }}"
+      - name: 카탈로그 일관성
+        run: |
+          python action/scripts/sync_catalog.py --check
+          python action/scripts/validate_catalog.py
+      - run: python action/scripts/run_validators.py --tier basic --changed-since "$BASE"
+
+  deep:
+    name: 심화검증
+    runs-on: ubuntu-latest
+    env:
+      LLM_PROVIDER: ollama
+      # 저장소 변수(Settings → Variables)로 바꿀 수 있다. 비우면 러너 안에 Ollama 를 띄운다.
+      OLLAMA_BASE_URL: ${{ vars.OLLAMA_BASE_URL || 'http://localhost:11434' }}
+      OLLAMA_MODEL: ${{ vars.OLLAMA_MODEL || 'qwen2.5:3b' }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install --quiet black
+      # 외부 Ollama(self-hosted 러너·터널)가 없으면 러너 안에 띄운다. CPU 러너라 3B 급이 한계다.
+      - name: Ollama 모델 캐시
+        if: env.OLLAMA_BASE_URL == 'http://localhost:11434'
+        uses: actions/cache@v4
+        with:
+          path: ~/.ollama/models
+          key: ollama-${{ env.OLLAMA_MODEL }}
+      - name: Ollama 준비
+        if: env.OLLAMA_BASE_URL == 'http://localhost:11434'
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          (ollama serve > /tmp/ollama.log 2>&1 &)
+          for i in $(seq 1 30); do curl -sf localhost:11434/api/tags >/dev/null && break; sleep 1; done
+          ollama pull "$OLLAMA_MODEL"
+          python action/scripts/llm_endpoint.py --ping
+      # 심화는 떨어져도 CI 를 세우지 않는다. 결과는 요약으로만 남긴다.
+      - name: 심화검증 실행
+        continue-on-error: true
+        run: |
+          python action/scripts/run_validators.py --tier deep \
+            --changed-since "$BASE" | tee deep.log
+          {
+            echo '### 심화검증 결과'
+            echo '```'
+            tail -n 14 deep.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
