@@ -1,5 +1,234 @@
 [
   {
+    "run_id": "pr5-60dee47",
+    "at": "2026-09-09T12:52:50+00:00",
+    "actor": "arizona95",
+    "trigger": "pull_request",
+    "run_url": "https://github.com/arizona95/genaisec-marketplace/actions/runs/34353599430",
+    "branch": {
+      "head": "dev",
+      "head_sha": "60dee473d9de",
+      "head_subject": "Merge 60dee473d9de85c6fecf05eadc63176438519f24 into 09c5ebc2b28c2f379faeeba58ac57376777d733b",
+      "base": "",
+      "base_sha": ""
+    },
+    "rebase_guard": "skipped",
+    "verdict": "blocked",
+    "summary": {
+      "assets": 22,
+      "registered": 0,
+      "blocked": 22,
+      "blocked_targets": [
+        "mcp/probe-desktop-local-mal-inst",
+        "mcp/probe-localhost-external-mal-inst",
+        "mcp/probe-localhost-internal-mal-inst",
+        "mcp/probe-localhost-local-mal-code",
+        "mcp/probe-localhost-local-mal-inst",
+        "mcp/probe-localhost-local-mal-url",
+        "mcp/probe-localhost-loopback-mal-inst",
+        "mcp/probe-remotehost-external-mal-inst",
+        "mcp/probe-remotehost-internal-mal-inst",
+        "plugins/probe-plugin-desktop-local-mal-inst",
+        "plugins/probe-plugin-localhost-external-mal-inst",
+        "plugins/probe-plugin-localhost-internal-mal-inst",
+        "plugins/probe-plugin-localhost-local-mal-inst",
+        "plugins/probe-plugin-localhost-loopback-mal-inst",
+        "plugins/probe-plugin-mal-code",
+        "plugins/probe-plugin-mal-inst",
+        "plugins/probe-plugin-mal-url",
+        "plugins/probe-plugin-remotehost-external-mal-inst",
+        "plugins/probe-plugin-remotehost-internal-mal-inst",
+        "skills/probe-skill-mal-code",
+        "skills/probe-skill-mal-inst",
+        "skills/probe-skill-mal-url"
+      ],
+      "fully_verified": 0
+    },
+    "pr": {
+      "number": 5,
+      "url": "https://github.com/arizona95/genaisec-marketplace/pull/5",
+      "title": "probe 픽스처 44개 등록 요청 (mal 22 + norm 22)"
+    },
+    "assets": [
+      {
+        "target": "mcp/probe-desktop-local-mal-inst",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "inst-scan"
+        ]
+      },
+      {
+        "target": "mcp/probe-localhost-external-mal-inst",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "inst-scan"
+        ]
+      },
+      {
+        "target": "mcp/probe-localhost-internal-mal-inst",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "inst-scan"
+        ]
+      },
+      {
+        "target": "mcp/probe-localhost-local-mal-code",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "code-scan"
+        ]
+      },
+      {
+        "target": "mcp/probe-localhost-local-mal-inst",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "inst-scan"
+        ]
+      },
+      {
+        "target": "mcp/probe-localhost-local-mal-url",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "leak-scan"
+        ]
+      },
+      {
+        "target": "mcp/probe-localhost-loopback-mal-inst",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "inst-scan"
+        ]
+      },
+      {
+        "target": "mcp/probe-remotehost-external-mal-inst",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "inst-scan"
+        ]
+      },
+      {
+        "target": "mcp/probe-remotehost-internal-mal-inst",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "inst-scan"
+        ]
+      },
+      {
+        "target": "plugins/probe-plugin-desktop-local-mal-inst",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "inst-scan"
+        ]
+      },
+      {
+        "target": "plugins/probe-plugin-localhost-external-mal-inst",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "inst-scan"
+        ]
+      },
+      {
+        "target": "plugins/probe-plugin-localhost-internal-mal-inst",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "inst-scan"
+        ]
+      },
+      {
+        "target": "plugins/probe-plugin-localhost-local-mal-inst",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "inst-scan"
+        ]
+      },
+      {
+        "target": "plugins/probe-plugin-localhost-loopback-mal-inst",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "inst-scan"
+        ]
+      },
+      {
+        "target": "plugins/probe-plugin-mal-code",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "code-scan"
+        ]
+      },
+      {
+        "target": "plugins/probe-plugin-mal-inst",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "inst-scan"
+        ]
+      },
+      {
+        "target": "plugins/probe-plugin-mal-url",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "leak-scan"
+        ]
+      },
+      {
+        "target": "plugins/probe-plugin-remotehost-external-mal-inst",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "inst-scan"
+        ]
+      },
+      {
+        "target": "plugins/probe-plugin-remotehost-internal-mal-inst",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "inst-scan"
+        ]
+      },
+      {
+        "target": "skills/probe-skill-mal-code",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "code-scan"
+        ]
+      },
+      {
+        "target": "skills/probe-skill-mal-inst",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "inst-scan"
+        ]
+      },
+      {
+        "target": "skills/probe-skill-mal-url",
+        "registered": false,
+        "marks": "2/5",
+        "failed": [
+          "leak-scan"
+        ]
+      }
+    ]
+  },
+  {
     "run_id": "pr5-1cfd7eb",
     "at": "2026-09-09T12:52:29+00:00",
     "actor": "arizona95",
