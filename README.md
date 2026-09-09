@@ -41,19 +41,21 @@ action/history/                   검사 이력(marketplace-ui 가 읽는 유일
 ### LLM 감시자의 엔드포인트는 둘이다
 
 ```
-LLM_PROVIDER=ollama   OLLAMA_BASE_URL  OLLAMA_MODEL            ← 공개 CI 기본값
+LLM_PROVIDER=ollama   OLLAMA_API_KEY  OLLAMA_BASE_URL(기본 https://ollama.com)  OLLAMA_MODEL(기본 glm-5.3)
 LLM_PROVIDER=fabrix   X_FABRIX_CLIENT  X_OPENAPI_TOKEN  FABRIX_MODEL_ID  FABRIX_USER_EMAIL
 ```
 
+공개 CI 는 **Ollama Cloud 의 GLM-5.3** 으로 돈다. 키는 저장소 secret `OLLAMA_API_KEY` 하나이고
+포크 PR 에는 전달되지 않으므로, 그때는 러너 안에 작은 로컬 모델(`qwen2.5:3b`)을 띄워 대신
+돈다 — 태그에 모델명이 박히니 어느 쪽이 판정했는지는 남는다(`llm-review@1.0.0+ollama.glm-5.3`).
+
 사내 FabriX 는 접근 IP 를 /32 로 잠그고 사내망 경로가 있어야 닿는다. GitHub 호스티드 러너는
-egress IP 가 매번 바뀌고 사내망 밖이라 못 부른다(`fabrix-probe.yml` 로 확인했다). 그래서
-공개 CI 는 러너 안에 Ollama 를 띄워 돌리고, 사내 self-hosted 러너나 개발자 PC 에서는
-`LLM_PROVIDER=fabrix` 로 바꾸기만 하면 된다. 감시자(`llm_scan.py`)는 어느 쪽인지 모른다 —
-`llm_endpoint.py` 의 `from_env()` 가 골라 준다. 태그에는 어느 모델이 판정했는지가 같이 박힌다
-(`llm-review@1.0.0+ollama.qwen2.5-3b`).
+egress IP 가 매번 바뀌고 사내망 밖이라 못 부른다(`fabrix-probe.yml` 로 확인했다). 사내
+self-hosted 러너나 개발자 PC 에서만 `LLM_PROVIDER=fabrix` 다. 감시자(`llm_scan.py`)는 어느
+쪽인지 모른다 — `llm/` 패키지의 `from_env()`(`llm/ollama`, `llm/fabrix`) 가 골라 준다.
 
 ```bash
-python action/scripts/llm_endpoint.py --ping              # 닿는지
+python action/scripts/llm_scan.py --ping              # 닿는지
 python action/scripts/llm_scan.py skills/<이름>           # 한 자산 검토
 python action/scripts/llm_scan.py skills/<이름> --show-prompt
 ```

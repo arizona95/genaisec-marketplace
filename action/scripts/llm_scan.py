@@ -17,8 +17,10 @@
     python action/scripts/llm_scan.py <target>
     python action/scripts/llm_scan.py --print-version
     python action/scripts/llm_scan.py <target> --show-prompt      # 보내는 내용만 출력
+    python action/scripts/llm_scan.py --ping                      # 엔드포인트가 닿고 인증되는지
+    python action/scripts/llm_scan.py --say "안녕"                # 실제 한 번 호출
 
-엔드포인트 선택은 llm_endpoint.py (LLM_PROVIDER=ollama|fabrix).
+엔드포인트 선택은 llm/ 패키지 (LLM_PROVIDER=ollama|fabrix → llm/ollama, llm/fabrix).
 
 종료코드: 0 = 통과, 1 = 결함, 2 = 판정 불가(엔드포인트 미도달·응답 파싱 실패)
 """
@@ -32,7 +34,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import llm_endpoint  # noqa: E402
+import llm  # noqa: E402
 import scanlib  # noqa: E402
 
 NAME = "llm-review"
@@ -101,13 +103,13 @@ def parse_verdict(raw: str) -> dict:
     s = re.sub(r"^```(?:json)?\s*|\s*```$", "", s, flags=re.S)
     m = re.search(r"\{.*\}", s, flags=re.S)
     if not m:
-        raise llm_endpoint.LLMError(f"JSON 객체가 없습니다: {raw[:200]!r}")
+        raise llm.LLMError(f"JSON 객체가 없습니다: {raw[:200]!r}")
     try:
         obj = json.loads(m.group(0))
     except json.JSONDecodeError as exc:
-        raise llm_endpoint.LLMError(f"JSON 파싱 실패: {exc}: {m.group(0)[:200]!r}") from exc
+        raise llm.LLMError(f"JSON 파싱 실패: {exc}: {m.group(0)[:200]!r}") from exc
     if not isinstance(obj, dict) or obj.get("verdict") not in ("pass", "fail"):
-        raise llm_endpoint.LLMError(f"verdict 가 pass/fail 이 아닙니다: {str(obj)[:200]}")
+        raise llm.LLMError(f"verdict 가 pass/fail 이 아닙니다: {str(obj)[:200]}")
     return obj
 
 
@@ -148,14 +150,26 @@ def main() -> int:
     ap.add_argument("target", nargs="?", default=".")
     ap.add_argument("--print-version", action="store_true")
     ap.add_argument("--show-prompt", action="store_true", help="모델에 보낼 내용만 찍고 끝")
-    ap.add_argument("--provider", choices=llm_endpoint.PROVIDERS, default=None)
+    ap.add_argument("--provider", choices=llm.PROVIDERS, default=None)
+    ap.add_argument("--ping", action="store_true", help="엔드포인트가 닿고 인증되는지만")
+    ap.add_argument("--say", default="", help="이 문장을 보내고 답을 찍는다")
     args = ap.parse_args()
+
+    if args.ping or args.say:
+        try:
+            ep = llm.from_env(args.provider)
+            print(ep.describe())
+            print(ep.ping() if args.ping else ep.chat([{"role": "user", "content": args.say}], max_tokens=200))
+        except llm.LLMError as exc:
+            print(f"실패: {exc}")
+            return 2
+        return 0
 
     # 버전 태그 = 검사기 버전 + 어느 모델이 판정했나. 엔드포인트 미설정이면 검사기 버전만.
     try:
-        ep = llm_endpoint.from_env(args.provider)
+        ep = llm.from_env(args.provider)
         tag = f"{VERSION}+{ep.version_tag()}"
-    except llm_endpoint.LLMError as exc:
+    except llm.LLMError as exc:
         ep, tag = None, VERSION
         if args.print_version:
             print(f"{NAME} {tag} (endpoint 미설정: {exc})")
@@ -190,7 +204,7 @@ def main() -> int:
     try:
         raw = ep.chat(messages, temperature=0.0, max_tokens=1500, json_mode=True)
         obj = parse_verdict(raw)
-    except llm_endpoint.LLMError as exc:
+    except llm.LLMError as exc:
         print(f"[{NAME}] 판정 불가 — {exc}")
         return 2
 
