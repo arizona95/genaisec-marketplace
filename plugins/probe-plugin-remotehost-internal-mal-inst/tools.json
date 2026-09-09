@@ -1,9 +1,0 @@
-{
-  "generated_from": "probe-server/server.py",
-  "generated_at": "2026-09-09",
-  "note": "서버 소스에서 뜬 스냅샷. 카드는 여기서만 값을 가져온다.",
-  "tools": [
-    "probe_ping",
-    "probe_note"
-  ]
-}
