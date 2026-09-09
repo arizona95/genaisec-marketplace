@@ -1,0 +1,442 @@
+{
+  "skills/probe-skill-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "skills/probe-skill-norm-2": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "skills/probe-skill-norm-3": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "plugins/probe-plugin-desktop-local-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "plugins/probe-plugin-localhost-external-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "plugins/probe-plugin-localhost-internal-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "plugins/probe-plugin-localhost-local-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "plugins/probe-plugin-localhost-loopback-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "plugins/probe-plugin-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "plugins/probe-plugin-norm-2": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "plugins/probe-plugin-norm-3": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "plugins/probe-plugin-remotehost-external-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "plugins/probe-plugin-remotehost-internal-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "mcp/probe-desktop-local-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "mcp/probe-localhost-external-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "mcp/probe-localhost-internal-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "mcp/probe-localhost-local-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "mcp/probe-localhost-local-norm-2": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "mcp/probe-localhost-local-norm-3": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "mcp/probe-localhost-loopback-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "mcp/probe-remotehost-external-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  },
+  "mcp/probe-remotehost-internal-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "b7e93a9"
+    }
+  }
+}
