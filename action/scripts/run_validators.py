@@ -123,6 +123,8 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--tier", choices=["basic", "deep", "all"], default="all")
     ap.add_argument("--write", action="store_true", help="marks.json 갱신")
+    ap.add_argument("--failed-out", default="",
+                    help="기본검증에 걸린 자산 목록을 이 JSON 파일에 쓴다 (게이트가 제외 커밋을 만들 때 읽는다)")
     ap.add_argument("--changed-since", default="",
                     help="이 ref 이후 바뀐 자산만 검사한다 (비우면 전수)")
     args = ap.parse_args()
@@ -196,6 +198,14 @@ def main() -> int:
                          encoding="utf-8")
         print(f"\nmarks 기록: {MARKS}")
 
+    if args.failed_out:
+        # 자산 단위로 모은다 — 어느 검사에 걸렸는지도 같이. 게이트는 자산만 본다.
+        by_asset: dict[str, list[str]] = {}
+        for f in failed_basic:
+            asset, _, val = f.rpartition("/")
+            by_asset.setdefault(asset, []).append(val)
+        Path(args.failed_out).write_text(json.dumps(by_asset, ensure_ascii=False, indent=2) + chr(10),
+                                         encoding="utf-8")
     if failed_basic:
         print(f"\n기본검증 실패: {', '.join(failed_basic)}")
         return 1

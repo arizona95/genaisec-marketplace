@@ -19,6 +19,10 @@ on:
   schedule:
     - cron: '47 4 * * 1'
   workflow_dispatch:
+    inputs:
+      pr:
+        description: "이 PR 의 헤드를 기록한다 (게이트가 GITHUB_TOKEN 으로 민 재시도용)"
+        default: ""
 
 permissions:
   contents: write
@@ -35,8 +39,8 @@ jobs:
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     env:
-      IS_PR: ${{ github.event_name == 'pull_request' }}
-      PR_NUM: ${{ github.event.pull_request.number }}
+      IS_PR: ${{ github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.pr != '') }}
+      PR_NUM: ${{ github.event.pull_request.number || inputs.pr }}
       PR_URL: ${{ github.event.pull_request.html_url }}
       PR_TITLE: ${{ github.event.pull_request.title }}
       PR_HEAD: ${{ github.event.pull_request.head.sha }}
@@ -49,6 +53,14 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
       - run: pip install --quiet ruff detect-secrets black
+
+      - name: PR 정보 (dispatch 로 왔으면 API 에서)
+        if: env.IS_PR == 'true' && github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr view "$PR_NUM" --repo "$GITHUB_REPOSITORY" --json headRefOid,headRefName,baseRefOid,url,title \
+            --jq '"PR_HEAD="+.headRefOid, "PR_BRANCH="+.headRefName, "BASE="+.baseRefOid, "PR_URL="+.url, "PR_TITLE="+.title' >> "$GITHUB_ENV"
 
       - name: 기록 위치·실행 id
         run: |
