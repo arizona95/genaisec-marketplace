@@ -1,0 +1,116 @@
+# FabriX LLM Serving API 를 러너에서 부를 수 있는지 확인한다.
+#
+# 왜 워크플로로 확인하나: FabriX 는 접근 가능 IP 를 /32 로 잠근다. 그 IP 는 "내 랜카드
+# 주소"가 아니라 "상대가 보는 출발지 주소"이고, 프록시·NAT 를 지나면 둘은 다르다.
+# 개발자 PC 에서 본 값(203.244.212.27)은 러너의 값이 아니므로 추측하면 안 된다.
+#
+# 수동 실행 전용. 자격증명을 쓰므로 PR 로는 돌리지 않는다 — 포크 PR 에는 secret 이
+# 전달되지 않지만, 같은 저장소 PR 에는 전달되므로 트리거 자체를 두지 않는 편이 안전하다.
+
+name: fabrix-probe
+
+on:
+  workflow_dispatch:
+    inputs:
+      call_llm:
+        description: "모델 목록·채팅까지 실제로 호출 (IP 확인만 하려면 false)"
+        type: boolean
+        default: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    # X_FABRIX_CLIENT / X_OPENAPI_TOKEN 이 이 environment 에 들어 있다.
+    # environment 를 선언하지 않으면 environment secret 을 못 읽는다.
+    # (저장소 secret 에도 같은 이름이 있으면 environment 쪽이 이긴다.)
+    environment: fabrix_api
+
+    steps:
+      - name: 러너 인터페이스 주소 (참고용 — 등록하면 안 되는 값)
+        run: ip -brief address show || ifconfig || true
+
+      - name: egress IP — FabriX 에 등록할 값
+        run: |
+          echo "--- 외부에서 본 출발지 ---"
+          for u in https://api.ipify.org https://checkip.amazonaws.com https://ifconfig.me/ip; do
+            printf '%-34s %s\n' "$u" "$(curl -s --max-time 10 "$u" || echo 실패)"
+          done
+          echo
+          echo ">>> 위 값을 FabriX '접근 가능 IP' 에 /32 로 등록합니다."
+          echo ">>> runs-on: ubuntu-latest 가 GitHub 호스티드면 IP 가 매번 바뀌어 /32 등록이"
+          echo "    불가능합니다. 그 경우 사내망 self-hosted 러너로 바꿔야 합니다."
+
+      - name: FabriX 도달 확인 (자격증명 없이)
+        continue-on-error: true
+        run: |
+          H=nsds-api.fabrix-s.samsungsds.com
+          echo "--- DNS ---"
+          getent hosts "$H" || echo "DNS 실패"
+          echo "--- TCP 443 ---"
+          if timeout 10 bash -c "cat < /dev/null > /dev/tcp/$H/443" 2>/dev/null; then
+            echo "연결 OK — 사내망 경로가 있습니다."
+          else
+            echo "연결 실패 — 사내망/VPN 밖입니다. IP 등록으로는 해결되지 않습니다."
+          fi
+          echo "--- 프록시 환경변수 ---"
+          env | grep -iE '^(http|https|no)_proxy=' || echo "(없음)"
+
+      - name: GET /v1/models
+        id: models
+        if: ${{ inputs.call_llm }}
+        continue-on-error: true
+        env:
+          BASE: https://nsds-api.fabrix-s.samsungsds.com/sds/trial/api-llm
+          X_FABRIX_CLIENT: ${{ secrets.X_FABRIX_CLIENT }}
+          X_OPENAPI_TOKEN: ${{ secrets.X_OPENAPI_TOKEN }}
+        run: |
+          test -n "$X_FABRIX_CLIENT" || { echo "secret X_FABRIX_CLIENT 가 비어 있습니다"; exit 1; }
+          code=$(curl -s -o /tmp/models.json -w '%{http_code}' --max-time 40 \
+            -H "x-fabrix-client: $X_FABRIX_CLIENT" \
+            -H "x-openapi-token: $X_OPENAPI_TOKEN" \
+            -H "x-generative-ai-user-email: dowoo.baik@samsung.com" \
+            -H 'Content-Type: application/json' \
+            "$BASE/v1/models")
+          echo "status=$code"
+          # 거부 응답 본문에 막힌 IP 가 실려 오는 경우가 많다 — 그게 등록할 값이다.
+          head -c 2000 /tmp/models.json; echo
+          case "$code" in
+            200) echo ">>> 성공. 이 러너의 egress IP 가 이미 허용돼 있습니다." ;;
+            401) echo ">>> 토큰 문제 (IP 는 통과). Pass Key 유효기간을 보세요." ;;
+            403) echo ">>> IP 거부. 위 egress IP 를 등록하세요." ;;
+            000) echo ">>> 연결 실패. 사내망 경로가 없습니다." ;;
+            *)   echo ">>> 예상 못한 상태코드 — 본문 확인." ;;
+          esac
+          # 첫 모델 id 를 다음 스텝으로 넘긴다
+          mid=$(python3 -c "
+import json,sys
+try:
+    d=json.load(open('/tmp/models.json'))
+    it=d if isinstance(d,list) else (d.get('data') or d.get('models') or [])
+    print(it[0].get('modelId') or it[0].get('id') or '')
+except Exception:
+    print('')
+" 2>/dev/null || echo "")
+          echo "model_id=$mid" >> "$GITHUB_OUTPUT"
+          echo "첫 모델 id: ${mid:-(없음)}"
+
+      - name: POST /chat/completions
+        if: ${{ inputs.call_llm && steps.models.outputs.model_id != '' }}
+        continue-on-error: true
+        env:
+          BASE: https://nsds-api.fabrix-s.samsungsds.com/sds/trial/api-llm
+          X_FABRIX_CLIENT: ${{ secrets.X_FABRIX_CLIENT }}
+          X_OPENAPI_TOKEN: ${{ secrets.X_OPENAPI_TOKEN }}
+          MODEL_ID: ${{ steps.models.outputs.model_id }}
+        run: |
+          code=$(curl -s -o /tmp/chat.json -w '%{http_code}' --max-time 90 \
+            -H "x-fabrix-client: $X_FABRIX_CLIENT" \
+            -H "x-openapi-token: $X_OPENAPI_TOKEN" \
+            -H "x-llm-model-id: $MODEL_ID" \
+            -H 'Content-Type: application/json' \
+            -d '{"model":"/mnt/models","messages":[{"role":"system","content":"You are a helpful assistant."},{"role":"user","content":"FABRIX-OK 라고만 답해."}],"max_completion_tokens":32,"temperature":0}' \
+            "$BASE/chat/completions")
+          echo "status=$code"
+          head -c 1500 /tmp/chat.json; echo
+          # Trial 은 최대 10 RPM 이다. 429 가 나오면 한도 문제일 뿐 설정 문제가 아니다.
+          test "$code" = "200" && echo ">>> LLM 호출 성공 — action 에서 부를 수 있습니다."
