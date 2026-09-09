@@ -1,9 +1,9 @@
 {
   "run_id": "pr4-027f0fc",
-  "at": "2026-09-09T12:41:17+00:00",
+  "at": "2026-09-09T12:50:26+00:00",
   "actor": "github-actions[bot]",
-  "trigger": "workflow_dispatch",
-  "run_url": "https://github.com/arizona95/genaisec-marketplace/actions/runs/34352421514",
+  "trigger": "pull_request",
+  "run_url": "https://github.com/arizona95/genaisec-marketplace/actions/runs/34352424943",
   "pr": {
     "number": 4,
     "url": "https://github.com/arizona95/genaisec-marketplace/pull/4",
@@ -12,7 +12,7 @@
   "branch": {
     "head": "dev",
     "head_sha": "027f0fc1ef77",
-    "head_subject": "[gate] 기본검증에 걸린 자산 제외",
+    "head_subject": "Merge 027f0fc1ef775f3645fa453674e8354e684f1036 into 43b66c3c5b5ac04e654e4c22feed40291afaf285",
     "base": "",
     "base_sha": ""
   },
@@ -81,27 +81,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
           "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         }
       ],
-      "marks": "4/5",
+      "marks": "3/5",
       "required_passed": true,
       "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "skillspector@skillspector 504+clawvet 57"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -131,28 +130,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         }
       ],
-      "marks": "5/5",
+      "marks": "3/5",
       "required_passed": true,
-      "advanced_passed": true,
+      "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "black@26.5.1",
-        "skillspector@skillspector 504+clawvet 57"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -182,27 +179,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
           "ok": false
         }
       ],
-      "marks": "4/5",
+      "marks": "3/5",
       "required_passed": true,
       "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "black@26.5.1"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -232,27 +228,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
           "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         }
       ],
-      "marks": "4/5",
+      "marks": "3/5",
       "required_passed": true,
       "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "skillspector@skillspector 504+clawvet 57"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -282,27 +277,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
           "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         }
       ],
-      "marks": "4/5",
+      "marks": "3/5",
       "required_passed": true,
       "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "skillspector@skillspector 504+clawvet 57"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -332,27 +326,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
           "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         }
       ],
-      "marks": "4/5",
+      "marks": "3/5",
       "required_passed": true,
       "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "skillspector@skillspector 504+clawvet 57"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -382,28 +375,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         }
       ],
-      "marks": "5/5",
+      "marks": "3/5",
       "required_passed": true,
-      "advanced_passed": true,
+      "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "black@26.5.1",
-        "skillspector@skillspector 504+clawvet 57"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -433,28 +424,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         }
       ],
-      "marks": "5/5",
+      "marks": "3/5",
       "required_passed": true,
-      "advanced_passed": true,
+      "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "black@26.5.1",
-        "skillspector@skillspector 504+clawvet 57"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -484,27 +473,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
           "ok": false
         }
       ],
-      "marks": "4/5",
+      "marks": "3/5",
       "required_passed": true,
       "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "black@26.5.1"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -534,27 +522,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
           "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         }
       ],
-      "marks": "4/5",
+      "marks": "3/5",
       "required_passed": true,
       "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "skillspector@skillspector 504+clawvet 57"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -584,28 +571,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         }
       ],
-      "marks": "5/5",
+      "marks": "3/5",
       "required_passed": true,
-      "advanced_passed": true,
+      "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "black@26.5.1",
-        "skillspector@skillspector 504+clawvet 57"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -635,27 +620,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
           "ok": false
         }
       ],
-      "marks": "4/5",
+      "marks": "3/5",
       "required_passed": true,
       "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "black@26.5.1"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -685,27 +669,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
           "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         }
       ],
-      "marks": "4/5",
+      "marks": "3/5",
       "required_passed": true,
       "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "skillspector@skillspector 504+clawvet 57"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -735,28 +718,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         }
       ],
-      "marks": "5/5",
+      "marks": "3/5",
       "required_passed": true,
-      "advanced_passed": true,
+      "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "black@26.5.1",
-        "skillspector@skillspector 504+clawvet 57"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -786,28 +767,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         }
       ],
-      "marks": "5/5",
+      "marks": "3/5",
       "required_passed": true,
-      "advanced_passed": true,
+      "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "black@26.5.1",
-        "skillspector@skillspector 504+clawvet 57"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -837,28 +816,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         }
       ],
-      "marks": "5/5",
+      "marks": "3/5",
       "required_passed": true,
-      "advanced_passed": true,
+      "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "black@26.5.1",
-        "skillspector@skillspector 504+clawvet 57"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -888,28 +865,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         }
       ],
-      "marks": "5/5",
+      "marks": "3/5",
       "required_passed": true,
-      "advanced_passed": true,
+      "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "black@26.5.1",
-        "skillspector@skillspector 504+clawvet 57"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -939,28 +914,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         }
       ],
-      "marks": "5/5",
+      "marks": "3/5",
       "required_passed": true,
-      "advanced_passed": true,
+      "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "black@26.5.1",
-        "skillspector@skillspector 504+clawvet 57"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -990,27 +963,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
           "ok": false
         }
       ],
-      "marks": "4/5",
+      "marks": "3/5",
       "required_passed": true,
       "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "black@26.5.1"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -1040,28 +1012,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         }
       ],
-      "marks": "5/5",
+      "marks": "3/5",
       "required_passed": true,
-      "advanced_passed": true,
+      "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "black@26.5.1",
-        "skillspector@skillspector 504+clawvet 57"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -1091,27 +1061,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
           "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         }
       ],
-      "marks": "4/5",
+      "marks": "3/5",
       "required_passed": true,
       "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "skillspector@skillspector 504+clawvet 57"
+        "leak-scan@1.0.0"
       ]
     },
     {
@@ -1141,27 +1110,26 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "26.5.1",
+          "version": "",
           "tier": "deep",
           "ok": false
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "skillspector 504+clawvet 57",
+          "version": "",
           "tier": "deep",
-          "ok": true
+          "ok": false
         }
       ],
-      "marks": "4/5",
+      "marks": "3/5",
       "required_passed": true,
       "advanced_passed": false,
       "registered": true,
       "tags": [
         "inst-scan@1.0.0",
         "code-scan@1.0.0",
-        "leak-scan@1.0.0",
-        "skillspector@skillspector 504+clawvet 57"
+        "leak-scan@1.0.0"
       ]
     }
   ],
@@ -1170,7 +1138,7 @@
     "registered": 22,
     "blocked": 0,
     "blocked_targets": [],
-    "fully_verified": 10
+    "fully_verified": 0
   },
   "verdict": "passed"
 }
