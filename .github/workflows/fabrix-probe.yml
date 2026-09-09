@@ -83,15 +83,8 @@ jobs:
             *)   echo ">>> 예상 못한 상태코드 — 본문 확인." ;;
           esac
           # 첫 모델 id 를 다음 스텝으로 넘긴다
-          mid=$(python3 -c "
-import json,sys
-try:
-    d=json.load(open('/tmp/models.json'))
-    it=d if isinstance(d,list) else (d.get('data') or d.get('models') or [])
-    print(it[0].get('modelId') or it[0].get('id') or '')
-except Exception:
-    print('')
-" 2>/dev/null || echo "")
+          # (한 줄로 쓴다 — 여러 줄 파이썬을 run 블록 안에서 열 0 으로 내리면 YAML 이 깨진다)
+          mid=$(python3 -c "import json;d=json.load(open('/tmp/models.json'));it=d if isinstance(d,list) else (d.get('data') or d.get('models') or []);print(it[0].get('modelId') or it[0].get('id') or '')" 2>/dev/null || echo "")
           echo "model_id=$mid" >> "$GITHUB_OUTPUT"
           echo "첫 모델 id: ${mid:-(없음)}"
 

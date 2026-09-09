@@ -73,7 +73,10 @@ jobs:
         if: env.OLLAMA_BASE_URL == 'http://localhost:11434'
         run: |
           curl -fsSL https://ollama.com/install.sh | sh
-          (ollama serve > /tmp/ollama.log 2>&1 &)
+          # 설치 스크립트가 띄우는 systemd 서비스는 모델을 /usr/share/ollama 에 둔다.
+          # 캐시 경로(~/.ollama/models)와 맞추려고 그 서비스는 끄고 직접 띄운다.
+          sudo systemctl stop ollama 2>/dev/null || true
+          (OLLAMA_MODELS="$HOME/.ollama/models" ollama serve > /tmp/ollama.log 2>&1 &)
           for i in $(seq 1 30); do curl -sf localhost:11434/api/tags >/dev/null && break; sleep 1; done
           ollama pull "$OLLAMA_MODEL"
           python action/scripts/llm_endpoint.py --ping
