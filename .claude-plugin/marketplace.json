@@ -245,6 +245,16 @@
       }
     },
     {
+      "name": "probe-skill-mal-inst",
+      "source": "./skills/probe-skill-mal-inst",
+      "hub": {
+        "type": "skill",
+        "status": "published",
+        "version": "1.0.0"
+      },
+      "version": "1.0.0"
+    },
+    {
       "name": "probe-skill-norm-1",
       "source": "./skills/probe-skill-norm-1",
       "hub": {
