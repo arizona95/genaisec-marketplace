@@ -2,8 +2,8 @@
 # 검증하고 emit_history 로 레코드를 만들어 `history` 브랜치에만 누적한다. UI(ui/server.py)는
 # 그 브랜치를 읽는다. main 에 이력을 두면 그 순간부터 사본이라 반드시 어긋난다.
 #
-# 두 단계로 기록한다. 기본검증은 LLM 이 없어 1분 안에 끝나므로 먼저 기록해 밀고(등록/차단이
-# 바로 보인다, 심화는 ⏳), 심화(llm-review 포함)는 돌린 뒤 **같은 run_id 로 덮어써** 다시 민다.
+# 두 단계로 기록한다. 기본검증을 먼저 기록해 밀고(등록/차단이 바로 보인다, 심화는 ⏳), 심화는
+# 돌린 뒤 **같은 run_id 로 덮어써** 다시 민다. (llm-review 는 임시 비활성 — validators.json)
 # UI 는 SSE 로 두 번 갱신된다.
 #
 # 바뀐 자산만 다시 잰다. 직전 실행의 marks.json 을 history 브랜치에서 이어받고, 안 건드린 자산은
@@ -41,12 +41,6 @@ jobs:
     env:
       BRANCH: ${{ github.ref_name }}
       BASE: ${{ github.event_name == 'push' && github.event.before || '' }}
-      LLM_PROVIDER: ollama
-      OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
-      OLLAMA_BASE_URL: ${{ vars.OLLAMA_BASE_URL || 'https://ollama.com' }}
-      OLLAMA_MODEL: ${{ vars.OLLAMA_MODEL || 'glm-5.3' }}
-      # 한 호출이 몇 분씩 매달리면 44개 전수가 한 시간을 넘는다. 느리면 '판정 불가'로 두고 넘어간다.
-      LLM_TIMEOUT: "120"
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
@@ -86,7 +80,7 @@ jobs:
           cp action/marks.json "/tmp/hist/$BRANCH/marks.json"
           bash action/scripts/push_history.sh "$BRANCH" "1/2 기본"
 
-      - name: 2/2 심화검증 → 같은 레코드 덮어쓰기 (llm-review 포함)
+      - name: 2/2 심화검증 → 같은 레코드 덮어쓰기 (black·skillspector)
         run: |
           python action/scripts/run_validators.py --tier deep --write --changed-since "$BASE" || true
           python action/scripts/emit_history.py --out "/tmp/hist/$BRANCH" --run-id "$RUN_ID"

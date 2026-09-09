@@ -14,8 +14,10 @@
     "",
     "{target} 은 검사 대상 폴더로 치환된다.",
     "",
-    "llm-review 는 엔드포인트가 둘이다 — 공개 CI(GitHub 호스티드 러너)는 Ollama, 사내 self-hosted 러너·개발자 PC 는",
-    "FabriX. 어느 쪽인지는 LLM_PROVIDER 환경변수가 정하고 태그에 모델 이름이 같이 박힌다(llm-review@1.0.0+ollama.qwen2.5-3b)."
+    "",
+    "llm-review(LLM 감시자)는 임시로 뺐다 — Ollama Cloud 호출이 44개 전수에 20~30분 걸려 이력이 안 보였다.",
+    "빠른 검사(정규식 3 + black + skillspector)만 돌린다. 되살리려면 이 항목을 다시 넣고 ci.yml·history.yml 에",
+    "LLM 환경변수와 ping 단계를 복구한다(git log 의 '임시 비활성화' 커밋 참조)."
   ],
   "validators": [
     {
@@ -105,24 +107,6 @@
       "version_cmd": [
         "python",
         "action/scripts/sast_scan.py",
-        "--print-version"
-      ]
-    },
-    {
-      "name": "llm-review",
-      "title": "LLM 감시자",
-      "tier": "deep",
-      "scope": "target",
-      "description": "모델이 자산 전체를 읽고 악성지시문·악성코드·유출을 한 번 더 판정 (Ollama/FabriX, LLM_PROVIDER 로 선택)",
-      "catches": "",
-      "cmd": [
-        "python",
-        "action/scripts/llm_scan.py",
-        "{target}"
-      ],
-      "version_cmd": [
-        "python",
-        "action/scripts/llm_scan.py",
         "--print-version"
       ]
     }

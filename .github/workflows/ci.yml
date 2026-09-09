@@ -4,9 +4,7 @@
 #   기본 : 내보내면 안 되는 것(악성지시문·악성코드·유출) → 병합을 막는다.
 #   심화 : 판단이 섞이는 영역 → 막지 않고, 태그가 안 붙는 것으로 드러낸다.
 #
-# LLM 감시자(llm-review)는 심화에 있고 Ollama Cloud 의 glm-5.3 으로 돈다. 사내 FabriX 는 접근
-# IP 를 /32 로 잠가서 GitHub 호스티드 러너(egress IP 가 매번 바뀜)에서는 못 부른다 —
-# fabrix-probe.yml 이 그걸 확인한 워크플로다. 사내 self-hosted 러너에서만 LLM_PROVIDER=fabrix.
+# LLM 감시자(llm-review)는 임시 비활성이다(action/validators.json). 빠른 검사만 돈다.
 #
 # 매번 전 자산을 돌리지 않는다. 단 action/ · .github/ 가 바뀌면 판정 기준이 바뀐 것이라
 # 러너가 알아서 전수로 올린다.
@@ -51,40 +49,14 @@ jobs:
   deep:
     name: 심화검증
     runs-on: ubuntu-latest
-    env:
-      LLM_PROVIDER: ollama
-      # LLM 감시자는 Ollama Cloud 의 glm-5.3 으로 돈다 — 러너(CPU 7GB)에 올릴 수 없는 크기라서.
-      # 키는 저장소 secret OLLAMA_API_KEY. 포크 PR 에는 secret 이 안 오므로 그때는
-      # 러너 안에 작은 로컬 모델을 띄워 대신 돈다(태그에 모델명이 박히니 어느 쪽이었는지 남는다).
-      OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
-      OLLAMA_BASE_URL: ${{ secrets.OLLAMA_API_KEY != '' && (vars.OLLAMA_BASE_URL || 'https://ollama.com') || 'http://localhost:11434' }}
-      OLLAMA_MODEL: ${{ secrets.OLLAMA_API_KEY != '' && (vars.OLLAMA_MODEL || 'glm-5.3') || 'qwen2.5:3b' }}
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
       - run: pip install --quiet black
-      - name: Ollama 모델 캐시 (로컬 대체 경로일 때만)
-        if: env.OLLAMA_API_KEY == ''
-        uses: actions/cache@v4
-        with:
-          path: ~/.ollama/models
-          key: ollama-${{ env.OLLAMA_MODEL }}
-      - name: 로컬 Ollama 준비 (키가 없을 때만)
-        if: env.OLLAMA_API_KEY == ''
-        run: |
-          curl -fsSL https://ollama.com/install.sh | sh
-          # 설치 스크립트가 띄우는 systemd 서비스는 모델을 /usr/share/ollama 에 둔다.
-          # 캐시 경로(~/.ollama/models)와 맞추려고 그 서비스는 끄고 직접 띄운다.
-          sudo systemctl stop ollama 2>/dev/null || true
-          (OLLAMA_MODELS="$HOME/.ollama/models" ollama serve > /tmp/ollama.log 2>&1 &)
-          for i in $(seq 1 30); do curl -sf localhost:11434/api/tags >/dev/null && break; sleep 1; done
-          ollama pull "$OLLAMA_MODEL"
-      # 닿는지 + 인증되는지. Cloud 는 /api/tags 가 키 없이도 200 이라 ping 이 /api/chat 까지 친다.
-      - name: LLM 엔드포인트 확인
-        run: python action/scripts/llm_scan.py --ping
       # 심화는 떨어져도 CI 를 세우지 않는다. 결과는 요약으로만 남긴다.
+      # (llm-review 는 임시 비활성 — action/validators.json 참조)
       - name: 심화검증 실행
         continue-on-error: true
         run: |
