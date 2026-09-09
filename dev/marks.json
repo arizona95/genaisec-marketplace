@@ -1,0 +1,882 @@
+{
+  "skills/probe-skill-mal-code": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "skills/probe-skill-mal-inst": {
+    "inst-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "skills/probe-skill-mal-url": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "skills/probe-skill-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "skills/probe-skill-norm-2": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "skills/probe-skill-norm-3": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-desktop-local-mal-inst": {
+    "inst-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-desktop-local-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-localhost-external-mal-inst": {
+    "inst-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-localhost-external-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-localhost-internal-mal-inst": {
+    "inst-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-localhost-internal-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-localhost-local-mal-inst": {
+    "inst-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-localhost-local-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-localhost-loopback-mal-inst": {
+    "inst-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-localhost-loopback-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-mal-code": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-mal-inst": {
+    "inst-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-mal-url": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-norm-2": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-norm-3": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-remotehost-external-mal-inst": {
+    "inst-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-remotehost-external-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-remotehost-internal-mal-inst": {
+    "inst-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "plugins/probe-plugin-remotehost-internal-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "mcp/probe-desktop-local-mal-inst": {
+    "inst-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "mcp/probe-desktop-local-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "mcp/probe-localhost-external-mal-inst": {
+    "inst-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "mcp/probe-localhost-external-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "mcp/probe-localhost-internal-mal-inst": {
+    "inst-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "mcp/probe-localhost-internal-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "mcp/probe-localhost-local-mal-code": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "mcp/probe-localhost-local-mal-inst": {
+    "inst-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "mcp/probe-localhost-local-mal-url": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "mcp/probe-localhost-local-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "mcp/probe-localhost-local-norm-2": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "mcp/probe-localhost-local-norm-3": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "mcp/probe-localhost-loopback-mal-inst": {
+    "inst-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "mcp/probe-localhost-loopback-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "mcp/probe-remotehost-external-mal-inst": {
+    "inst-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "mcp/probe-remotehost-external-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "mcp/probe-remotehost-internal-mal-inst": {
+    "inst-scan": {
+      "ok": false,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  },
+  "mcp/probe-remotehost-internal-norm-1": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "5924147"
+    }
+  }
+}
