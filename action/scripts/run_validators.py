@@ -71,6 +71,16 @@ def changed_assets(base_ref: str) -> list[str] | None:
     return sorted(hit)
 
 
+def sh_head() -> str:
+    """지금 검사하는 커밋. 없으면(저장소 밖) 빈 문자열."""
+    try:
+        r = subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", timeout=30)
+        return r.stdout.strip() if r.returncode == 0 else ""
+    except Exception:                                   # noqa: BLE001
+        return ""
+
+
 VERSION_RE = re.compile(r"\d+\.\d+(?:\.\d+)?(?:[a-z0-9.\-+]*)?")
 
 
@@ -139,8 +149,14 @@ def main() -> int:
     versions = {v["name"]: tool_version(v.get("version_cmd")) for v in chosen}
 
     known = {v["name"] for v in reg}
+    # 마크마다 어느 커밋에서 잰 것인지 남긴다. marks.json 을 실행 간에 이어받으면(history.yml),
+    # 이번에 다시 재는 자산의 옛 커밋 결과는 낡은 것이므로 버린다 — 등급이 달라도(기본만 다시 재고
+    # 심화는 나중에) 같은 커밋이면 서로의 결과를 지운다. 안 건드린 자산은 그대로 둔다.
+    head = sh_head()
     for t in targets:
         entry = marks.setdefault(t, {})
+        for stale in [k for k, m in entry.items() if not (isinstance(m, dict) and m.get("sha") == head)]:
+            entry.pop(stale)
         # 등록표에서 빠진 검증자의 옛 결과를 남겨두면, 지운 검사가 계속 '미통과'로 보인다.
         for stale in [k for k in entry if k not in known]:
             entry.pop(stale)
@@ -149,7 +165,7 @@ def main() -> int:
             ok, msg = run(v["cmd"], t if v["scope"] == "target" else ".")
             # 통과 여부와 '어느 버전이 판정했는지'를 함께 남긴다.
             entry[v["name"]] = {"ok": ok, "version": versions.get(v["name"], ""),
-                                "tier": v["tier"]}
+                                "tier": v["tier"], "sha": head}
             icon = "O" if ok else "X"
             ver = versions.get(v["name"], "")
             print(f"  [{icon}] {v['name']:14} {ver:22} ({v['tier']:5}) {msg[:60]}")
