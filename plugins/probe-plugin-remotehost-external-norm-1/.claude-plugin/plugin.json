@@ -1,0 +1,8 @@
+{
+  "name": "probe-plugin-remotehost-external-norm-1",
+  "version": "1.0.0",
+  "description": "프로브 plugin+mcp (remotehost_external, norm_1).",
+  "author": {
+    "name": "AgentReview"
+  }
+}

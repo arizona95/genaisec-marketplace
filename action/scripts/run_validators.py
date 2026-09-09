@@ -95,14 +95,17 @@ def tool_version(cmd: list[str] | None) -> str:
 def run(cmd: list[str], target: str) -> tuple[bool, str]:
     argv = [a.replace("{target}", target) for a in cmd]
     try:
-        r = subprocess.run(argv, capture_output=True, text=True, timeout=900)
+        # Windows 는 encoding 미지정 시 로케일(cp949)로 자식 UTF-8 출력을 디코드하다 죽어
+        # stdout 이 None 이 된다. 리눅스 CI 에선 안 나지만 명시한다.
+        r = subprocess.run(argv, capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", timeout=900)
     except FileNotFoundError:
         # 검증자 실행파일이 없으면 '실패'가 아니라 '판정 불가'다. 없는 도구 때문에 태그를
         # 떼면, 도구를 지우는 것만으로 검증을 통과시킬 수 있다는 뜻이 되어 더 위험하다.
         return False, f"{argv[0]} 를 찾을 수 없습니다 (미설치)"
     except subprocess.TimeoutExpired:
         return False, "시간 초과"
-    tail = (r.stdout + r.stderr).strip().splitlines()
+    tail = ((r.stdout or '') + (r.stderr or '')).strip().splitlines()
     return r.returncode == 0, (tail[-1] if tail else "")
 
 

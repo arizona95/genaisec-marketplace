@@ -1,0 +1,8 @@
+{
+  "name": "probe-plugin-localhost-loopback-norm-1",
+  "version": "1.0.0",
+  "description": "프로브 plugin+mcp (localhost_loopback, norm_1).",
+  "author": {
+    "name": "AgentReview"
+  }
+}

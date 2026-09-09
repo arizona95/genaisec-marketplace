@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "probe": {
+      "type": "http",
+      "url": "https://dowhub.org/probe_remotehost_external_norm_1/mcp"
+    }
+  }
+}

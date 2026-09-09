@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "probe": {
+      "type": "http",
+      "url": "https://dowhub.org/probe_localhost_external_mal_inst/mcp"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "probe": {
+      "type": "http",
+      "url": "http://localhost:8899/probe_localhost_loopback_norm_1/mcp"
+    }
+  }
+}

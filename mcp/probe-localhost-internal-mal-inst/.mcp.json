@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "probe": {
+      "type": "http",
+      "url": "http://LAN_IP:8899/probe_localhost_internal_mal_inst/mcp"
+    }
+  }
+}

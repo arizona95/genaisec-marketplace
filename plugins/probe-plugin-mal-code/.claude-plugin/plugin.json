@@ -1,0 +1,8 @@
+{
+  "name": "probe-plugin-mal-code",
+  "version": "1.0.0",
+  "description": "무해한 프로브 플러그인 픽스처 (mal_code).",
+  "author": {
+    "name": "AgentReview"
+  }
+}

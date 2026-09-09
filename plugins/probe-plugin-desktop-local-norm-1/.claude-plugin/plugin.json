@@ -1,0 +1,8 @@
+{
+  "name": "probe-plugin-desktop-local-norm-1",
+  "version": "1.0.0",
+  "description": "프로브 plugin+mcp (desktop_local, norm_1).",
+  "author": {
+    "name": "AgentReview"
+  }
+}
