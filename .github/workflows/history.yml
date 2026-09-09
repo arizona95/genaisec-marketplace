@@ -1,35 +1,29 @@
-# 검사 이력은 사람이 쓰지 않는다 — 이 워크플로가 push(main·dev)·주 1회·수동 실행 때 자산을
-# 검증하고 emit_history 로 레코드를 만들어 `history` 브랜치에만 누적한다. UI(ui/server.py)는
-# 그 브랜치를 읽는다. main 에 이력을 두면 그 순간부터 사본이라 반드시 어긋난다.
+# 검사 이력은 사람이 쓰지 않는다 — 이 워크플로만 `history` 브랜치에 쓴다. UI(ui/server.py)는 그 브랜치를 읽는다.
 #
-# 두 단계로 기록한다. 기본검증을 먼저 기록해 밀고(등록/차단이 바로 보인다, 심화는 ⏳), 심화는
-# 돌린 뒤 **같은 run_id 로 덮어써** 다시 민다. (llm-review 는 임시 비활성 — validators.json)
-# UI 는 SSE 로 두 번 갱신된다.
+# 로그는 PR 단위다. PR 이 열리거나 갱신될 때 **그 PR 에서 바뀐 자산만** 검사해 `pr/` 에 기록한다.
+# PR 하나에 자산 3개가 바뀌었으면 레코드 하나에 자산 3개 — UI 는 그걸 3줄로 찍는다. 같은 PR 에
+# 다시 push 하면 헤드 해시가 다른 레코드가 하나 더 남는다(run_id = pr<번호>-<헤드해시>).
 #
-# 바뀐 자산만 다시 잰다. 직전 실행의 marks.json 을 history 브랜치에서 이어받고, 안 건드린 자산은
-# 직전 태그를 유지한다(마크마다 커밋 sha 가 있어 다시 재는 자산의 옛 결과는 버려진다).
-# action/·.github/ 가 바뀌면 전수, 스케줄·수동도 전수.
-#
-# 레코드마다 커밋 해시가 박힌다(run_id = 시각-해시). 같은 자산이 여러 커밋에서 차단→통과로
-# 바뀌면 그 시도가 전부 별도 레코드로 남는다.
+# main 에 push 되면(=병합) 등록 현황을 위해 `main/` 을 갱신한다. 직전 태그를 이어받아 바뀐
+# 자산만 다시 잰다. 주 1회 전수.
 #
 # 레이아웃 (history 브랜치):
-#   <브랜치>/latest.json          최신 레코드 별칭
-#   <브랜치>/index.json           실행 목록(최신순, 커밋 해시 포함)
-#   <브랜치>/runs/<run_id>.json   레코드
-#   <브랜치>/marks.json           다음 실행이 이어받는 태그
+#   pr/index.json · pr/runs/<run_id>.json      PR 로그 (헤드 해시·PR 번호·자산별 판정)
+#   main/latest.json · main/index.json · main/runs/ · main/marks.json   등록 현황
 name: history
 on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
   push:
-    branches: [main, dev]
+    branches: [main]
   schedule:
-    - cron: '47 4 * * 1'        # ci.yml 전수(17 4 * * 1) 뒤 — 도구·모델이 올라가면 판정도 따라간다
+    - cron: '47 4 * * 1'
   workflow_dispatch:
 
 permissions:
   contents: write
 
-# 두 브랜치가 동시에 history 브랜치에 push 하면 충돌한다 — 직렬화한다.
+# history 브랜치에 동시에 push 하면 충돌한다 — 직렬화한다.
 concurrency:
   group: history
   cancel-in-progress: false
@@ -37,10 +31,18 @@ concurrency:
 jobs:
   record:
     name: 이력 기록 → history 브랜치
+    # 포크 PR 은 토큰이 읽기 전용이라 기록할 수 없다(검사는 ci.yml 이 한다).
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     env:
-      BRANCH: ${{ github.ref_name }}
-      BASE: ${{ github.event_name == 'push' && github.event.before || '' }}
+      IS_PR: ${{ github.event_name == 'pull_request' }}
+      PR_NUM: ${{ github.event.pull_request.number }}
+      PR_URL: ${{ github.event.pull_request.html_url }}
+      PR_TITLE: ${{ github.event.pull_request.title }}
+      PR_HEAD: ${{ github.event.pull_request.head.sha }}
+      PR_BRANCH: ${{ github.event.pull_request.head.ref }}
+      # PR 은 base 와 비교(=그 PR 에서 바뀐 자산만), push 는 직전 커밋과 비교, 그 외는 전수.
+      BASE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || (github.event_name == 'push' && github.event.before || '') }}
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
@@ -48,12 +50,17 @@ jobs:
         with: { python-version: '3.12' }
       - run: pip install --quiet ruff detect-secrets black
 
-      - name: 실행 id (두 단계가 같은 레코드를 쓴다)
-        run: echo "RUN_ID=$(date -u +%Y%m%dT%H%M%SZ)-${GITHUB_SHA::7}" >> "$GITHUB_ENV"
-
-      - name: rebase-guard (main 기준 · 레코드에 남긴다)
-        if: env.BRANCH != 'main'
-        run: python action/scripts/rebase_guard.py --base origin/main || true
+      - name: 기록 위치·실행 id
+        run: |
+          if [ "$IS_PR" = "true" ]; then
+            echo "OUT=pr" >> "$GITHUB_ENV"
+            echo "RUN_ID=pr${PR_NUM}-${PR_HEAD::7}" >> "$GITHUB_ENV"
+            echo "EXTRA=--pr $PR_NUM --pr-url $PR_URL --head-sha $PR_HEAD --head-branch $PR_BRANCH" >> "$GITHUB_ENV"
+          else
+            echo "OUT=main" >> "$GITHUB_ENV"
+            echo "RUN_ID=$(date -u +%Y%m%dT%H%M%SZ)-${GITHUB_SHA::7}" >> "$GITHUB_ENV"
+            echo "EXTRA=" >> "$GITHUB_ENV"
+          fi
 
       - name: history 브랜치 워크트리
         run: |
@@ -69,20 +76,23 @@ jobs:
             git -C /tmp/hist read-tree --empty
             git -C /tmp/hist clean -fdq
           fi
-          mkdir -p "/tmp/hist/$BRANCH"
-          # 직전 실행의 태그를 이어받는다(있으면).
-          test -f "/tmp/hist/$BRANCH/marks.json" && cp "/tmp/hist/$BRANCH/marks.json" action/marks.json || true
+          mkdir -p "/tmp/hist/$OUT"
+          # main 은 직전 태그를 이어받는다. PR 은 이어받지 않는다 — 바뀐 자산만 레코드에 남아야 한다.
+          if [ "$IS_PR" != "true" ] && [ -f "/tmp/hist/main/marks.json" ]; then
+            cp /tmp/hist/main/marks.json action/marks.json
+          fi
 
-      - name: 1/2 기본검증 → 즉시 기록 (LLM 없음)
+      - name: 1/2 기본검증 → 즉시 기록
         run: |
           python action/scripts/run_validators.py --tier basic --write --changed-since "$BASE" || true
-          python action/scripts/emit_history.py --out "/tmp/hist/$BRANCH" --run-id "$RUN_ID"
-          cp action/marks.json "/tmp/hist/$BRANCH/marks.json"
-          bash action/scripts/push_history.sh "$BRANCH" "1/2 기본"
+          test -f action/marks.json || echo '{}' > action/marks.json
+          python action/scripts/emit_history.py --out "/tmp/hist/$OUT" --run-id "$RUN_ID" --pr-title "$PR_TITLE" $EXTRA
+          if [ "$IS_PR" != "true" ]; then cp action/marks.json /tmp/hist/main/marks.json; fi
+          bash action/scripts/push_history.sh "$OUT" "1/2 기본 $RUN_ID"
 
-      - name: 2/2 심화검증 → 같은 레코드 덮어쓰기 (black·skillspector)
+      - name: 2/2 심화검증 → 같은 레코드 덮어쓰기
         run: |
           python action/scripts/run_validators.py --tier deep --write --changed-since "$BASE" || true
-          python action/scripts/emit_history.py --out "/tmp/hist/$BRANCH" --run-id "$RUN_ID"
-          cp action/marks.json "/tmp/hist/$BRANCH/marks.json"
-          bash action/scripts/push_history.sh "$BRANCH" "2/2 심화"
+          python action/scripts/emit_history.py --out "/tmp/hist/$OUT" --run-id "$RUN_ID" --pr-title "$PR_TITLE" $EXTRA
+          if [ "$IS_PR" != "true" ]; then cp action/marks.json /tmp/hist/main/marks.json; fi
+          bash action/scripts/push_history.sh "$OUT" "2/2 심화 $RUN_ID"
