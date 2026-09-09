@@ -64,7 +64,7 @@ SYSTEM = """당신은 Claude Code 마켓플레이스에 올라오는 자산(스�
 정상 자산도 코드를 실행하고 밖으로 나간다. 목적과 설명에 맞는 동작은 결함이 아니다.
 확신이 없으면 보고하지 마라 — 오탐이 나면 개발자가 검사기를 끄고, 그것이 최악의 결과다.
 
-답은 JSON 객체 하나만. 다른 텍스트 금지.
+답은 JSON 객체 하나만. 분석·설명·서두를 절대 쓰지 마라. 첫 글자는 '{{' 여야 하고 마지막 글자는 '}}' 여야 한다.
 {{"verdict": "pass" | "fail",
   "findings": [{{"file": "<경로>", "line": <정수 또는 0>, "rule": "mal_inst"|"mal_code"|"mal_url",
                 "excerpt": "<문제 구절 그대로, 120자 이내>", "reason": "<왜 결함인지 한 문장>"}}]}}
@@ -202,8 +202,16 @@ def main() -> int:
         print(f"  예산 초과 — 파일 {len(seen)}/{len(files)}개만 보냈습니다 (나머지는 정규식 검사만)")
 
     try:
-        raw = ep.chat(messages, temperature=0.0, max_tokens=1500, json_mode=True)
-        obj = parse_verdict(raw)
+        raw = ep.chat(messages, temperature=0.0, max_tokens=3072, json_mode=True)
+        try:
+            obj = parse_verdict(raw)
+        except llm.LLMError:
+            # glm 계열은 format=json 에도 분석 서두를 붙여 예산을 소진하고 JSON 을 못 낼 때가 있다.
+            # "JSON 만" 을 한 번 더 못박고 예산을 늘려 재시도한다.
+            retry = messages + [{"role": "user", "content":
+                     "JSON 객체 하나만 출력하라. 서두·분석 금지. 첫 글자는 { 여야 한다."}]
+            raw = ep.chat(retry, temperature=0.0, max_tokens=4096, json_mode=True)
+            obj = parse_verdict(raw)
     except llm.LLMError as exc:
         print(f"[{NAME}] 판정 불가 — {exc}")
         return 2
