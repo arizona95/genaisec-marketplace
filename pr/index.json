@@ -1,14 +1,14 @@
 [
   {
     "run_id": "pr5-bd8682d",
-    "at": "2026-09-09T12:53:14+00:00",
+    "at": "2026-09-09T12:53:29+00:00",
     "actor": "github-actions[bot]",
-    "trigger": "workflow_dispatch",
-    "run_url": "https://github.com/arizona95/genaisec-marketplace/actions/runs/34353625161",
+    "trigger": "pull_request",
+    "run_url": "https://github.com/arizona95/genaisec-marketplace/actions/runs/34353632988",
     "branch": {
       "head": "dev",
       "head_sha": "bd8682dd76a4",
-      "head_subject": "[gate] 기본검증에 걸린 자산 제외",
+      "head_subject": "Merge bd8682dd76a4370c838a5ba5a3899ce7715f32b1 into 09c5ebc2b28c2f379faeeba58ac57376777d733b",
       "base": "",
       "base_sha": ""
     },
