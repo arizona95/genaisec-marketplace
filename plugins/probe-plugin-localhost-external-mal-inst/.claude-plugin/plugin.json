@@ -1,0 +1,8 @@
+{
+  "name": "probe-plugin-localhost-external-mal-inst",
+  "version": "1.0.0",
+  "description": "프로브 plugin+mcp (localhost_external, mal_inst).",
+  "author": {
+    "name": "AgentReview"
+  }
+}

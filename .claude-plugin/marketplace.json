@@ -9,12 +9,38 @@
   },
   "plugins": [
     {
+      "name": "probe-desktop-local-mal-inst",
+      "source": "./mcp/probe-desktop-local-mal-inst",
+      "hub": {
+        "type": "mcp",
+        "status": "published",
+        "url": "stdio://server.py",
+        "tools": [
+          "probe_ping",
+          "probe_note"
+        ]
+      }
+    },
+    {
       "name": "probe-desktop-local-norm-1",
       "source": "./mcp/probe-desktop-local-norm-1",
       "hub": {
         "type": "mcp",
         "status": "published",
         "url": "stdio://server.py",
+        "tools": [
+          "probe_ping",
+          "probe_note"
+        ]
+      }
+    },
+    {
+      "name": "probe-localhost-external-mal-inst",
+      "source": "./mcp/probe-localhost-external-mal-inst",
+      "hub": {
+        "type": "mcp",
+        "status": "published",
+        "url": "https://dowhub.org/probe_localhost_external_mal_inst/mcp",
         "tools": [
           "probe_ping",
           "probe_note"
@@ -35,12 +61,64 @@
       }
     },
     {
+      "name": "probe-localhost-internal-mal-inst",
+      "source": "./mcp/probe-localhost-internal-mal-inst",
+      "hub": {
+        "type": "mcp",
+        "status": "published",
+        "url": "http://LAN_IP:8899/probe_localhost_internal_mal_inst/mcp",
+        "tools": [
+          "probe_ping",
+          "probe_note"
+        ]
+      }
+    },
+    {
       "name": "probe-localhost-internal-norm-1",
       "source": "./mcp/probe-localhost-internal-norm-1",
       "hub": {
         "type": "mcp",
         "status": "published",
         "url": "http://LAN_IP:8899/probe_localhost_internal_norm_1/mcp",
+        "tools": [
+          "probe_ping",
+          "probe_note"
+        ]
+      }
+    },
+    {
+      "name": "probe-localhost-local-mal-code",
+      "source": "./mcp/probe-localhost-local-mal-code",
+      "hub": {
+        "type": "mcp",
+        "status": "published",
+        "url": "stdio://server.py",
+        "tools": [
+          "probe_ping",
+          "probe_note"
+        ]
+      }
+    },
+    {
+      "name": "probe-localhost-local-mal-inst",
+      "source": "./mcp/probe-localhost-local-mal-inst",
+      "hub": {
+        "type": "mcp",
+        "status": "published",
+        "url": "stdio://server.py",
+        "tools": [
+          "probe_ping",
+          "probe_note"
+        ]
+      }
+    },
+    {
+      "name": "probe-localhost-local-mal-url",
+      "source": "./mcp/probe-localhost-local-mal-url",
+      "hub": {
+        "type": "mcp",
+        "status": "published",
+        "url": "stdio://server.py",
         "tools": [
           "probe_ping",
           "probe_note"
@@ -87,6 +165,19 @@
       }
     },
     {
+      "name": "probe-localhost-loopback-mal-inst",
+      "source": "./mcp/probe-localhost-loopback-mal-inst",
+      "hub": {
+        "type": "mcp",
+        "status": "published",
+        "url": "http://localhost:8899/probe_localhost_loopback_mal_inst/mcp",
+        "tools": [
+          "probe_ping",
+          "probe_note"
+        ]
+      }
+    },
+    {
       "name": "probe-localhost-loopback-norm-1",
       "source": "./mcp/probe-localhost-loopback-norm-1",
       "hub": {
@@ -100,6 +191,17 @@
       }
     },
     {
+      "name": "probe-plugin-desktop-local-mal-inst",
+      "source": "./plugins/probe-plugin-desktop-local-mal-inst",
+      "hub": {
+        "type": "plugin",
+        "status": "published",
+        "version": "1.0.0"
+      },
+      "version": "1.0.0",
+      "description": "프로브 plugin+mcp (desktop_local, mal_inst)."
+    },
+    {
       "name": "probe-plugin-desktop-local-norm-1",
       "source": "./plugins/probe-plugin-desktop-local-norm-1",
       "hub": {
@@ -109,6 +211,17 @@
       },
       "version": "1.0.0",
       "description": "프로브 plugin+mcp (desktop_local, norm_1)."
+    },
+    {
+      "name": "probe-plugin-localhost-external-mal-inst",
+      "source": "./plugins/probe-plugin-localhost-external-mal-inst",
+      "hub": {
+        "type": "plugin",
+        "status": "published",
+        "version": "1.0.0"
+      },
+      "version": "1.0.0",
+      "description": "프로브 plugin+mcp (localhost_external, mal_inst)."
     },
     {
       "name": "probe-plugin-localhost-external-norm-1",
@@ -122,6 +235,17 @@
       "description": "프로브 plugin+mcp (localhost_external, norm_1)."
     },
     {
+      "name": "probe-plugin-localhost-internal-mal-inst",
+      "source": "./plugins/probe-plugin-localhost-internal-mal-inst",
+      "hub": {
+        "type": "plugin",
+        "status": "published",
+        "version": "1.0.0"
+      },
+      "version": "1.0.0",
+      "description": "프로브 plugin+mcp (localhost_internal, mal_inst)."
+    },
+    {
       "name": "probe-plugin-localhost-internal-norm-1",
       "source": "./plugins/probe-plugin-localhost-internal-norm-1",
       "hub": {
@@ -131,6 +255,17 @@
       },
       "version": "1.0.0",
       "description": "프로브 plugin+mcp (localhost_internal, norm_1)."
+    },
+    {
+      "name": "probe-plugin-localhost-local-mal-inst",
+      "source": "./plugins/probe-plugin-localhost-local-mal-inst",
+      "hub": {
+        "type": "plugin",
+        "status": "published",
+        "version": "1.0.0"
+      },
+      "version": "1.0.0",
+      "description": "프로브 plugin+mcp (localhost_local, mal_inst)."
     },
     {
       "name": "probe-plugin-localhost-local-norm-1",
@@ -144,6 +279,17 @@
       "description": "프로브 plugin+mcp (localhost_local, norm_1)."
     },
     {
+      "name": "probe-plugin-localhost-loopback-mal-inst",
+      "source": "./plugins/probe-plugin-localhost-loopback-mal-inst",
+      "hub": {
+        "type": "plugin",
+        "status": "published",
+        "version": "1.0.0"
+      },
+      "version": "1.0.0",
+      "description": "프로브 plugin+mcp (localhost_loopback, mal_inst)."
+    },
+    {
       "name": "probe-plugin-localhost-loopback-norm-1",
       "source": "./plugins/probe-plugin-localhost-loopback-norm-1",
       "hub": {
@@ -153,6 +299,48 @@
       },
       "version": "1.0.0",
       "description": "프로브 plugin+mcp (localhost_loopback, norm_1)."
+    },
+    {
+      "name": "probe-plugin-mal-code",
+      "source": "./plugins/probe-plugin-mal-code",
+      "hub": {
+        "type": "plugin",
+        "status": "published",
+        "version": "1.0.0",
+        "skills": [
+          "probe-plugin-mal-code-skill"
+        ]
+      },
+      "version": "1.0.0",
+      "description": "무해한 프로브 플러그인 픽스처 (mal_code)."
+    },
+    {
+      "name": "probe-plugin-mal-inst",
+      "source": "./plugins/probe-plugin-mal-inst",
+      "hub": {
+        "type": "plugin",
+        "status": "published",
+        "version": "1.0.0",
+        "skills": [
+          "probe-plugin-mal-inst-skill"
+        ]
+      },
+      "version": "1.0.0",
+      "description": "무해한 프로브 플러그인 픽스처 (mal_inst)."
+    },
+    {
+      "name": "probe-plugin-mal-url",
+      "source": "./plugins/probe-plugin-mal-url",
+      "hub": {
+        "type": "plugin",
+        "status": "published",
+        "version": "1.0.0",
+        "skills": [
+          "probe-plugin-mal-url-skill"
+        ]
+      },
+      "version": "1.0.0",
+      "description": "무해한 프로브 플러그인 픽스처 (mal_url)."
     },
     {
       "name": "probe-plugin-norm-1",
@@ -197,6 +385,17 @@
       "description": "무해한 프로브 플러그인 픽스처 (norm_3)."
     },
     {
+      "name": "probe-plugin-remotehost-external-mal-inst",
+      "source": "./plugins/probe-plugin-remotehost-external-mal-inst",
+      "hub": {
+        "type": "plugin",
+        "status": "published",
+        "version": "1.0.0"
+      },
+      "version": "1.0.0",
+      "description": "프로브 plugin+mcp (remotehost_external, mal_inst)."
+    },
+    {
       "name": "probe-plugin-remotehost-external-norm-1",
       "source": "./plugins/probe-plugin-remotehost-external-norm-1",
       "hub": {
@@ -206,6 +405,17 @@
       },
       "version": "1.0.0",
       "description": "프로브 plugin+mcp (remotehost_external, norm_1)."
+    },
+    {
+      "name": "probe-plugin-remotehost-internal-mal-inst",
+      "source": "./plugins/probe-plugin-remotehost-internal-mal-inst",
+      "hub": {
+        "type": "plugin",
+        "status": "published",
+        "version": "1.0.0"
+      },
+      "version": "1.0.0",
+      "description": "프로브 plugin+mcp (remotehost_internal, mal_inst)."
     },
     {
       "name": "probe-plugin-remotehost-internal-norm-1",
@@ -219,12 +429,38 @@
       "description": "프로브 plugin+mcp (remotehost_internal, norm_1)."
     },
     {
+      "name": "probe-remotehost-external-mal-inst",
+      "source": "./mcp/probe-remotehost-external-mal-inst",
+      "hub": {
+        "type": "mcp",
+        "status": "published",
+        "url": "https://dowhub.org/probe_remotehost_external_mal_inst/mcp",
+        "tools": [
+          "probe_ping",
+          "probe_note"
+        ]
+      }
+    },
+    {
       "name": "probe-remotehost-external-norm-1",
       "source": "./mcp/probe-remotehost-external-norm-1",
       "hub": {
         "type": "mcp",
         "status": "published",
         "url": "https://dowhub.org/probe_remotehost_external_norm_1/mcp",
+        "tools": [
+          "probe_ping",
+          "probe_note"
+        ]
+      }
+    },
+    {
+      "name": "probe-remotehost-internal-mal-inst",
+      "source": "./mcp/probe-remotehost-internal-mal-inst",
+      "hub": {
+        "type": "mcp",
+        "status": "published",
+        "url": "http://LAN_IP:8899/probe_remotehost_internal_mal_inst/mcp",
         "tools": [
           "probe_ping",
           "probe_note"
@@ -243,6 +479,36 @@
           "probe_note"
         ]
       }
+    },
+    {
+      "name": "probe-skill-mal-code",
+      "source": "./skills/probe-skill-mal-code",
+      "hub": {
+        "type": "skill",
+        "status": "published",
+        "version": "1.0.0"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "name": "probe-skill-mal-inst",
+      "source": "./skills/probe-skill-mal-inst",
+      "hub": {
+        "type": "skill",
+        "status": "published",
+        "version": "1.0.0"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "name": "probe-skill-mal-url",
+      "source": "./skills/probe-skill-mal-url",
+      "hub": {
+        "type": "skill",
+        "status": "published",
+        "version": "1.0.0"
+      },
+      "version": "1.0.0"
     },
     {
       "name": "probe-skill-norm-1",

@@ -1,0 +1,10 @@
+{
+  "manifest_version": "0.1",
+  "name": "probe-desktop-local-mal-inst",
+  "version": "1.0.0",
+  "server": {
+    "type": "python",
+    "entry_point": "server.py"
+  },
+  "_note": "MCPB 번들(미서명 - 서명키 없음)"
+}
