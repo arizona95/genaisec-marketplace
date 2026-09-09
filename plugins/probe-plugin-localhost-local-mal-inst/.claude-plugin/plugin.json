@@ -1,8 +1,0 @@
-{
-  "name": "probe-plugin-localhost-local-mal-inst",
-  "version": "1.0.0",
-  "description": "프로브 plugin+mcp (localhost_local, mal_inst).",
-  "author": {
-    "name": "AgentReview"
-  }
-}

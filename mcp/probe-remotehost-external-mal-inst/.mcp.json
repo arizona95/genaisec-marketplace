@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "probe": {
-      "type": "http",
-      "url": "https://dowhub.org/probe_remotehost_external_mal_inst/mcp"
-    }
-  }
-}
