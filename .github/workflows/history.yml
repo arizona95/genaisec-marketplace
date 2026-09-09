@@ -34,6 +34,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BRANCH: ${{ github.ref_name }}
+      # push 는 직전 커밋 이후 바뀐 자산만 다시 검사한다(나머지는 history 의 marks.json 을 이어받음).
+      # 스케줄·수동은 빈 값 = 전수. action/·.github/ 가 바뀌면 러너가 알아서 전수로 올린다.
+      BASE: ${{ github.event_name == 'push' && github.event.before || '' }}
       LLM_PROVIDER: ollama
       OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
       OLLAMA_BASE_URL: ${{ vars.OLLAMA_BASE_URL || 'https://ollama.com' }}
@@ -48,10 +51,6 @@ jobs:
       - name: rebase-guard (main 기준 · 레코드에 남긴다)
         if: env.BRANCH != 'main'
         run: python action/scripts/rebase_guard.py --base origin/main || true
-
-      # 전수. 기본검증 실패는 레코드에 '차단'으로, 심화 실패는 태그 없음으로 남는다.
-      - name: 전 자산 검증 (태그 계산)
-        run: python action/scripts/run_validators.py --tier all --write || true
 
       - name: history 브랜치 워크트리
         run: |
@@ -68,6 +67,14 @@ jobs:
             git -C /tmp/hist read-tree --empty
             git -C /tmp/hist clean -fdq
           fi
+
+      # 직전 실행의 태그를 이어받아 바뀐 자산만 다시 잰다. 기본검증 실패는 레코드에 '차단'으로,
+      # 심화 실패는 태그 없음으로 남는다. marks.json 도 history 브랜치에 같이 보관한다.
+      - name: 자산 검증 (바뀐 것만 · 태그 계산)
+        run: |
+          test -f "/tmp/hist/$BRANCH/marks.json" && cp "/tmp/hist/$BRANCH/marks.json" action/marks.json || true
+          python action/scripts/run_validators.py --tier all --write --changed-since "$BASE" || true
+          mkdir -p "/tmp/hist/$BRANCH" && cp action/marks.json "/tmp/hist/$BRANCH/marks.json"
 
       - name: 이력 기록
         run: python action/scripts/emit_history.py --out "/tmp/hist/$BRANCH"
