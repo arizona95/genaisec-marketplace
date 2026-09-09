@@ -1,0 +1,66 @@
+{
+  "run_id": "20260909T090249Z-45c6a53",
+  "at": "2026-09-09T09:02:49+00:00",
+  "actor": "dowoo <arizona9506@gmail.com>",
+  "trigger": "local",
+  "run_url": "",
+  "branch": {
+    "head": "dev",
+    "head_sha": "45c6a5306d62",
+    "head_subject": "llm-review: JSON 파서 강화 — 균형 중괄호 추출 + 후행 콤마 허용",
+    "base": "",
+    "base_sha": ""
+  },
+  "rebase_guard": {
+    "status": "skipped",
+    "rebased": null,
+    "behind": []
+  },
+  "validators": [
+    {
+      "name": "inst-scan",
+      "tier": "basic",
+      "declared_version": "",
+      "description": "지시 덮어쓰기·비밀 유지 요구·역할 위장 — 본문과 MCP 도구 설명 양쪽"
+    },
+    {
+      "name": "code-scan",
+      "tier": "basic",
+      "declared_version": "",
+      "description": "동적 실행·자격증명 경로 접근·외부 프로세스 호출 + 문법 오류(ruff 흡수)"
+    },
+    {
+      "name": "leak-scan",
+      "tier": "basic",
+      "declared_version": "",
+      "description": "승인 도메인 밖으로 나가는 전송 + 하드코딩된 자격증명(detect-secrets 흡수)"
+    },
+    {
+      "name": "black",
+      "tier": "deep",
+      "declared_version": "",
+      "description": "코드 포맷이 black 규칙에 맞는지"
+    },
+    {
+      "name": "skillspector",
+      "tier": "deep",
+      "declared_version": "",
+      "description": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분"
+    },
+    {
+      "name": "llm-review",
+      "tier": "deep",
+      "declared_version": "",
+      "description": "모델이 자산 전체를 읽고 악성지시문·악성코드·유출을 한 번 더 판정 (Ollama/FabriX, LLM_PROVIDER 로 선택)"
+    }
+  ],
+  "assets": [],
+  "summary": {
+    "assets": 0,
+    "registered": 0,
+    "blocked": 0,
+    "blocked_targets": [],
+    "fully_verified": 0
+  },
+  "verdict": "passed"
+}
