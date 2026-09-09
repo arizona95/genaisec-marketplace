@@ -76,7 +76,8 @@ class Repo:
         for line in out.splitlines():
             ref, _, sha = line.partition(" ")
             name = ref.removeprefix("origin/")
-            if name != "HEAD":
+            # origin/HEAD 는 짧은 이름이 "origin" 으로 나온다 — 브랜치가 아니다.
+            if name not in ("HEAD", "origin"):
                 heads[name] = sha
         changed = heads != self.heads
         with self._cond:
@@ -159,9 +160,11 @@ class Handler(BaseHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
 
     def log_message(self, fmt, *args):  # noqa: D102
-        if "/api/events" in (args[0] if args else ""):
+        # 오류 경로에서는 args[0] 이 HTTPStatus 다 — 먼저 문자열로 만든 뒤 본다.
+        line = fmt % args
+        if "/api/events" in line:
             return
-        sys.stderr.write("[ui] " + (fmt % args) + "\n")
+        sys.stderr.write("[ui] " + line + chr(10))
 
     def _send(self, code: int, body: bytes, ctype: str) -> None:
         self.send_response(code)
