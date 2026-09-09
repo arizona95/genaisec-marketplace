@@ -1,7 +1,7 @@
 [
   {
     "run_id": "pr5-60dee47",
-    "at": "2026-09-09T12:52:50+00:00",
+    "at": "2026-09-09T12:52:57+00:00",
     "actor": "arizona95",
     "trigger": "pull_request",
     "run_url": "https://github.com/arizona95/genaisec-marketplace/actions/runs/34353599430",
@@ -55,23 +55,27 @@
         "registered": false,
         "marks": "2/5",
         "failed": [
-          "inst-scan"
+          "inst-scan",
+          "black",
+          "skillspector"
         ]
       },
       {
         "target": "mcp/probe-localhost-external-mal-inst",
         "registered": false,
-        "marks": "2/5",
+        "marks": "3/5",
         "failed": [
-          "inst-scan"
+          "inst-scan",
+          "skillspector"
         ]
       },
       {
         "target": "mcp/probe-localhost-internal-mal-inst",
         "registered": false,
-        "marks": "2/5",
+        "marks": "3/5",
         "failed": [
-          "inst-scan"
+          "inst-scan",
+          "skillspector"
         ]
       },
       {
@@ -79,7 +83,9 @@
         "registered": false,
         "marks": "2/5",
         "failed": [
-          "code-scan"
+          "code-scan",
+          "black",
+          "skillspector"
         ]
       },
       {
@@ -87,7 +93,9 @@
         "registered": false,
         "marks": "2/5",
         "failed": [
-          "inst-scan"
+          "inst-scan",
+          "black",
+          "skillspector"
         ]
       },
       {
@@ -95,31 +103,36 @@
         "registered": false,
         "marks": "2/5",
         "failed": [
-          "leak-scan"
+          "leak-scan",
+          "black",
+          "skillspector"
         ]
       },
       {
         "target": "mcp/probe-localhost-loopback-mal-inst",
         "registered": false,
-        "marks": "2/5",
+        "marks": "3/5",
         "failed": [
-          "inst-scan"
+          "inst-scan",
+          "skillspector"
         ]
       },
       {
         "target": "mcp/probe-remotehost-external-mal-inst",
         "registered": false,
-        "marks": "2/5",
+        "marks": "3/5",
         "failed": [
-          "inst-scan"
+          "inst-scan",
+          "skillspector"
         ]
       },
       {
         "target": "mcp/probe-remotehost-internal-mal-inst",
         "registered": false,
-        "marks": "2/5",
+        "marks": "3/5",
         "failed": [
-          "inst-scan"
+          "inst-scan",
+          "skillspector"
         ]
       },
       {
@@ -127,23 +140,27 @@
         "registered": false,
         "marks": "2/5",
         "failed": [
-          "inst-scan"
+          "inst-scan",
+          "black",
+          "skillspector"
         ]
       },
       {
         "target": "plugins/probe-plugin-localhost-external-mal-inst",
         "registered": false,
-        "marks": "2/5",
+        "marks": "3/5",
         "failed": [
-          "inst-scan"
+          "inst-scan",
+          "skillspector"
         ]
       },
       {
         "target": "plugins/probe-plugin-localhost-internal-mal-inst",
         "registered": false,
-        "marks": "2/5",
+        "marks": "3/5",
         "failed": [
-          "inst-scan"
+          "inst-scan",
+          "skillspector"
         ]
       },
       {
@@ -151,79 +168,90 @@
         "registered": false,
         "marks": "2/5",
         "failed": [
-          "inst-scan"
+          "inst-scan",
+          "black",
+          "skillspector"
         ]
       },
       {
         "target": "plugins/probe-plugin-localhost-loopback-mal-inst",
         "registered": false,
-        "marks": "2/5",
+        "marks": "3/5",
         "failed": [
-          "inst-scan"
+          "inst-scan",
+          "skillspector"
         ]
       },
       {
         "target": "plugins/probe-plugin-mal-code",
         "registered": false,
-        "marks": "2/5",
+        "marks": "3/5",
         "failed": [
-          "code-scan"
+          "code-scan",
+          "skillspector"
         ]
       },
       {
         "target": "plugins/probe-plugin-mal-inst",
         "registered": false,
-        "marks": "2/5",
+        "marks": "3/5",
         "failed": [
-          "inst-scan"
+          "inst-scan",
+          "skillspector"
         ]
       },
       {
         "target": "plugins/probe-plugin-mal-url",
         "registered": false,
-        "marks": "2/5",
+        "marks": "3/5",
         "failed": [
-          "leak-scan"
+          "leak-scan",
+          "skillspector"
         ]
       },
       {
         "target": "plugins/probe-plugin-remotehost-external-mal-inst",
         "registered": false,
-        "marks": "2/5",
+        "marks": "3/5",
         "failed": [
-          "inst-scan"
+          "inst-scan",
+          "skillspector"
         ]
       },
       {
         "target": "plugins/probe-plugin-remotehost-internal-mal-inst",
         "registered": false,
-        "marks": "2/5",
+        "marks": "3/5",
         "failed": [
-          "inst-scan"
+          "inst-scan",
+          "skillspector"
         ]
       },
       {
         "target": "skills/probe-skill-mal-code",
         "registered": false,
-        "marks": "2/5",
+        "marks": "3/5",
         "failed": [
-          "code-scan"
+          "code-scan",
+          "skillspector"
         ]
       },
       {
         "target": "skills/probe-skill-mal-inst",
         "registered": false,
-        "marks": "2/5",
+        "marks": "3/5",
         "failed": [
-          "inst-scan"
+          "inst-scan",
+          "skillspector"
         ]
       },
       {
         "target": "skills/probe-skill-mal-url",
         "registered": false,
-        "marks": "2/5",
+        "marks": "3/5",
         "failed": [
-          "leak-scan"
+          "leak-scan",
+          "skillspector"
         ]
       }
     ]
