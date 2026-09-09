@@ -44,6 +44,9 @@ def actor() -> str:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="action/history")
+    ap.add_argument("--run-id", default="",
+                    help="레코드 id 를 고정한다. 같은 id 로 다시 쓰면 그 레코드를 덮어쓴다"
+                         "(기본검증만 먼저 기록하고 심화를 나중에 채우는 2단계 실행용)")
     args = ap.parse_args()
 
     reg = json.loads(REGISTRY.read_text(encoding="utf-8"))["validators"]
@@ -56,7 +59,7 @@ def main() -> int:
 
     now = datetime.now(timezone.utc)
     head_sha = sh("git", "rev-parse", "HEAD", default="0" * 40)
-    run_id = f"{now.strftime('%Y%m%dT%H%M%SZ')}-{head_sha[:7]}"
+    run_id = args.run_id or f"{now.strftime('%Y%m%dT%H%M%SZ')}-{head_sha[:7]}"
 
     # 자산별 · 검사자별 판정
     assets = []
