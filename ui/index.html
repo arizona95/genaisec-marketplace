@@ -67,7 +67,6 @@ td.src{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--mut
 <div class="wrap">
   <header>
     <h1>genaisec marketplace <span class="sub">검증 대시보드</span></h1>
-    <label>브랜치 <select id="branch"></select></label>
     <div class="sync">
       <span class="live" id="live" title="실시간 연결"></span>
       <span id="syncmsg">동기화 중…</span>
@@ -96,7 +95,7 @@ td.src{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--mut
 
   <section id="tab-log" hidden>
     <div class="tbl"><table>
-      <thead><tr><th>시각(UTC)</th><th>브랜치</th><th>커밋</th><th>실행자</th><th>트리거</th><th>rebase</th><th>판정</th><th>자산</th><th>등록</th><th>차단</th><th>완전검증</th><th>CI</th></tr></thead>
+      <thead><tr><th>시각(UTC)</th><th>PR</th><th>헤드</th><th>종류</th><th>자산</th><th>상태</th><th>걸린 검사</th><th>마크</th><th>PR 제목</th><th>CI</th></tr></thead>
       <tbody id="runs"></tbody>
     </table></div>
     <div class="detail" id="detail"></div>
@@ -114,15 +113,12 @@ async function j(url, opt){ const r = await fetch(url, {cache:"no-store", ...(op
 
 async function loadState(){
   S.state = await j("/api/state");
-  const sel = $("branch"), cur = S.branch;
-  sel.innerHTML = S.state.branches.map(b=>`<option ${b===cur?"selected":""}>${esc(b)}</option>`).join("");
-  if(!S.state.branches.includes(cur) && S.state.branches.length){ S.branch = S.state.branches.includes("main")?"main":S.state.branches[0]; sel.value=S.branch; }
   paintSync();
 }
 function paintSync(){
   const st = S.state; if(!st) return;
-  const head = st.heads[S.branch]||"?";
-  $("syncmsg").innerHTML = `동기화 ${ago(st.synced_at)} · origin/${esc(S.branch)} <code>${esc(head)}</code>` + (st.history_branch?"":" · <b>이력 없음(CI 대기)</b>") + (st.last_error?` · <span style="color:var(--bad)">fetch 실패</span>`:"");
+  const head = st.heads["main"]||"?";
+  $("syncmsg").innerHTML = `동기화 ${ago(st.synced_at)} · origin/main <code>${esc(head)}</code>` + (st.history_branch?"":" · <b>이력 없음(CI 대기)</b>") + (st.last_error?` · <span style="color:var(--bad)">fetch 실패</span>`:"");
   $("ci").innerHTML = (st.ci||[]).slice(0,6).map(r=>{
     const cls = r.status!=="completed"?"run":(r.conclusion==="success"?"ok":"fail");
     const label = r.status!=="completed"?"진행 중":(r.conclusion||"?");
@@ -172,32 +168,44 @@ function marks(checks){
 }
 
 async function loadLog(){
-  const b = encodeURIComponent(S.branch);
-  S.index = await j(`/api/history/index?branch=${b}`).catch(()=>[]);
+  // 로그는 PR 단위다. PR 하나에 바뀐 자산이 3개면 3줄.
+  S.index = await j(`/api/history/index?branch=pr`).catch(()=>[]);
   if(!S.runId || !S.index.some(e=>e.run_id===S.runId)) S.runId = S.index[0]?.run_id||null;
   paintRuns();
   await loadRun();
 }
 function paintRuns(){
-  $("runs").innerHTML = S.index.map(e=>{const s=e.summary||{}, br=e.branch||{};return `<tr class="click ${e.run_id===S.runId?"sel":""}" data-id="${esc(e.run_id)}">
-    <td>${esc((e.at||"").replace("T"," ").replace("+00:00",""))}</td><td>${esc(br.head||"")}</td>
-    <td title="${esc(br.head_subject||"")}"><code>${esc(br.head_sha||"")}</code> ${esc((br.head_subject||"").slice(0,40))}</td>
-    <td>${esc(e.actor||"")}</td><td>${esc(e.trigger||"")}</td><td>${esc(e.rebase_guard||"")}</td>
-    <td class="v ${e.verdict}">${e.verdict==="passed"?"통과":"차단"}</td>
-    <td>${s.assets??""}</td><td>${s.registered??""}</td><td>${s.blocked??""}</td><td>${s.fully_verified??""}</td>
-    <td>${e.run_url?`<a href="${esc(e.run_url)}" target="_blank">로그</a>`:""}</td></tr>`;}).join("")
-    || `<tr><td colspan="12" class="empty">이력이 아직 없습니다 — CI(history.yml)가 첫 실행을 마치면 채워집니다.</td></tr>`;
+  const rows = [];
+  for(const e of S.index){
+    const pr = e.pr||{}, br = e.branch||{};
+    const assets = (e.assets||[]).map(a=>({...a, type:typeOf(a.target)})).sort((x,y)=>(ORDER[x.type]??9)-(ORDER[y.type]??9)||x.target.localeCompare(y.target));
+    if(!assets.length) assets.push({target:"(바뀐 자산 없음)", type:"", registered:true, marks:"", failed:[]});
+    for(const a of assets) rows.push({e, pr, br, a});
+  }
+  $("runs").innerHTML = rows.map(({e,pr,br,a})=>`<tr class="click ${e.run_id===S.runId?"sel":""}" data-id="${esc(e.run_id)}">
+    <td>${esc((e.at||"").replace("T"," ").replace("+00:00",""))}</td>
+    <td>${pr.number?`<a href="${esc(pr.url)}" target="_blank">#${pr.number}</a>`:esc(e.trigger||"")}</td>
+    <td><code>${esc((br.head_sha||"").slice(0,7))}</code></td>
+    <td>${a.type?`<span class="type ${a.type}">${esc(a.type)}</span>`:""}</td>
+    <td><b>${esc(a.target)}</b></td>
+    <td><span class="st ${a.registered?"ok":"bad"}">${a.registered?"통과":"차단"}</span></td>
+    <td>${(a.failed||[]).map(f=>`<span class="m bad">✗ ${esc(f)}</span>`).join(" ")}</td>
+    <td>${esc(a.marks||"")}</td>
+    <td class="desc" title="${esc(pr.title||br.head_subject||"")}">${esc((pr.title||br.head_subject||"").slice(0,48))}</td>
+    <td>${e.run_url?`<a href="${esc(e.run_url)}" target="_blank">로그</a>`:""}</td></tr>`).join("")
+    || `<tr><td colspan="10" class="empty">PR 이력이 아직 없습니다 — PR 이 열리면 그 PR 에서 바뀐 자산만 검사해 여기 한 줄씩 남습니다.</td></tr>`;
 }
 async function loadRun(){
   if(!S.runId){ $("detail").innerHTML=""; return; }
-  S.run = await j(`/api/history/run?branch=${encodeURIComponent(S.branch)}&id=${encodeURIComponent(S.runId)}`).catch(()=>null);
+  S.run = await j(`/api/history/run?branch=pr&id=${encodeURIComponent(S.runId)}`).catch(()=>null);
   paintRun();
 }
 function paintRun(){
   const r = S.run; if(!r){ $("detail").innerHTML=""; return; }
   const b=r.branch||{}, rg=r.rebase_guard||{}, s=r.summary||{};
   const assets = (r.assets||[]).map(a=>({...a, type:typeOf(a.target)})).sort((x,y)=>(ORDER[x.type]??9)-(ORDER[y.type]??9)||x.target.localeCompare(y.target));
-  $("detail").innerHTML = `<h3>실행 <code>${esc(r.run_id)}</code> <span class="v ${r.verdict}">${r.verdict==="passed"?"통과":"차단"}</span></h3>
+  const pr = r.pr||{};
+  $("detail").innerHTML = `<h3>${pr.number?`<a href="${esc(pr.url)}" target="_blank">PR #${pr.number}</a> `:""}<code>${esc(r.run_id)}</code> <span class="v ${r.verdict}">${r.verdict==="passed"?"통과":"차단"}</span></h3>
     <div class="meta">${esc(r.at)} · ${esc(r.actor)} · ${esc(r.trigger)} · <code>${esc(b.head)}</code>@<code>${esc(b.head_sha)}</code> “${esc(b.head_subject)}” · rebase-guard: ${esc(rg.status)}${rg.behind&&rg.behind.length?` (main 에만 ${rg.behind.length}개)`:""} · 자산 ${s.assets} / 등록 ${s.registered} / 차단 ${s.blocked} / 완전검증 ${s.fully_verified}${r.run_url?` · <a href="${esc(r.run_url)}" target="_blank">CI 로그</a>`:""}</div>
     <div class="tbl"><table><thead><tr><th>종류</th><th>자산</th><th>상태</th><th>마크</th><th>검사</th><th>태그</th></tr></thead><tbody>
     ${assets.map(a=>`<tr><td><span class="type ${a.type}">${esc(a.type)}</span></td><td><b>${esc(a.target)}</b></td>
@@ -213,7 +221,6 @@ async function reloadAll(){
 function showTab(t){ S.tab=t; document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===t)); $("tab-status").hidden=t!=="status"; $("tab-log").hidden=t!=="log"; reloadAll(); }
 
 document.querySelector(".tabs").addEventListener("click",e=>{const b=e.target.closest("button"); if(b) showTab(b.dataset.tab);});
-$("branch").addEventListener("change",e=>{S.branch=e.target.value; S.runId=null; reloadAll();});
 $("refresh").addEventListener("click",async()=>{ $("syncmsg").textContent="fetch 중…"; try{ await j("/api/refresh",{method:"POST"}); }catch(_){} reloadAll(); });
 $("copy").addEventListener("click",()=>navigator.clipboard.writeText($("install").textContent));
 $("q").addEventListener("input",e=>{S.q=e.target.value; paintStatus();});

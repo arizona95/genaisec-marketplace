@@ -44,6 +44,11 @@ def actor() -> str:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="action/history")
+    ap.add_argument("--pr", type=int, default=0, help="PR 번호 (PR 이벤트에서 기록할 때)")
+    ap.add_argument("--pr-url", default="")
+    ap.add_argument("--pr-title", default="")
+    ap.add_argument("--head-sha", default="", help="PR 헤드 커밋. PR 체크아웃은 merge 커밋이라 따로 받는다")
+    ap.add_argument("--head-branch", default="")
     ap.add_argument("--run-id", default="",
                     help="레코드 id 를 고정한다. 같은 id 로 다시 쓰면 그 레코드를 덮어쓴다"
                          "(기본검증만 먼저 기록하고 심화를 나중에 채우는 2단계 실행용)")
@@ -58,7 +63,7 @@ def main() -> int:
         rebase = json.loads(rp.read_text(encoding="utf-8"))
 
     now = datetime.now(timezone.utc)
-    head_sha = sh("git", "rev-parse", "HEAD", default="0" * 40)
+    head_sha = args.head_sha or sh("git", "rev-parse", "HEAD", default="0" * 40)
     run_id = args.run_id or f"{now.strftime('%Y%m%dT%H%M%SZ')}-{head_sha[:7]}"
 
     # 자산별 · 검사자별 판정
@@ -102,8 +107,10 @@ def main() -> int:
             f"/actions/runs/{os.environ['GITHUB_RUN_ID']}"
             if os.environ.get("GITHUB_RUN_ID") else ""
         ),
+        # PR 이벤트에서 기록한 것이면 어느 PR 인지. 로그는 PR 단위로 읽는다.
+        "pr": ({"number": args.pr, "url": args.pr_url, "title": args.pr_title} if args.pr else None),
         "branch": {
-            "head": rebase.get("head") or sh("git", "rev-parse", "--abbrev-ref", "HEAD"),
+            "head": args.head_branch or rebase.get("head") or sh("git", "rev-parse", "--abbrev-ref", "HEAD"),
             "head_sha": head_sha[:12],
             "head_subject": sh("git", "log", "-1", "--pretty=%s"),
             "base": rebase.get("base", ""),
@@ -157,6 +164,11 @@ def main() -> int:
         "rebase_guard": record["rebase_guard"]["status"],
         "verdict": record["verdict"],
         "summary": record["summary"],
+        "pr": record["pr"],
+        # 로그 탭은 PR 하나에 바뀐 자산 수만큼 줄을 찍는다 — 레코드를 하나하나 열지 않게 여기 요약을 둔다.
+        "assets": [{"target": a["target"], "registered": a["registered"], "marks": a["marks"],
+                    "failed": [c["validator"] for c in a["checks"] if not c["ok"] and c["version"]]}
+                   for a in assets],
     })
     idx.sort(key=lambda e: e.get("at", ""), reverse=True)
     idx_path.write_text(json.dumps(idx[:500], ensure_ascii=False, indent=2) + "\n",
