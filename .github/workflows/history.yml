@@ -1,17 +1,23 @@
-# 검사 이력은 사람이 쓰지 않는다 — 이 워크플로가 push(main·dev)·주 1회·수동 실행 때 전 자산을
+# 검사 이력은 사람이 쓰지 않는다 — 이 워크플로가 push(main·dev)·주 1회·수동 실행 때 자산을
 # 검증하고 emit_history 로 레코드를 만들어 `history` 브랜치에만 누적한다. UI(ui/server.py)는
-# 그 브랜치를 읽는다.
+# 그 브랜치를 읽는다. main 에 이력을 두면 그 순간부터 사본이라 반드시 어긋난다.
 #
-# 왜 main 에 안 두나: main 은 기본검증 필수라 CI 봇이 직접 못 밀고, 사람이 --write 로 커밋하면
-# 그 순간부터 사본이라 반드시 어긋난다(dowhub 의 marks.yml 과 같은 이유).
+# 두 단계로 기록한다. 기본검증은 LLM 이 없어 1분 안에 끝나므로 먼저 기록해 밀고(등록/차단이
+# 바로 보인다, 심화는 ⏳), 심화(llm-review 포함)는 돌린 뒤 **같은 run_id 로 덮어써** 다시 민다.
+# UI 는 SSE 로 두 번 갱신된다.
+#
+# 바뀐 자산만 다시 잰다. 직전 실행의 marks.json 을 history 브랜치에서 이어받고, 안 건드린 자산은
+# 직전 태그를 유지한다(마크마다 커밋 sha 가 있어 다시 재는 자산의 옛 결과는 버려진다).
+# action/·.github/ 가 바뀌면 전수, 스케줄·수동도 전수.
 #
 # 레코드마다 커밋 해시가 박힌다(run_id = 시각-해시). 같은 자산이 여러 커밋에서 차단→통과로
-# 바뀌면 그 시도가 전부 별도 레코드로 남는다 — 덮어쓰지 않는다.
+# 바뀌면 그 시도가 전부 별도 레코드로 남는다.
 #
 # 레이아웃 (history 브랜치):
 #   <브랜치>/latest.json          최신 레코드 별칭
 #   <브랜치>/index.json           실행 목록(최신순, 커밋 해시 포함)
 #   <브랜치>/runs/<run_id>.json   레코드
+#   <브랜치>/marks.json           다음 실행이 이어받는 태그
 name: history
 on:
   push:
@@ -34,19 +40,22 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BRANCH: ${{ github.ref_name }}
-      # push 는 직전 커밋 이후 바뀐 자산만 다시 검사한다(나머지는 history 의 marks.json 을 이어받음).
-      # 스케줄·수동은 빈 값 = 전수. action/·.github/ 가 바뀌면 러너가 알아서 전수로 올린다.
       BASE: ${{ github.event_name == 'push' && github.event.before || '' }}
       LLM_PROVIDER: ollama
       OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
       OLLAMA_BASE_URL: ${{ vars.OLLAMA_BASE_URL || 'https://ollama.com' }}
       OLLAMA_MODEL: ${{ vars.OLLAMA_MODEL || 'glm-5.3' }}
+      # 한 호출이 몇 분씩 매달리면 44개 전수가 한 시간을 넘는다. 느리면 '판정 불가'로 두고 넘어간다.
+      LLM_TIMEOUT: "120"
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
       - run: pip install --quiet ruff detect-secrets black
+
+      - name: 실행 id (두 단계가 같은 레코드를 쓴다)
+        run: echo "RUN_ID=$(date -u +%Y%m%dT%H%M%SZ)-${GITHUB_SHA::7}" >> "$GITHUB_ENV"
 
       - name: rebase-guard (main 기준 · 레코드에 남긴다)
         if: env.BRANCH != 'main'
@@ -61,31 +70,25 @@ jobs:
             git fetch -q origin history
             git worktree add -q /tmp/hist -B history origin/history
           else
-            # 첫 실행: 빈 고아 브랜치. 인덱스를 비우고 남은 파일을 치운다.
             git worktree add -q --detach /tmp/hist
             git -C /tmp/hist checkout -q --orphan history
             git -C /tmp/hist read-tree --empty
             git -C /tmp/hist clean -fdq
           fi
-
-      # 직전 실행의 태그를 이어받아 바뀐 자산만 다시 잰다. 기본검증 실패는 레코드에 '차단'으로,
-      # 심화 실패는 태그 없음으로 남는다. marks.json 도 history 브랜치에 같이 보관한다.
-      - name: 자산 검증 (바뀐 것만 · 태그 계산)
-        run: |
+          mkdir -p "/tmp/hist/$BRANCH"
+          # 직전 실행의 태그를 이어받는다(있으면).
           test -f "/tmp/hist/$BRANCH/marks.json" && cp "/tmp/hist/$BRANCH/marks.json" action/marks.json || true
-          python action/scripts/run_validators.py --tier all --write --changed-since "$BASE" || true
-          mkdir -p "/tmp/hist/$BRANCH" && cp action/marks.json "/tmp/hist/$BRANCH/marks.json"
 
-      - name: 이력 기록
-        run: python action/scripts/emit_history.py --out "/tmp/hist/$BRANCH"
-
-      - name: history 브랜치에 push
+      - name: 1/2 기본검증 → 즉시 기록 (LLM 없음)
         run: |
-          set -e
-          cd /tmp/hist
-          git add -A
-          git commit -qm "history: $BRANCH ${GITHUB_SHA::7} ($(date -u +%Y-%m-%dT%H:%MZ))" || { echo "변경 없음"; exit 0; }
-          # 다른 실행이 먼저 밀었을 수 있다 — 한 번 따라잡고 다시 민다.
-          git push -q origin HEAD:history \
-            || { git fetch -q origin history && git rebase -q origin/history && git push -q origin HEAD:history; }
-          echo "history/$BRANCH 갱신: https://github.com/$GITHUB_REPOSITORY/tree/history/$BRANCH" >> "$GITHUB_STEP_SUMMARY"
+          python action/scripts/run_validators.py --tier basic --write --changed-since "$BASE" || true
+          python action/scripts/emit_history.py --out "/tmp/hist/$BRANCH" --run-id "$RUN_ID"
+          cp action/marks.json "/tmp/hist/$BRANCH/marks.json"
+          bash action/scripts/push_history.sh "$BRANCH" "1/2 기본"
+
+      - name: 2/2 심화검증 → 같은 레코드 덮어쓰기 (llm-review 포함)
+        run: |
+          python action/scripts/run_validators.py --tier deep --write --changed-since "$BASE" || true
+          python action/scripts/emit_history.py --out "/tmp/hist/$BRANCH" --run-id "$RUN_ID"
+          cp action/marks.json "/tmp/hist/$BRANCH/marks.json"
+          bash action/scripts/push_history.sh "$BRANCH" "2/2 심화"
