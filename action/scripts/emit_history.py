@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """한 번의 검사를 이력 레코드 하나로 남긴다.
 
-marketplace-ui 가 읽는 유일한 입력이다. "언제 · 누가 · 무엇을 · 어떤 검사자가 · 어느
+UI(docs/index.html)가 읽는 유일한 입력이다. CI(history.yml)만 이걸 만들어 history 브랜치에 누적한다 — 손으로 돌려 커밋하지 마라. "언제 · 누가 · 무엇을 · 어떤 검사자가 · 어느
 버전으로 · 결과가 무엇이었나" 를 한 파일에 담는다.
 
 검사자 버전을 레코드에 박는 이유: 검사자는 계속 올라간다. 버전이 없으면 6개월 뒤에
 "이 자산은 왜 통과했지?" 를 재현할 수 없다.
 
     python action/scripts/emit_history.py
-    python action/scripts/emit_history.py --out action/history
+    python action/scripts/emit_history.py --out /tmp/hist/main     # CI 가 쓰는 형태
 """
 
 from __future__ import annotations
@@ -128,13 +128,36 @@ def main() -> int:
     }
 
     out_dir = Path(args.out)
-    out_dir.mkdir(parents=True, exist_ok=True)
-    path = out_dir / f"{run_id}.json"
+    (out_dir / "runs").mkdir(parents=True, exist_ok=True)
+    path = out_dir / "runs" / f"{run_id}.json"
     path.write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     # 최신 것을 UI 가 바로 집을 수 있게 별칭도 남긴다.
     (out_dir / "latest.json").write_text(
         json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    # 실행 목록(index.json) — UI 히스토리 탭이 읽는다. raw 로는 폴더를 나열할 수 없으므로
+    # 레코드를 쓸 때마다 한 줄을 보탠다. 누적은 CI 가 history 브랜치에서 한다.
+    idx_path = out_dir / "index.json"
+    try:
+        idx = json.loads(idx_path.read_text(encoding="utf-8")) if idx_path.exists() else []
+    except json.JSONDecodeError:
+        idx = []
+    idx = [e for e in idx if isinstance(e, dict) and e.get("run_id") != run_id]
+    idx.append({
+        "run_id": run_id,
+        "at": record["at"],
+        "actor": record["actor"],
+        "trigger": record["trigger"],
+        "run_url": record["run_url"],
+        "branch": record["branch"],
+        "rebase_guard": record["rebase_guard"]["status"],
+        "verdict": record["verdict"],
+        "summary": record["summary"],
+    })
+    idx.sort(key=lambda e: e.get("at", ""), reverse=True)
+    idx_path.write_text(json.dumps(idx[:500], ensure_ascii=False, indent=2) + "\n",
+                        encoding="utf-8")
 
     s = record["summary"]
     print(f"[emit-history] {path}")

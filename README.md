@@ -19,9 +19,28 @@ plugins/                          플러그인 원본
 mcp/                              MCP 카드 (원격은 소스가 아니라 엔드포인트)
 action/validators.json            검증자 등록표 — 검사를 붙일 때 여기만 고친다
 action/scripts/                   검증자 · 카탈로그 동기화 · 이력 기록
-action/history/                   검사 이력(marketplace-ui 가 읽는 유일한 입력)
 .github/workflows/ci.yml          기본검증(병합 게이트) + 심화검증(태그)
+.github/workflows/history.yml     검사 이력 기록 → history 브랜치 (CI 만 쓴다)
+ui/server.py · ui/index.html      로컬 대시보드 — origin 을 직접 읽는다
 ```
+
+## 이력과 대시보드도 손으로 적지 않는다
+
+검사 결과는 **`history` 브랜치**에만 있고 **CI(`history.yml`)만 쓴다** — push(main·dev)·주 1회·수동
+실행 때 전 자산을 검증하고 `emit_history` 로 `<브랜치>/latest.json`·`index.json`·`runs/<run_id>.json`
+을 누적한다. 레코드마다 커밋 해시가 박혀서, 같은 자산이 여러 커밋에서 차단→통과로 바뀌면 그 시도가
+전부 남는다. main 에 이력 파일을 두면 그 순간부터 사본이라 반드시 어긋난다. `run_validators.py --write`
+를 손으로 돌려 커밋하지 마라.
+
+대시보드는 정적 파일이 아니라 로컬 서버다. raw 를 읽으면 CDN 캐시를 거치고, 데이터를 내장하면 사본이다.
+
+```bash
+python ui/server.py            # http://127.0.0.1:8787 · 15초마다 git fetch · 바뀌면 SSE 로 즉시 갱신
+```
+
+서버는 로컬 체크아웃이 아니라 `origin/<브랜치>` 와 `origin/history` 의 git 객체를 직접 읽는다. 어느
+클론에서 띄워도 원격 최신을 보여주고, 아무것도 저장하지 않는다. 탭은 둘이다 — **등록 현황**(카탈로그에
+등록된 것 + 최신 판정, skill→mcp→plugin 순) / **로그**(실행 목록과 실행별 자산 판정, 커밋 해시 포함).
 
 ## 검증
 
@@ -71,13 +90,13 @@ dev 브랜치 → 수정 → PR(dev→main) → rebase-guard + 기본검증 → 
 
 ## 이 저장소에 들어오지 않는 것
 
-워크스페이스에는 형제 폴더가 있고, **이 저장소는 추적하지 않는다.**
+워크스페이스에는 형제 폴더가 둘 더 있고, **둘 다 이 저장소가 추적하지 않는다.** 대시보드는 저장소 안 `ui/` 에 있다(`../marketplace-ui/start.cmd` 는 그걸 띄우는 런처).
 
 | 폴더 | 무엇 | 왜 밖에 있나 |
 |---|---|---|
 | `../3rd/` | 서드파티 저장소 사본 (`dowhub-marketplace` — 이 설계의 원본) | 남의 코드가 정본 카탈로그에 섞이면 무엇이 우리 배포물인지 흐려진다 |
 | `../probe-server/` | 프로브 픽스처용 MCP 테스트 서버 | 배포물이 아니라 검사 도구다. CI 가 이걸 훑을 이유가 없다 |
-| `../marketplace-ui/` | `action/history/` 를 읽는 UI | 배포물이 아니다 |
 
-프로브 픽스처(`probe_*`)도 카탈로그에 등록하지 않는다 — 등록하면 `/plugin marketplace add`
-로 누구나 설치할 수 있게 되고, 악성 픽스처가 그 경로로 나가면 그것 자체가 사고다.
+프로브 픽스처(`probe-*`)는 특별 취급하지 않는다 — 일반 자산과 똑같이 `skills/`·`plugins/`·`mcp/`
+에 두고 카탈로그에 등록한다. 악성 픽스처는 기본검증에서 의도대로 차단되며, 그게 검사기가 동작한다는
+증거다. 위험한 줄은 실행되지 않는 문자열 상수(DETECTION_TARGETS)에만 있다.

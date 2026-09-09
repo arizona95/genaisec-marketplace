@@ -1,0 +1,84 @@
+# 검사 이력은 사람이 쓰지 않는다 — 이 워크플로가 push(main·dev)·주 1회·수동 실행 때 전 자산을
+# 검증하고 emit_history 로 레코드를 만들어 `history` 브랜치에만 누적한다. UI(ui/server.py)는
+# 그 브랜치를 읽는다.
+#
+# 왜 main 에 안 두나: main 은 기본검증 필수라 CI 봇이 직접 못 밀고, 사람이 --write 로 커밋하면
+# 그 순간부터 사본이라 반드시 어긋난다(dowhub 의 marks.yml 과 같은 이유).
+#
+# 레코드마다 커밋 해시가 박힌다(run_id = 시각-해시). 같은 자산이 여러 커밋에서 차단→통과로
+# 바뀌면 그 시도가 전부 별도 레코드로 남는다 — 덮어쓰지 않는다.
+#
+# 레이아웃 (history 브랜치):
+#   <브랜치>/latest.json          최신 레코드 별칭
+#   <브랜치>/index.json           실행 목록(최신순, 커밋 해시 포함)
+#   <브랜치>/runs/<run_id>.json   레코드
+name: history
+on:
+  push:
+    branches: [main, dev]
+  schedule:
+    - cron: '47 4 * * 1'        # ci.yml 전수(17 4 * * 1) 뒤 — 도구·모델이 올라가면 판정도 따라간다
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# 두 브랜치가 동시에 history 브랜치에 push 하면 충돌한다 — 직렬화한다.
+concurrency:
+  group: history
+  cancel-in-progress: false
+
+jobs:
+  record:
+    name: 이력 기록 → history 브랜치
+    runs-on: ubuntu-latest
+    env:
+      BRANCH: ${{ github.ref_name }}
+      LLM_PROVIDER: ollama
+      OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
+      OLLAMA_BASE_URL: ${{ vars.OLLAMA_BASE_URL || 'https://ollama.com' }}
+      OLLAMA_MODEL: ${{ vars.OLLAMA_MODEL || 'glm-5.3' }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install --quiet ruff detect-secrets black
+
+      - name: rebase-guard (main 기준 · 레코드에 남긴다)
+        if: env.BRANCH != 'main'
+        run: python action/scripts/rebase_guard.py --base origin/main || true
+
+      # 전수. 기본검증 실패는 레코드에 '차단'으로, 심화 실패는 태그 없음으로 남는다.
+      - name: 전 자산 검증 (태그 계산)
+        run: python action/scripts/run_validators.py --tier all --write || true
+
+      - name: history 브랜치 워크트리
+        run: |
+          set -e
+          git config user.name  github-actions
+          git config user.email github-actions@users.noreply.github.com
+          if git ls-remote --exit-code --heads origin history >/dev/null 2>&1; then
+            git fetch -q origin history
+            git worktree add -q /tmp/hist -B history origin/history
+          else
+            # 첫 실행: 빈 고아 브랜치. 인덱스를 비우고 남은 파일을 치운다.
+            git worktree add -q --detach /tmp/hist
+            git -C /tmp/hist checkout -q --orphan history
+            git -C /tmp/hist read-tree --empty
+            git -C /tmp/hist clean -fdq
+          fi
+
+      - name: 이력 기록
+        run: python action/scripts/emit_history.py --out "/tmp/hist/$BRANCH"
+
+      - name: history 브랜치에 push
+        run: |
+          set -e
+          cd /tmp/hist
+          git add -A
+          git commit -qm "history: $BRANCH ${GITHUB_SHA::7} ($(date -u +%Y-%m-%dT%H:%MZ))" || { echo "변경 없음"; exit 0; }
+          # 다른 실행이 먼저 밀었을 수 있다 — 한 번 따라잡고 다시 민다.
+          git push -q origin HEAD:history \
+            || { git fetch -q origin history && git rebase -q origin/history && git push -q origin HEAD:history; }
+          echo "history/$BRANCH 갱신: https://github.com/$GITHUB_REPOSITORY/tree/history/$BRANCH" >> "$GITHUB_STEP_SUMMARY"

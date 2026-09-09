@@ -3,3 +3,6 @@ __pycache__/
 .DS_Store
 action/history/.partial/
 action/marks.json
+# 이력은 CI 만 history 브랜치에 쓴다 — 여기엔 .gitkeep 만
+action/history/*.json
+action/history/runs/
