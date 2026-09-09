@@ -97,17 +97,46 @@ def bundle(files: list[Path], root: Path) -> tuple[str, list[Path]]:
     return "".join(parts), seen
 
 
+def _balanced_json(s):
+    """첫 { 부터 짝이 맞는 } 까지만 잘라낸다. 문자열 안의 중괄호·이스케이프는 세지 않는다.
+    glm 이 JSON 뒤에 잡담을 덧붙이거나(Extra data) 여러 덩어리를 내도 첫 객체만 건진다."""
+    start = s.find("{")
+    if start < 0:
+        return None
+    depth, in_str, esc = 0, False, False
+    for i in range(start, len(s)):
+        c = s[i]
+        if in_str:
+            if esc:      esc = False
+            elif c == chr(92): esc = True
+            elif c == chr(34): in_str = False
+        elif c == chr(34): in_str = True
+        elif c == "{":  depth += 1
+        elif c == "}":
+            depth -= 1
+            if depth == 0:
+                return s[start:i + 1]
+    return None  # 닫히지 않음(잘림)
+
+
 def parse_verdict(raw: str) -> dict:
-    """모델 출력에서 JSON 객체 하나를 건진다. 코드펜스·앞뒤 잡담은 버린다."""
+    """모델 출력에서 JSON 객체 하나를 건진다. 코드펜스·앞뒤 잡담·후행 콤마를 견딘다."""
     s = raw.strip()
     s = re.sub(r"^```(?:json)?\s*|\s*```$", "", s, flags=re.S)
-    m = re.search(r"\{.*\}", s, flags=re.S)
-    if not m:
+    block = _balanced_json(s)
+    if block is None:
         raise llm.LLMError(f"JSON 객체가 없습니다: {raw[:200]!r}")
+    def _load(t):
+        return json.loads(t)
     try:
-        obj = json.loads(m.group(0))
-    except json.JSONDecodeError as exc:
-        raise llm.LLMError(f"JSON 파싱 실패: {exc}: {m.group(0)[:200]!r}") from exc
+        obj = _load(block)
+    except json.JSONDecodeError:
+        # 후행 콤마( , } / , ] )를 지우고 한 번 더. glm 이 자주 남긴다.
+        cleaned = re.sub(r",(\s*[}\]])", r"\1", block)
+        try:
+            obj = _load(cleaned)
+        except json.JSONDecodeError as exc:
+            raise llm.LLMError(f"JSON 파싱 실패: {exc}: {block[:200]!r}") from exc
     if not isinstance(obj, dict) or obj.get("verdict") not in ("pass", "fail"):
         raise llm.LLMError(f"verdict 가 pass/fail 이 아닙니다: {str(obj)[:200]}")
     return obj
