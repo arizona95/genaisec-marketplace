@@ -1,7 +1,7 @@
 [
   {
     "run_id": "pr10-e3f93a7",
-    "at": "2026-09-10T08:09:18+00:00",
+    "at": "2026-09-10T08:09:26+00:00",
     "actor": "arizona95",
     "trigger": "pull_request",
     "run_url": "https://github.com/arizona95/genaisec-marketplace/actions/runs/34453621110",
@@ -19,7 +19,7 @@
       "registered": 24,
       "blocked": 0,
       "blocked_targets": [],
-      "fully_verified": 0
+      "fully_verified": 12
     },
     "pr": {
       "number": 10,
@@ -30,146 +30,170 @@
       {
         "target": "mcp/echo-upload-mcp",
         "registered": true,
-        "marks": "3/5",
+        "marks": "5/5",
         "failed": []
       },
       {
         "target": "mcp/probe-desktop-local-norm-1",
         "registered": true,
-        "marks": "3/5",
-        "failed": []
+        "marks": "4/5",
+        "failed": [
+          "black"
+        ]
       },
       {
         "target": "mcp/probe-localhost-external-norm-1",
         "registered": true,
-        "marks": "3/5",
+        "marks": "5/5",
         "failed": []
       },
       {
         "target": "mcp/probe-localhost-internal-norm-1",
         "registered": true,
-        "marks": "3/5",
-        "failed": []
+        "marks": "4/5",
+        "failed": [
+          "skillspector"
+        ]
       },
       {
         "target": "mcp/probe-localhost-local-norm-1",
         "registered": true,
-        "marks": "3/5",
-        "failed": []
+        "marks": "4/5",
+        "failed": [
+          "black"
+        ]
       },
       {
         "target": "mcp/probe-localhost-local-norm-2",
         "registered": true,
-        "marks": "3/5",
-        "failed": []
+        "marks": "4/5",
+        "failed": [
+          "black"
+        ]
       },
       {
         "target": "mcp/probe-localhost-local-norm-3",
         "registered": true,
-        "marks": "3/5",
-        "failed": []
+        "marks": "4/5",
+        "failed": [
+          "black"
+        ]
       },
       {
         "target": "mcp/probe-localhost-loopback-norm-1",
         "registered": true,
-        "marks": "3/5",
+        "marks": "5/5",
         "failed": []
       },
       {
         "target": "mcp/probe-remotehost-external-norm-1",
         "registered": true,
-        "marks": "3/5",
+        "marks": "5/5",
         "failed": []
       },
       {
         "target": "mcp/probe-remotehost-internal-norm-1",
         "registered": true,
-        "marks": "3/5",
-        "failed": []
+        "marks": "4/5",
+        "failed": [
+          "skillspector"
+        ]
       },
       {
         "target": "plugins/probe-plugin-desktop-local-norm-1",
         "registered": true,
-        "marks": "3/5",
-        "failed": []
+        "marks": "4/5",
+        "failed": [
+          "black"
+        ]
       },
       {
         "target": "plugins/probe-plugin-localhost-external-norm-1",
         "registered": true,
-        "marks": "3/5",
+        "marks": "5/5",
         "failed": []
       },
       {
         "target": "plugins/probe-plugin-localhost-internal-norm-1",
         "registered": true,
-        "marks": "3/5",
-        "failed": []
+        "marks": "4/5",
+        "failed": [
+          "skillspector"
+        ]
       },
       {
         "target": "plugins/probe-plugin-localhost-local-norm-1",
         "registered": true,
-        "marks": "3/5",
-        "failed": []
+        "marks": "4/5",
+        "failed": [
+          "black"
+        ]
       },
       {
         "target": "plugins/probe-plugin-localhost-loopback-norm-1",
         "registered": true,
-        "marks": "3/5",
+        "marks": "5/5",
         "failed": []
       },
       {
         "target": "plugins/probe-plugin-norm-1",
         "registered": true,
-        "marks": "3/5",
+        "marks": "5/5",
         "failed": []
       },
       {
         "target": "plugins/probe-plugin-norm-2",
         "registered": true,
-        "marks": "3/5",
+        "marks": "5/5",
         "failed": []
       },
       {
         "target": "plugins/probe-plugin-norm-3",
         "registered": true,
-        "marks": "3/5",
+        "marks": "5/5",
         "failed": []
       },
       {
         "target": "plugins/probe-plugin-remotehost-external-norm-1",
         "registered": true,
-        "marks": "3/5",
+        "marks": "5/5",
         "failed": []
       },
       {
         "target": "plugins/probe-plugin-remotehost-internal-norm-1",
         "registered": true,
-        "marks": "3/5",
-        "failed": []
+        "marks": "4/5",
+        "failed": [
+          "skillspector"
+        ]
       },
       {
         "target": "skills/hello-upload-skill",
         "registered": true,
-        "marks": "3/5",
+        "marks": "5/5",
         "failed": []
       },
       {
         "target": "skills/probe-skill-norm-1",
         "registered": true,
-        "marks": "3/5",
+        "marks": "5/5",
         "failed": []
       },
       {
         "target": "skills/probe-skill-norm-2",
         "registered": true,
-        "marks": "3/5",
-        "failed": []
+        "marks": "4/5",
+        "failed": [
+          "black"
+        ]
       },
       {
         "target": "skills/probe-skill-norm-3",
         "registered": true,
-        "marks": "3/5",
-        "failed": []
+        "marks": "4/5",
+        "failed": [
+          "black"
+        ]
       }
     ]
   },
