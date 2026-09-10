@@ -25,8 +25,10 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import subprocess
 import sys
+import tempfile
 import threading
 import time
 import urllib.error
@@ -37,7 +39,11 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+SCRIPTS = HERE.parent / "action" / "scripts"
 HISTORY_BRANCH = "history"
+UPLOAD_EXT = (".zip", ".skill", ".mcpb")
+UPLOAD_MAX = 50 * 1024 * 1024
+UPLOAD_LOCK = threading.Lock()     # 업로드는 한 번에 하나 — 같은 클론에서 fetch·worktree 가 겹치지 않게
 REPO_API = "https://api.github.com/repos/arizona95/genaisec-marketplace"
 
 
@@ -156,6 +162,57 @@ class Repo:
 REPO: Repo
 
 
+def publish_upload(filename: str, data: bytes) -> tuple[int, dict]:
+    """업로드 바이트를 임시 파일로 두고 publish_upload.py 를 돌린다. (HTTP 코드, 결과 JSON)."""
+    safe = Path(filename).name
+    if Path(safe).suffix.lower() not in UPLOAD_EXT:
+        return 400, {"ok": False, "pass": True,
+                     "reason": f"허용 확장자는 {', '.join(UPLOAD_EXT)} 뿐이다: {safe}"}
+    if len(data) > UPLOAD_MAX:
+        return 413, {"ok": False, "pass": True, "reason": f"{UPLOAD_MAX // (1024 * 1024)}MB 를 넘는다"}
+    tmp = Path(tempfile.mkdtemp(prefix="upload-"))
+    try:
+        f = tmp / safe
+        f.write_bytes(data)
+        with UPLOAD_LOCK:
+            r = subprocess.run([sys.executable, str(SCRIPTS / "publish_upload.py"), str(f),
+                                "--repo", str(REPO.path)],
+                               capture_output=True, text=True, encoding="utf-8", errors="replace",
+                               timeout=600)
+        line = (r.stdout.strip().splitlines() or [""])[-1]
+        try:
+            out = json.loads(line)
+        except json.JSONDecodeError:
+            out = {"ok": False, "reason": (r.stderr or r.stdout).strip()[-800:] or "출력 없음"}
+        code = 200 if r.returncode == 0 else (422 if r.returncode == 3 else 500)
+        return code, out
+    except subprocess.TimeoutExpired:
+        return 504, {"ok": False, "reason": "시간 초과(600초)"}
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def pr_status(number: int) -> tuple[int, dict]:
+    """gh 로 PR 상태 + 체크 롤업. 사람이 보는 건 이것뿐이라 gh 의 JSON 을 얇게 추린다."""
+    try:
+        r = subprocess.run(["gh", "pr", "view", str(number), "--repo", "arizona95/genaisec-marketplace",
+                            "--json", "number,state,mergedAt,url,headRefName,title,statusCheckRollup,autoMergeRequest"],
+                           capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)
+    except (OSError, subprocess.TimeoutExpired) as e:
+        return 502, {"error": str(e)}
+    if r.returncode != 0:
+        return 502, {"error": r.stderr.strip()[:300]}
+    d = json.loads(r.stdout)
+    checks = [{"name": c.get("name") or c.get("context"), "status": c.get("status"),
+               "conclusion": c.get("conclusion") or c.get("state"), "url": c.get("detailsUrl") or c.get("targetUrl")}
+              for c in d.get("statusCheckRollup") or []]
+    # 브랜치가 아직 있는지 — 병합 뒤 저장소 설정(delete_branch_on_merge)이 지우는 걸 눈으로 확인시킨다.
+    code, _ = sh(REPO.path, "ls-remote", "--exit-code", "--heads", "origin", d.get("headRefName", ""), timeout=60)
+    return 200, {"number": d.get("number"), "state": d.get("state"), "merged_at": d.get("mergedAt"),
+                 "url": d.get("url"), "branch": d.get("headRefName"), "branch_exists": code == 0,
+                 "title": d.get("title"), "auto_merge": bool(d.get("autoMergeRequest")), "checks": checks}
+
+
 class Handler(BaseHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
 
@@ -211,14 +268,49 @@ class Handler(BaseHTTPRequestHandler):
             return self._json(doc if doc else {"error": "없는 실행"}, 200 if doc else 404)
         if url.path == "/api/events":
             return self._events(int((q.get("since") or ["0"])[0]))
+        if url.path == "/api/upload/pr":
+            try:
+                n = int((q.get("n") or ["0"])[0])
+            except ValueError:
+                n = 0
+            if n <= 0:
+                return self._json({"error": "bad pr"}, 400)
+            code, doc = pr_status(n)
+            return self._json(doc, code)
+        if url.path == "/api/upload/rules":
+            return self._json({"ext": list(UPLOAD_EXT), "max_bytes": UPLOAD_MAX})
         self._send(404, b"not found", "text/plain")
 
     def do_POST(self):  # noqa: N802
+        # 본문을 반드시 비운다. keep-alive 연결에서 본문을 안 읽고 응답하면 남은 바이트가 다음 요청의
+        # 시작으로 파싱돼 501(Unsupported method) 이 난다 — 프록시 뒤에서 Cloudflare RUM 비컨
+        # (POST /cdn-cgi/rum, JSON 본문)이 그대로 넘어와 실제로 겪었다.
+        length = int(self.headers.get("Content-Length") or 0)
+        url = urllib.parse.urlsplit(self.path)
+        if url.path == "/api/upload":
+            # 본문 = 파일 바이트 그대로(multipart 아님). 파일명은 ?name= 으로.
+            name = (urllib.parse.parse_qs(url.query).get("name") or [""])[0]
+            if length > UPLOAD_MAX:
+                self._drain(length)
+                return self._json({"ok": False, "pass": True, "reason": f"{UPLOAD_MAX // (1024 * 1024)}MB 를 넘는다"}, 413)
+            data = self.rfile.read(length) if length > 0 else b""
+            if not name or not data:
+                return self._json({"ok": False, "pass": True, "reason": "파일명(?name=)과 본문이 필요하다"}, 400)
+            code, out = publish_upload(name, data)
+            return self._json(out, code)
+        self._drain(length)
         if self.path == "/api/refresh":
             changed = REPO.fetch()
             REPO.poll_ci()
             return self._json({"changed": changed, **REPO.state()})
         self._send(404, b"not found", "text/plain")
+
+    def _drain(self, length: int) -> None:
+        while length > 0:
+            chunk = self.rfile.read(min(length, 65536))
+            if not chunk:
+                break
+            length -= len(chunk)
 
     def _events(self, since: int) -> None:
         """SSE. 참조가 바뀌면 version 을 보내고, 조용하면 15초마다 심장박동."""

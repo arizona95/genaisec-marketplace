@@ -61,6 +61,26 @@ td.src{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--mut
 .meta{color:var(--muted);font-size:12px;margin-bottom:8px}.meta code{background:var(--head);border-radius:4px;padding:1px 5px}
 .v{font-weight:700}.v.passed{color:var(--ok)}.v.blocked{color:var(--bad)}
 .err{background:var(--badbg);color:var(--bad);padding:8px 12px;border-radius:8px;margin-bottom:10px;font-size:12.5px}
+/* 업로드 탭 */
+.drop{border:2px dashed var(--line);border-radius:12px;background:var(--panel);padding:34px 18px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
+.drop.over{border-color:var(--accent);background:var(--sel)}
+.drop b{font-size:15px}.drop .hint{color:var(--muted);font-size:12.5px;margin-top:6px}
+.drop code{background:var(--head);border-radius:4px;padding:1px 6px}
+.drop input{display:none}
+.flow{color:var(--muted);font-size:12.5px;margin:10px 2px 16px}
+.flow code{background:var(--head);border-radius:4px;padding:1px 5px}
+.up{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:12px 14px;margin-bottom:10px}
+.up .head{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.up .file{font-weight:700}
+.up .steps{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.step{font-size:12px;padding:2px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.step.ok{background:var(--okbg);color:var(--ok);border-color:transparent}
+.step.bad{background:var(--badbg);color:var(--bad);border-color:transparent}
+.step.run{background:var(--waitbg);color:var(--wait);border-color:transparent}
+.up .why{color:var(--bad);font-size:12.5px;margin-top:6px;white-space:pre-wrap}
+.up .note{color:var(--muted);font-size:12px;margin-top:6px}
+.up a{color:var(--accent)}
+.up .x{margin-left:auto;background:none;border:0;color:var(--muted);cursor:pointer;font-size:12px}
 </style>
 </head>
 <body>
@@ -78,6 +98,7 @@ td.src{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--mut
   <div class="tabs">
     <button data-tab="status" class="on">등록 현황</button>
     <button data-tab="log">로그</button>
+    <button data-tab="upload">업로드</button>
   </div>
 
   <section id="tab-status">
@@ -100,6 +121,17 @@ td.src{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--mut
     </table></div>
     <div class="detail" id="detail"></div>
   </section>
+
+  <section id="tab-upload" hidden>
+    <label class="drop" id="drop">
+      <input type="file" id="pick" multiple accept=".zip,.skill,.mcpb">
+      <b>여기에 파일을 떨구거나 클릭해서 고르세요</b>
+      <div class="hint">허용 확장자: <code id="exts">.zip · .skill · .mcpb</code> · 최대 <span id="maxmb">50</span>MB · 폴더째 압축해도 됩니다</div>
+      <div class="hint">skill(SKILL.md) · mcp(.mcp.json / manifest.json) · plugin(.claude-plugin/plugin.json) 을 알아서 판별합니다. 어느 것도 아니면 아무것도 하지 않습니다.</div>
+    </label>
+    <div class="flow">흐름: 판별 → 임시 브랜치 <code>upload/&lt;이름&gt;-&lt;시각&gt;</code> → PR → 기본검증(악성지시문·악성코드·유출) → 통과하면 자동 병합, 병합되면 브랜치 삭제. 같은 이름이 이미 있으면 업데이트입니다.</div>
+    <div id="ups"></div>
+  </section>
 </div>
 <script>
 const ORDER = {skill:0, mcp:1, plugin:2};
@@ -109,10 +141,12 @@ const esc = s => (s==null?"":String(s)).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"
 const typeOf = t => (t||"").split("/")[0].replace(/s$/,"");
 const ago = iso => { if(!iso) return "–"; const s=Math.max(0,(Date.now()-Date.parse(iso))/1000|0); return s<60?`${s}초 전`:s<3600?`${s/60|0}분 전`:`${s/3600|0}시간 전`; };
 
+// API 경로는 상대경로다 — 리버스 프록시(SDSsiteBLUE 게이트웨이)가 /<이름>/ 접두로 붙일 때
+// 절대경로 "/api/.." 는 게이트웨이 루트로 새고(특히 EventSource 는 shim 이 안 잡는다), 상대경로는 어디 붙어도 맞는다.
 async function j(url, opt){ const r = await fetch(url, {cache:"no-store", ...(opt||{})}); if(!r.ok) throw new Error(`${r.status} ${url}`); return r.json(); }
 
 async function loadState(){
-  S.state = await j("/api/state");
+  S.state = await j("api/state");
   paintSync();
 }
 function paintSync(){
@@ -129,8 +163,8 @@ function paintSync(){
 async function loadStatus(){
   const b = encodeURIComponent(S.branch);
   const [cat, latest] = await Promise.all([
-    j(`/api/catalog?branch=${b}`).catch(()=>null),
-    j(`/api/history/latest?branch=${b}`).catch(()=>null),
+    j(`api/catalog?branch=${b}`).catch(()=>null),
+    j(`api/history/latest?branch=${b}`).catch(()=>null),
   ]);
   S.catalog = cat; S.latest = latest;
   $("install").textContent = "/plugin marketplace add https://github.com/arizona95/genaisec-marketplace.git";
@@ -169,7 +203,7 @@ function marks(checks){
 
 async function loadLog(){
   // 로그는 PR 단위다. PR 하나에 바뀐 자산이 3개면 3줄.
-  S.index = await j(`/api/history/index?branch=pr`).catch(()=>[]);
+  S.index = await j(`api/history/index?branch=pr`).catch(()=>[]);
   if(!S.runId || !S.index.some(e=>e.run_id===S.runId)) S.runId = S.index[0]?.run_id||null;
   paintRuns();
   await loadRun();
@@ -197,7 +231,7 @@ function paintRuns(){
 }
 async function loadRun(){
   if(!S.runId){ $("detail").innerHTML=""; return; }
-  S.run = await j(`/api/history/run?branch=pr&id=${encodeURIComponent(S.runId)}`).catch(()=>null);
+  S.run = await j(`api/history/run?branch=pr&id=${encodeURIComponent(S.runId)}`).catch(()=>null);
   paintRun();
 }
 function paintRun(){
@@ -215,13 +249,79 @@ function paintRun(){
 }
 
 async function reloadAll(){
-  try{ await loadState(); if(S.tab==="status") await loadStatus(); else await loadLog(); $("live").classList.remove("off"); }
+  try{ await loadState(); if(S.tab==="status") await loadStatus(); else if(S.tab==="log") await loadLog(); $("live").classList.remove("off"); }
   catch(e){ $("err").innerHTML = `<div class="err">${esc(e.message)}</div>`; }
 }
-function showTab(t){ S.tab=t; document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===t)); $("tab-status").hidden=t!=="status"; $("tab-log").hidden=t!=="log"; reloadAll(); }
+function showTab(t){ S.tab=t; document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===t)); $("tab-status").hidden=t!=="status"; $("tab-log").hidden=t!=="log"; $("tab-upload").hidden=t!=="upload"; if(t==="upload"){ paintUps(); pollUps(); } else reloadAll(); }
+
+// ── 업로드 ───────────────────────────────────────────────────────────────
+// 목록은 이 브라우저의 localStorage 에만 둔다(진실원은 GitHub 의 PR 이다 — 여기 목록은 바로가기일 뿐).
+const UPS_KEY = "genaisec-uploads";
+let UPS = []; try{ UPS = JSON.parse(localStorage.getItem(UPS_KEY)||"[]"); }catch(_){ UPS = []; }
+function saveUps(){ try{ localStorage.setItem(UPS_KEY, JSON.stringify(UPS.slice(0,50))); }catch(_){} }
+const stepCls = st => st==="ok"?"ok":st==="bad"?"bad":st==="run"?"run":"";
+function paintUps(){
+  if(!UPS.length){ $("ups").innerHTML = `<div class="empty">아직 올린 것이 없습니다.</div>`; return; }
+  $("ups").innerHTML = UPS.map((u,i)=>{
+    const pr = u.pr||{};
+    const checks = (pr.checks||[]);
+    const ciSt = !u.prNumber ? "" : pr.state==="MERGED" ? "ok" : checks.some(c=>["FAILURE","ERROR","CANCELLED","TIMED_OUT"].includes(String(c.conclusion).toUpperCase())) ? "bad" : (checks.length && checks.every(c=>String(c.conclusion).toUpperCase()==="SUCCESS")) ? "ok" : "run";
+    const mergeSt = !u.prNumber ? "" : pr.state==="MERGED" ? "ok" : pr.state==="CLOSED" ? "bad" : "run";
+    const brSt = !u.prNumber ? "" : pr.state==="MERGED" ? (pr.branch_exists===false?"ok":"run") : "";
+    const detectSt = u.stage==="sending" ? "run" : u.error ? "bad" : "ok";
+    return `<div class="up">
+      <div class="head"><span class="file">${esc(u.file)}</span>
+        ${u.kind?`<span class="type ${esc(u.kind)}">${esc(u.kind)}</span> <b>${esc(u.name)}</b> <span class="meta">${esc(u.version||"")}</span>`:""}
+        <span class="meta">${ago(u.at)}</span>
+        ${u.prUrl?`<a href="${esc(u.prUrl)}" target="_blank">PR #${u.prNumber}</a>`:""}
+        <button class="x" data-i="${i}" title="목록에서 지움(PR 은 그대로)">지움</button></div>
+      <div class="steps">
+        <span class="step ${stepCls(detectSt)}">① 판별${u.kind?` · ${esc(u.kind)}`:""}</span>
+        <span class="step ${stepCls(u.prNumber?"ok":u.error?"":"")}">② 브랜치 ${u.branch?`<code>${esc(u.branch)}</code>`:""}</span>
+        <span class="step ${stepCls(u.prNumber?"ok":"")}">③ PR${u.prNumber?` #${u.prNumber}`:""}</span>
+        <span class="step ${stepCls(ciSt)}">④ 기본검증${checks.length?` ${checks.filter(c=>String(c.conclusion).toUpperCase()==="SUCCESS").length}/${checks.length}`:""}</span>
+        <span class="step ${stepCls(mergeSt)}">⑤ 병합${pr.state==="MERGED"?" · 완료":pr.state==="CLOSED"?" · 닫힘(병합 안 됨)":pr.auto_merge?" · 자동병합 예약됨":""}</span>
+        <span class="step ${stepCls(brSt)}">⑥ 브랜치 삭제${pr.state==="MERGED"?(pr.branch_exists===false?" · 완료":" · 대기"):""}</span>
+      </div>
+      ${u.error?`<div class="why">${esc(u.error)}</div>`:""}
+      ${(u.notes||[]).length?`<div class="note">정규화: ${u.notes.map(esc).join(" · ")}</div>`:""}
+      ${checks.length?`<div class="note">${checks.map(c=>`<a href="${esc(c.url||"#")}" target="_blank">${esc(c.name)}</a>: ${esc(c.conclusion||c.status||"…")}`).join(" · ")}</div>`:""}
+    </div>`;
+  }).join("");
+}
+async function sendFile(file){
+  const u = {file:file.name, at:new Date().toISOString(), stage:"sending"};
+  UPS.unshift(u); saveUps(); paintUps();
+  try{
+    const r = await fetch(`api/upload?name=${encodeURIComponent(file.name)}`, {method:"POST", body:file, headers:{"Content-Type":"application/octet-stream"}});
+    const d = await r.json().catch(()=>({ok:false, reason:`${r.status} ${r.statusText}`}));
+    u.stage = "done";
+    if(d.ok){ Object.assign(u, {kind:d.kind, name:d.name, version:d.version, branch:d.branch, prNumber:d.pr, prUrl:d.pr_url, notes:d.notes||[]}); }
+    else { u.error = (d.pass?"패스 — ":"실패 — ") + (d.reason||"이유 없음"); }
+  }catch(e){ u.stage="done"; u.error = "전송 실패 — " + e.message; }
+  saveUps(); paintUps(); pollUps();
+}
+let pollTimer = null;
+async function pollUps(){
+  clearTimeout(pollTimer);
+  const open = UPS.filter(u=>u.prNumber && !(u.pr && u.pr.state==="MERGED" && u.pr.branch_exists===false) && !(u.pr && u.pr.state==="CLOSED"));
+  for(const u of open){ try{ u.pr = await j(`api/upload/pr?n=${u.prNumber}`); }catch(_){} }
+  if(open.length){ saveUps(); paintUps(); }
+  if(S.tab==="upload" && open.length) pollTimer = setTimeout(pollUps, 10000);
+}
+(function(){
+  const drop = $("drop"), pick = $("pick");
+  const files = list => { for(const f of list) sendFile(f); };
+  ["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault(); drop.classList.add("over");}));
+  ["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault(); drop.classList.remove("over");}));
+  drop.addEventListener("drop",e=>files(e.dataTransfer.files));
+  pick.addEventListener("change",e=>{ files(e.target.files); e.target.value=""; });
+  $("ups").addEventListener("click",e=>{ const b=e.target.closest("button.x"); if(!b) return; UPS.splice(+b.dataset.i,1); saveUps(); paintUps(); });
+  j("api/upload/rules").then(r=>{ $("exts").textContent = r.ext.join(" · "); $("maxmb").textContent = Math.round(r.max_bytes/1048576); }).catch(()=>{});
+})();
 
 document.querySelector(".tabs").addEventListener("click",e=>{const b=e.target.closest("button"); if(b) showTab(b.dataset.tab);});
-$("refresh").addEventListener("click",async()=>{ $("syncmsg").textContent="fetch 중…"; try{ await j("/api/refresh",{method:"POST"}); }catch(_){} reloadAll(); });
+$("refresh").addEventListener("click",async()=>{ $("syncmsg").textContent="fetch 중…"; try{ await j("api/refresh",{method:"POST"}); }catch(_){} reloadAll(); });
 $("copy").addEventListener("click",()=>navigator.clipboard.writeText($("install").textContent));
 $("q").addEventListener("input",e=>{S.q=e.target.value; paintStatus();});
 for(const [id,key] of [["ftype","type"]]) $(id).addEventListener("click",e=>{const b=e.target.closest("button"); if(!b)return; S[key]=b.dataset.v; [...e.currentTarget.children].forEach(x=>x.classList.toggle("on",x===b)); paintStatus();});
@@ -229,7 +329,7 @@ $("runs").addEventListener("click",e=>{const tr=e.target.closest("tr[data-id]");
 
 // 실시간: 서버가 origin 참조 변화를 SSE 로 알리면 다시 읽는다. 끊기면 재접속.
 function listen(){
-  const es = new EventSource(`/api/events?since=${S.state?S.state.version:0}`);
+  const es = new EventSource(`api/events?since=${S.state?S.state.version:0}`);
   es.onmessage = ()=>reloadAll();
   es.onerror = ()=>{ $("live").classList.add("off"); es.close(); setTimeout(listen, 3000); };
 }

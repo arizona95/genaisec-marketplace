@@ -1,0 +1,32 @@
+# 병합된 업로드 브랜치를 지운다.
+#
+# 대시보드 업로드는 PR 마다 `upload/<이름>-<시각>` 브랜치를 만든다. 저장소 설정
+# delete_branch_on_merge 가 있지만, 워크플로(GITHUB_TOKEN)가 병합한 PR 에서는 지워지지 않는 걸
+# 실측했다(2026-09-10, PR #8·#9 — 병합 뒤 브랜치가 그대로 남았다). 그래서 여기서 직접 지운다.
+#
+# dev 는 절대 지우지 않는다 — 상시 브랜치다. upload/ 접두만 대상이고, 병합된 PR 만 대상이다
+# (닫혔지만 병합 안 된 PR 의 브랜치는 사람이 볼 수 있게 남긴다).
+name: cleanup-branch
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: write
+
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    if: >
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      startsWith(github.event.pull_request.head.ref, 'upload/')
+    steps:
+      - name: 브랜치 삭제
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          gh api -X DELETE "repos/$GITHUB_REPOSITORY/git/refs/heads/$REF" \
+            && echo "삭제: $REF (PR #${{ github.event.pull_request.number }} 병합됨)" >> "$GITHUB_STEP_SUMMARY" \
+            || echo "이미 없음: $REF" >> "$GITHUB_STEP_SUMMARY"
