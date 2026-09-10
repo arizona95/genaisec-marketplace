@@ -314,6 +314,22 @@
       },
       "version": "1.0.0",
       "description": "대시보드 업로드 경로 검증용 무해한 스킬. 인사말을 정중하게 다듬는 방법을 안내한다."
+    },
+    {
+      "name": "echo-upload-mcp",
+      "source": "./mcp/echo-upload-mcp",
+      "hub": {
+        "type": "mcp",
+        "status": "published",
+        "url": "stdio://python server.py",
+        "version": "0.1.0",
+        "tools": [
+          "count_chars",
+          "echo"
+        ]
+      },
+      "version": "0.1.0",
+      "description": "대시보드 업로드 경로 검증용 무해한 stdio MCP. 문자열을 되돌려주고 글자 수를 센다."
     }
   ]
 }
