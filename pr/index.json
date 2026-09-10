@@ -1,7 +1,7 @@
 [
   {
     "run_id": "pr11-151923a",
-    "at": "2026-09-10T08:10:44+00:00",
+    "at": "2026-09-10T08:10:46+00:00",
     "actor": "arizona95",
     "trigger": "pull_request",
     "run_url": "https://github.com/arizona95/genaisec-marketplace/actions/runs/34453755628",
@@ -19,7 +19,7 @@
       "registered": 1,
       "blocked": 0,
       "blocked_targets": [],
-      "fully_verified": 0
+      "fully_verified": 1
     },
     "pr": {
       "number": 11,
@@ -30,7 +30,7 @@
       {
         "target": "skills/hello-upload-skill",
         "registered": true,
-        "marks": "3/5",
+        "marks": "5/5",
         "failed": []
       }
     ]
