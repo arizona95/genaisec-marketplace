@@ -66,10 +66,9 @@ def truth_version(entry: dict) -> str | None:
     d = asset_dir(entry.get("source"))
     if d is None:
         return None
-    if hub.get("type") == "plugin":
-        man = d / ".claude-plugin" / "plugin.json"
-        if not man.is_file():
-            return None
+    # 모든 자산이 plugin.json 을 갖는다(채팅 쪽 동기화가 그 형태만 인식한다). 있으면 그게 진실원.
+    man = d / ".claude-plugin" / "plugin.json"
+    if man.is_file():
         try:
             return json.loads(man.read_text(encoding="utf-8")).get("version")
         except json.JSONDecodeError:
@@ -117,10 +116,8 @@ def truth_description(entry: dict) -> str | None:
     d = asset_dir(entry.get("source"))
     if d is None:
         return None
-    if hub.get("type") == "plugin":
-        man = d / ".claude-plugin" / "plugin.json"
-        if not man.is_file():
-            return None
+    man = d / ".claude-plugin" / "plugin.json"
+    if man.is_file():
         try:
             return json.loads(man.read_text(encoding="utf-8")).get("description")
         except json.JSONDecodeError:

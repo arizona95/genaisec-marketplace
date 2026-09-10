@@ -1,0 +1,8 @@
+{
+  "name": "probe-localhost-internal-norm-1",
+  "version": "1.0.0",
+  "description": "mcp 단독 프로브. 전송: localhost_internal. 내 PC -> http://<랜 IP>:8899. 방화벽 인바운드 필요.",
+  "author": {
+    "name": "AgentReview"
+  }
+}
