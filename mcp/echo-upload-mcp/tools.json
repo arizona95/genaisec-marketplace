@@ -1,0 +1,9 @@
+{
+  "generated_from": "server.py",
+  "generated_at": "",
+  "note": "업로드 시 서버 소스에서 뜬 스냅샷. 카드는 여기서만 값을 가져온다.",
+  "tools": [
+    "count_chars",
+    "echo"
+  ]
+}
