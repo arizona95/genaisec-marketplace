@@ -1,6 +1,6 @@
 {
   "name": "hello-upload-skill",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "대시보드 업로드 경로 검증용 무해한 스킬. 인사말을 정중하게 다듬는 방법을 안내한다.",
   "author": {
     "name": "upload"
