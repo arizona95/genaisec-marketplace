@@ -1,7 +1,7 @@
 [
   {
     "run_id": "pr12-ea67ca4",
-    "at": "2026-09-10T08:10:58+00:00",
+    "at": "2026-09-10T08:11:01+00:00",
     "actor": "arizona95",
     "trigger": "pull_request",
     "run_url": "https://github.com/arizona95/genaisec-marketplace/actions/runs/34453764143",
@@ -32,10 +32,11 @@
       {
         "target": "skills/mal-probe-upload",
         "registered": false,
-        "marks": "1/5",
+        "marks": "2/5",
         "failed": [
           "inst-scan",
-          "code-scan"
+          "code-scan",
+          "skillspector"
         ]
       }
     ]

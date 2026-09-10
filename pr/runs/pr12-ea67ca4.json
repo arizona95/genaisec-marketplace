@@ -1,6 +1,6 @@
 {
   "run_id": "pr12-ea67ca4",
-  "at": "2026-09-10T08:10:58+00:00",
+  "at": "2026-09-10T08:11:01+00:00",
   "actor": "arizona95",
   "trigger": "pull_request",
   "run_url": "https://github.com/arizona95/genaisec-marketplace/actions/runs/34453764143",
@@ -81,24 +81,25 @@
         {
           "validator": "black",
           "title": "코드 포맷이 black 규칙에 맞는지",
-          "version": "",
+          "version": "26.5.1",
           "tier": "deep",
-          "ok": false
+          "ok": true
         },
         {
           "validator": "skillspector",
           "title": "위협 패턴 561개(skillspector 504 + clawvet 57) 대비 baseline 초과분",
-          "version": "",
+          "version": "skillspector 504+clawvet 57",
           "tier": "deep",
           "ok": false
         }
       ],
-      "marks": "1/5",
+      "marks": "2/5",
       "required_passed": false,
       "advanced_passed": false,
       "registered": false,
       "tags": [
-        "leak-scan@1.0.0"
+        "leak-scan@1.0.0",
+        "black@26.5.1"
       ]
     }
   ],
