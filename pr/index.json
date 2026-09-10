@@ -1,5 +1,179 @@
 [
   {
+    "run_id": "pr13-62b6938",
+    "at": "2026-09-10T08:15:38+00:00",
+    "actor": "arizona95",
+    "trigger": "pull_request",
+    "run_url": "https://github.com/arizona95/genaisec-marketplace/actions/runs/34454177366",
+    "branch": {
+      "head": "dev",
+      "head_sha": "62b69387c3f9",
+      "head_subject": "Merge 62b69387c3f9b99acd899134ece02eeee7a09fe7 into a9d7adfce8f72af603de8978091547c67f85b9be",
+      "base": "",
+      "base_sha": ""
+    },
+    "rebase_guard": "skipped",
+    "verdict": "passed",
+    "summary": {
+      "assets": 24,
+      "registered": 24,
+      "blocked": 0,
+      "blocked_targets": [],
+      "fully_verified": 0
+    },
+    "pr": {
+      "number": 13,
+      "url": "https://github.com/arizona95/genaisec-marketplace/pull/13",
+      "title": "업로드 뒷정리는 서버가: 병합된 upload/* 브랜치 삭제, 게이트가 비운 PR 닫기"
+    },
+    "assets": [
+      {
+        "target": "mcp/echo-upload-mcp",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "mcp/probe-desktop-local-norm-1",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "mcp/probe-localhost-external-norm-1",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "mcp/probe-localhost-internal-norm-1",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "mcp/probe-localhost-local-norm-1",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "mcp/probe-localhost-local-norm-2",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "mcp/probe-localhost-local-norm-3",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "mcp/probe-localhost-loopback-norm-1",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "mcp/probe-remotehost-external-norm-1",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "mcp/probe-remotehost-internal-norm-1",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "plugins/probe-plugin-desktop-local-norm-1",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "plugins/probe-plugin-localhost-external-norm-1",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "plugins/probe-plugin-localhost-internal-norm-1",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "plugins/probe-plugin-localhost-local-norm-1",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "plugins/probe-plugin-localhost-loopback-norm-1",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "plugins/probe-plugin-norm-1",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "plugins/probe-plugin-norm-2",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "plugins/probe-plugin-norm-3",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "plugins/probe-plugin-remotehost-external-norm-1",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "plugins/probe-plugin-remotehost-internal-norm-1",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "skills/hello-upload-skill",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "skills/probe-skill-norm-1",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "skills/probe-skill-norm-2",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      },
+      {
+        "target": "skills/probe-skill-norm-3",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      }
+    ]
+  },
+  {
     "run_id": "pr12-198d2a7",
     "at": "2026-09-10T08:11:18+00:00",
     "actor": "github-actions[bot]",
