@@ -1,5 +1,41 @@
 [
   {
+    "run_id": "pr9-312c583",
+    "at": "2026-09-10T08:05:16+00:00",
+    "actor": "arizona95",
+    "trigger": "pull_request",
+    "run_url": "https://github.com/arizona95/genaisec-marketplace/actions/runs/34453258898",
+    "branch": {
+      "head": "upload/echo-upload-mcp-20260910T080456Z",
+      "head_sha": "312c583b3a2e",
+      "head_subject": "Merge 312c583b3a2e8a251e361f15735e66bf8dfd2ba5 into 41f0d7a610dbe2208eab864090439ff543d44d0d",
+      "base": "",
+      "base_sha": ""
+    },
+    "rebase_guard": "skipped",
+    "verdict": "passed",
+    "summary": {
+      "assets": 1,
+      "registered": 1,
+      "blocked": 0,
+      "blocked_targets": [],
+      "fully_verified": 0
+    },
+    "pr": {
+      "number": 9,
+      "url": "https://github.com/arizona95/genaisec-marketplace/pull/9",
+      "title": "업로드: mcp echo-upload-mcp 0.1.0"
+    },
+    "assets": [
+      {
+        "target": "mcp/echo-upload-mcp",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      }
+    ]
+  },
+  {
     "run_id": "pr8-1a88470",
     "at": "2026-09-10T08:04:52+00:00",
     "actor": "arizona95",
