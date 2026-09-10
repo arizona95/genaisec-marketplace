@@ -19,7 +19,8 @@
           "probe_ping",
           "probe_note"
         ]
-      }
+      },
+      "description": "mcp 단독 프로브. 전송: desktop_local. MCPB 번들(미서명). manifest.json 참조. 클라이언트가 번들에서 spawn."
     },
     {
       "name": "probe-localhost-external-norm-1",
@@ -32,7 +33,8 @@
           "probe_ping",
           "probe_note"
         ]
-      }
+      },
+      "description": "mcp 단독 프로브. 전송: localhost_external. 내 PC -> https://dowhub.org. 사외 = Anthropic 접근 가능."
     },
     {
       "name": "probe-localhost-internal-norm-1",
@@ -45,7 +47,8 @@
           "probe_ping",
           "probe_note"
         ]
-      }
+      },
+      "description": "mcp 단독 프로브. 전송: localhost_internal. 내 PC -> http://<랜 IP>:8899. 방화벽 인바운드 필요."
     },
     {
       "name": "probe-localhost-local-norm-1",
@@ -58,7 +61,8 @@
           "probe_ping",
           "probe_note"
         ]
-      }
+      },
+      "description": "stdio MCP 프로브 픽스처. 서버 소스가 이 폴더에 있어 검사기가 직접 본다."
     },
     {
       "name": "probe-localhost-local-norm-2",
@@ -71,7 +75,8 @@
           "probe_ping",
           "probe_note"
         ]
-      }
+      },
+      "description": "stdio MCP 프로브 픽스처. 서버 소스가 이 폴더에 있어 검사기가 직접 본다."
     },
     {
       "name": "probe-localhost-local-norm-3",
@@ -84,7 +89,8 @@
           "probe_ping",
           "probe_note"
         ]
-      }
+      },
+      "description": "stdio MCP 프로브 픽스처. 서버 소스가 이 폴더에 있어 검사기가 직접 본다."
     },
     {
       "name": "probe-localhost-loopback-norm-1",
@@ -97,7 +103,8 @@
           "probe_ping",
           "probe_note"
         ]
-      }
+      },
+      "description": "mcp 단독 프로브. 전송: localhost_loopback. 내 PC -> http://localhost:8899. 서버는 probe-server."
     },
     {
       "name": "probe-plugin-desktop-local-norm-1",
@@ -229,7 +236,8 @@
           "probe_ping",
           "probe_note"
         ]
-      }
+      },
+      "description": "mcp 단독 프로브. 전송: remotehost_external. Anthropic -> 사외 서버. 커넥터 등록 필요."
     },
     {
       "name": "probe-remotehost-internal-norm-1",
@@ -242,7 +250,8 @@
           "probe_ping",
           "probe_note"
         ]
-      }
+      },
+      "description": "mcp 단독 프로브. 전송: remotehost_internal. Anthropic -> 사내 서버. 못 붙으면 그 실패가 곧 클라이언트=Anthropic 쪽 증명."
     },
     {
       "name": "probe-skill-norm-1",
@@ -252,7 +261,8 @@
         "status": "published",
         "version": "1.0.0"
       },
-      "version": "1.0.0"
+      "version": "1.0.0",
+      "description": "무해한 프로브 스킬 픽스처 (norm_1)."
     },
     {
       "name": "probe-skill-norm-2",
@@ -262,7 +272,8 @@
         "status": "published",
         "version": "1.0.0"
       },
-      "version": "1.0.0"
+      "version": "1.0.0",
+      "description": "무해한 프로브 스킬 픽스처 (norm_2)."
     },
     {
       "name": "probe-skill-norm-3",
@@ -272,7 +283,8 @@
         "status": "published",
         "version": "1.0.0"
       },
-      "version": "1.0.0"
+      "version": "1.0.0",
+      "description": "무해한 프로브 스킬 픽스처 (norm_3)."
     }
   ]
 }

@@ -108,18 +108,34 @@ def truth_tools(entry: dict) -> list[str] | None:
 
 
 def truth_description(entry: dict) -> str | None:
-    """카드 설명의 진실원. plugin 은 plugin.json 의 description 이 그것이다."""
+    """카드 설명의 진실원.
+    · plugin → plugin.json 의 description
+    · skill  → SKILL.md frontmatter 의 description (한 줄짜리만)
+    · mcp    → README.md 의 첫 본문 줄
+    설명이 없는 카드는 목록에서 빈칸으로 보이거나 아예 안 보인다 — 손으로 적지 말고 여기서 끌어온다."""
     hub = entry.get("hub") or {}
     d = asset_dir(entry.get("source"))
-    if hub.get("type") != "plugin" or d is None:
+    if d is None:
         return None
-    man = d / ".claude-plugin" / "plugin.json"
-    if not man.is_file():
-        return None
-    try:
-        return json.loads(man.read_text(encoding="utf-8")).get("description")
-    except json.JSONDecodeError:
-        return None
+    if hub.get("type") == "plugin":
+        man = d / ".claude-plugin" / "plugin.json"
+        if not man.is_file():
+            return None
+        try:
+            return json.loads(man.read_text(encoding="utf-8")).get("description")
+        except json.JSONDecodeError:
+            return None
+    if hub.get("type") == "skill":
+        return _frontmatter_value(d / "SKILL.md", "description")
+    if hub.get("type") == "mcp":
+        try:
+            for line in (d / "README.md").read_text(encoding="utf-8").splitlines():
+                s = line.strip()
+                if s and not s.startswith("#"):
+                    return s
+        except OSError:
+            return None
+    return None
 
 
 def truth_skills(entry: dict) -> list[str] | None:
