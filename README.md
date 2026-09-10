@@ -100,6 +100,9 @@ python action/scripts/llm_scan.py skills/<이름> --show-prompt
 - `publish_upload.py` 는 origin/main 에서 detached worktree 를 만들어 작업한다 — 대시보드가 도는 작업 트리를
   건드리지 않는다. `validate_catalog.py` 가 실패하면 push 하지 않는다.
 - 페이지는 게이트웨이 IP whitelist 로 잠근다. 업로드 = 소유자 PR = 자동병합이기 때문이다.
+- 뒷정리는 서버가 한다(`sweep_uploads`, 60초): 병합된 upload/* 브랜치 삭제, 게이트가 자산을 빼서 비어버린
+  업로드 PR 은 닫고 삭제. 워크플로로는 안 된다 — GITHUB_TOKEN 이 예약한 auto-merge 의 병합은
+  `pull_request: closed` 를 발생시키지 않고, 게이트 커밋의 재검사 run 은 action_required 로 멈춘다(PR #11·#12 실측).
 
 main 은 보호 규칙으로 **기본검증 체크가 필수**다. 이게 없으면 `gh pr merge --auto` 가 검사를 기다리지
 않고 즉시 병합한다(2026-09-10 실측 — PR #8·#9 가 CI 시작 5초 만에 병합됐다). 규칙은 저장소 설정이라

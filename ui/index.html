@@ -265,9 +265,9 @@ function paintUps(){
   $("ups").innerHTML = UPS.map((u,i)=>{
     const pr = u.pr||{};
     const checks = (pr.checks||[]);
-    const ciSt = !u.prNumber ? "" : pr.state==="MERGED" ? "ok" : checks.some(c=>["FAILURE","ERROR","CANCELLED","TIMED_OUT"].includes(String(c.conclusion).toUpperCase())) ? "bad" : (checks.length && checks.every(c=>String(c.conclusion).toUpperCase()==="SUCCESS")) ? "ok" : "run";
+    const ciSt = !u.prNumber ? "" : pr.gated ? "bad" : pr.state==="MERGED" ? "ok" : checks.some(c=>["FAILURE","ERROR","CANCELLED","TIMED_OUT"].includes(String(c.conclusion).toUpperCase())) ? "bad" : (checks.length && checks.every(c=>String(c.conclusion).toUpperCase()==="SUCCESS")) ? "ok" : "run";
     const mergeSt = !u.prNumber ? "" : pr.state==="MERGED" ? "ok" : pr.state==="CLOSED" ? "bad" : "run";
-    const brSt = !u.prNumber ? "" : pr.state==="MERGED" ? (pr.branch_exists===false?"ok":"run") : "";
+    const brSt = !u.prNumber ? "" : (pr.state==="MERGED"||pr.state==="CLOSED") ? (pr.branch_exists===false?"ok":"run") : "";
     const detectSt = u.stage==="sending" ? "run" : u.error ? "bad" : "ok";
     return `<div class="up">
       <div class="head"><span class="file">${esc(u.file)}</span>
@@ -279,9 +279,9 @@ function paintUps(){
         <span class="step ${stepCls(detectSt)}">① 판별${u.kind?` · ${esc(u.kind)}`:""}</span>
         <span class="step ${stepCls(u.prNumber?"ok":u.error?"":"")}">② 브랜치 ${u.branch?`<code>${esc(u.branch)}</code>`:""}</span>
         <span class="step ${stepCls(u.prNumber?"ok":"")}">③ PR${u.prNumber?` #${u.prNumber}`:""}</span>
-        <span class="step ${stepCls(ciSt)}">④ 기본검증${checks.length?` ${checks.filter(c=>String(c.conclusion).toUpperCase()==="SUCCESS").length}/${checks.length}`:""}</span>
-        <span class="step ${stepCls(mergeSt)}">⑤ 병합${pr.state==="MERGED"?" · 완료":pr.state==="CLOSED"?" · 닫힘(병합 안 됨)":pr.auto_merge?" · 자동병합 예약됨":""}</span>
-        <span class="step ${stepCls(brSt)}">⑥ 브랜치 삭제${pr.state==="MERGED"?(pr.branch_exists===false?" · 완료":" · 대기"):""}</span>
+        <span class="step ${stepCls(ciSt)}">④ 기본검증${pr.gated?" · 차단 — 게이트가 자산을 뺌":checks.length?` ${checks.filter(c=>String(c.conclusion).toUpperCase()==="SUCCESS").length}/${checks.length}`:""}</span>
+        <span class="step ${stepCls(mergeSt)}">⑤ 병합${pr.state==="MERGED"?" · 완료":pr.state==="CLOSED"?" · 닫힘(병합 안 됨)":pr.gated?" · 정리 대기(곧 닫힘)":pr.auto_merge?" · 자동병합 예약됨":""}</span>
+        <span class="step ${stepCls(brSt)}">⑥ 브랜치 삭제${(pr.state==="MERGED"||pr.state==="CLOSED")?(pr.branch_exists===false?" · 완료":" · 대기"):""}</span>
       </div>
       ${u.error?`<div class="why">${esc(u.error)}</div>`:""}
       ${(u.notes||[]).length?`<div class="note">정규화: ${u.notes.map(esc).join(" · ")}</div>`:""}
@@ -304,7 +304,7 @@ async function sendFile(file){
 let pollTimer = null;
 async function pollUps(){
   clearTimeout(pollTimer);
-  const open = UPS.filter(u=>u.prNumber && !(u.pr && u.pr.state==="MERGED" && u.pr.branch_exists===false) && !(u.pr && u.pr.state==="CLOSED"));
+  const open = UPS.filter(u=>u.prNumber && !(u.pr && (u.pr.state==="MERGED"||u.pr.state==="CLOSED") && u.pr.branch_exists===false));
   for(const u of open){ try{ u.pr = await j(`api/upload/pr?n=${u.prNumber}`); }catch(_){} }
   if(open.length){ saveUps(); paintUps(); }
   if(S.tab==="upload" && open.length) pollTimer = setTimeout(pollUps, 10000);
