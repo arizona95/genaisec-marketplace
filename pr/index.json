@@ -1,7 +1,7 @@
 [
   {
     "run_id": "pr9-312c583",
-    "at": "2026-09-10T08:05:16+00:00",
+    "at": "2026-09-10T08:05:18+00:00",
     "actor": "arizona95",
     "trigger": "pull_request",
     "run_url": "https://github.com/arizona95/genaisec-marketplace/actions/runs/34453258898",
@@ -19,7 +19,7 @@
       "registered": 1,
       "blocked": 0,
       "blocked_targets": [],
-      "fully_verified": 0
+      "fully_verified": 1
     },
     "pr": {
       "number": 9,
@@ -30,7 +30,7 @@
       {
         "target": "mcp/echo-upload-mcp",
         "registered": true,
-        "marks": "3/5",
+        "marks": "5/5",
         "failed": []
       }
     ]
