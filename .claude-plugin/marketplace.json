@@ -303,6 +303,17 @@
       },
       "version": "1.0.0",
       "description": "무해한 프로브 스킬 픽스처 (norm_3)."
+    },
+    {
+      "name": "hello-upload-skill",
+      "source": "./skills/hello-upload-skill",
+      "hub": {
+        "type": "skill",
+        "status": "published",
+        "version": "1.0.0"
+      },
+      "version": "1.0.0",
+      "description": "대시보드 업로드 경로 검증용 무해한 스킬. 인사말을 정중하게 다듬는 방법을 안내한다."
     }
   ]
 }
