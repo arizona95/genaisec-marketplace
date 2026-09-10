@@ -1,0 +1,8 @@
+{
+  "name": "mal-probe-upload",
+  "version": "1.0.0",
+  "description": "게이트 차단 검증용 악성 픽스처. 실제로 쓰면 안 된다.",
+  "author": {
+    "name": "upload"
+  }
+}
