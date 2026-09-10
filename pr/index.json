@@ -1,5 +1,41 @@
 [
   {
+    "run_id": "pr8-1a88470",
+    "at": "2026-09-10T08:04:50+00:00",
+    "actor": "arizona95",
+    "trigger": "pull_request",
+    "run_url": "https://github.com/arizona95/genaisec-marketplace/actions/runs/34453218581",
+    "branch": {
+      "head": "upload/hello-upload-skill-20260910T080428Z",
+      "head_sha": "1a88470859ce",
+      "head_subject": "Merge 1a88470859ce9a21e30b447c95267905a5f8fb52 into 502c27ee33c7c513fa3e61433ce1d53c07dc69f7",
+      "base": "",
+      "base_sha": ""
+    },
+    "rebase_guard": "skipped",
+    "verdict": "passed",
+    "summary": {
+      "assets": 1,
+      "registered": 1,
+      "blocked": 0,
+      "blocked_targets": [],
+      "fully_verified": 0
+    },
+    "pr": {
+      "number": 8,
+      "url": "https://github.com/arizona95/genaisec-marketplace/pull/8",
+      "title": "업로드: skill hello-upload-skill 1.0.0"
+    },
+    "assets": [
+      {
+        "target": "skills/hello-upload-skill",
+        "registered": true,
+        "marks": "3/5",
+        "failed": []
+      }
+    ]
+  },
+  {
     "run_id": "pr7-cb832ed",
     "at": "2026-09-10T01:00:40+00:00",
     "actor": "arizona95",
