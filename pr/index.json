@@ -1,5 +1,46 @@
 [
   {
+    "run_id": "pr12-ea67ca4",
+    "at": "2026-09-10T08:10:58+00:00",
+    "actor": "arizona95",
+    "trigger": "pull_request",
+    "run_url": "https://github.com/arizona95/genaisec-marketplace/actions/runs/34453764143",
+    "branch": {
+      "head": "upload/mal-probe-upload-20260910T081034Z",
+      "head_sha": "ea67ca4dcbc0",
+      "head_subject": "Merge ea67ca4dcbc098231d86193c4a4f4a0ce63bc127 into 7daa6a0d3aa3b2210311fe602fbe8c811916fcea",
+      "base": "",
+      "base_sha": ""
+    },
+    "rebase_guard": "skipped",
+    "verdict": "blocked",
+    "summary": {
+      "assets": 1,
+      "registered": 0,
+      "blocked": 1,
+      "blocked_targets": [
+        "skills/mal-probe-upload"
+      ],
+      "fully_verified": 0
+    },
+    "pr": {
+      "number": 12,
+      "url": "https://github.com/arizona95/genaisec-marketplace/pull/12",
+      "title": "업로드: skill mal-probe-upload 1.0.0"
+    },
+    "assets": [
+      {
+        "target": "skills/mal-probe-upload",
+        "registered": false,
+        "marks": "1/5",
+        "failed": [
+          "inst-scan",
+          "code-scan"
+        ]
+      }
+    ]
+  },
+  {
     "run_id": "pr11-151923a",
     "at": "2026-09-10T08:10:46+00:00",
     "actor": "arizona95",
