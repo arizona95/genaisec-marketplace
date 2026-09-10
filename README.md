@@ -21,7 +21,10 @@ action/validators.json            검증자 등록표 — 검사를 붙일 때 �
 action/scripts/                   검증자 · 카탈로그 동기화 · 이력 기록
 .github/workflows/ci.yml          기본검증(병합 게이트) + 심화검증(태그)
 .github/workflows/history.yml     검사 이력 기록 → history 브랜치 (CI 만 쓴다)
-ui/server.py · ui/index.html      로컬 대시보드 — origin 을 직접 읽는다
+ui/server.py · ui/index.html      대시보드 — origin 을 직접 읽는다 · 업로드 탭
+action/scripts/ingest.py          업로드 파일 → 자산 폴더 + 카탈로그 항목 (판별 규칙은 여기 한 곳)
+action/scripts/publish_upload.py  업로드 → worktree → 브랜치 → PR
+.github/workflows/cleanup-branch.yml  병합된 upload/* 브랜치 삭제
 ```
 
 ## 이력과 대시보드도 손으로 적지 않는다
@@ -78,6 +81,30 @@ python action/scripts/llm_scan.py --ping              # 닿는지
 python action/scripts/llm_scan.py skills/<이름>           # 한 자산 검토
 python action/scripts/llm_scan.py skills/<이름> --show-prompt
 ```
+
+## 업로드 — 클론 없이 올리기
+
+대시보드의 **업로드** 탭에 파일을 떨구면 끝이다. 비개발자가 git 을 몰라도 같은 흐름(PR → 기본검증 →
+병합)을 탄다. 사람이 하는 일은 파일을 올리는 것뿐이고, 나머지는 서버와 CI 가 한다.
+
+```
+파일(.zip / .skill / .mcpb) → 판별(skill·mcp·plugin) → upload/<이름>-<시각> 브랜치 → PR
+  → auto-merge 예약 → 기본검증 통과 시 병합 → 브랜치 삭제(cleanup-branch.yml)
+```
+
+- 판별 규칙은 `action/scripts/ingest.py` 한 곳에 있다. `.claude-plugin/plugin.json` 이 있으면 구성요소로
+  가르고(skills 만 → skill, .mcp.json 만 → mcp, 그 외 → plugin), 없으면 `.mcp.json`/MCPB `manifest.json` → mcp,
+  `SKILL.md` → skill. 어느 것도 아니면 **아무것도 하지 않는다**(패스).
+- 저장소 규격으로 맞춘다: 루트 SKILL.md 는 `skills/<이름>/skills/<이름>/` 로 감싸고 plugin.json 을 만든다.
+  MCPB 는 manifest 에서 `.mcp.json` 을, 서버 소스에서 `tools.json` 스냅샷을 뜬다. 같은 이름은 **교체(업데이트)** 다.
+- `publish_upload.py` 는 origin/main 에서 detached worktree 를 만들어 작업한다 — 대시보드가 도는 작업 트리를
+  건드리지 않는다. `validate_catalog.py` 가 실패하면 push 하지 않는다.
+- 페이지는 게이트웨이 IP whitelist 로 잠근다. 업로드 = 소유자 PR = 자동병합이기 때문이다.
+
+main 은 보호 규칙으로 **기본검증 체크가 필수**다. 이게 없으면 `gh pr merge --auto` 가 검사를 기다리지
+않고 즉시 병합한다(2026-09-10 실측 — PR #8·#9 가 CI 시작 5초 만에 병합됐다). 규칙은 저장소 설정이라
+코드에 없다: `gh api repos/<owner>/<repo>/branches/main/protection` 으로 `required_status_checks.contexts` 에
+`기본검증` 이 있는지 확인한다.
 
 ## 병합
 

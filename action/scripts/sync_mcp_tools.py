@@ -34,7 +34,9 @@ def tools_from_source(path: Path) -> list[str]:
     for node in tree.body:
         if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             continue
-        if any(getattr(d, "attr", None) == "tool" for d in node.decorator_list):
+        # `@mcp.tool` 과 `@mcp.tool()` 둘 다 — 괄호가 붙으면 데코레이터가 Call 노드라 attr 이 한 단계 안에 있다.
+        decos = [getattr(d, "func", d) for d in node.decorator_list]
+        if any(getattr(d, "attr", None) == "tool" for d in decos):
             names.append(node.name)
     return sorted(names)
 
