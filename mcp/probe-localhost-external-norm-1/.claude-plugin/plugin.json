@@ -1,0 +1,8 @@
+{
+  "name": "probe-localhost-external-norm-1",
+  "version": "1.0.0",
+  "description": "mcp 단독 프로브. 전송: localhost_external. 내 PC -> https://dowhub.org. 사외 = Anthropic 접근 가능.",
+  "author": {
+    "name": "AgentReview"
+  }
+}

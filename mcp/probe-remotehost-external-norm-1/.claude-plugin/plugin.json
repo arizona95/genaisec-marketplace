@@ -1,0 +1,8 @@
+{
+  "name": "probe-remotehost-external-norm-1",
+  "version": "1.0.0",
+  "description": "mcp 단독 프로브. 전송: remotehost_external. Anthropic -> 사외 서버. 커넥터 등록 필요.",
+  "author": {
+    "name": "AgentReview"
+  }
+}

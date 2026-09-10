@@ -1,0 +1,8 @@
+{
+  "name": "probe-localhost-loopback-norm-1",
+  "version": "1.0.0",
+  "description": "mcp 단독 프로브. 전송: localhost_loopback. 내 PC -> http://localhost:8899. 서버는 probe-server.",
+  "author": {
+    "name": "AgentReview"
+  }
+}

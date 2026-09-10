@@ -97,9 +97,12 @@ def main() -> int:
                         # 보면 규칙이 두 곳에 생겨, 한쪽만 고쳤을 때 조용히 갈라진다.
                         del mv
                 elif etype == "skill":
-                    # 스킬은 SKILL.md 의 frontmatter 로 언제 쓸지가 정해진다.
-                    if not (p / "SKILL.md").is_file():
-                        errors.append(f"{where} SKILL.md 가 없습니다: {p}")
+                    # 스킬도 플러그인 형태(plugin.json + skills/<이름>/SKILL.md)로 둔다 — 채팅 쪽
+                    # 동기화가 그 형태만 스킬로 인식한다. 옛 형태(루트 SKILL.md)도 아직 받는다.
+                    has_plugin = (p / ".claude-plugin" / "plugin.json").is_file()
+                    has_skill = (p / "SKILL.md").is_file() or any((p / "skills").glob("*/SKILL.md"))
+                    if not (has_plugin and has_skill) and not (p / "SKILL.md").is_file():
+                        errors.append(f"{where} plugin.json + skills/*/SKILL.md 가 없습니다: {p}")
                 elif etype == "mcp":
                     # MCP 는 원격 엔드포인트라 스킬 파일이 없다. 배포물은 클라이언트가
                     # 실제로 쓰는 연결 매니페스트다.
