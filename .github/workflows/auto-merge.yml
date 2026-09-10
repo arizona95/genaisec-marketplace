@@ -4,6 +4,9 @@
 # 있는데, 무조건 자동병합하면 낯선 사람의 변경이 사람 눈을 거치지 않고 배포된다. 포크에서 온
 # PR 은 자동병합을 걸지 않고 그대로 둔다 — 그건 사람이 보고 결정할 일이다.
 #
+# merge 커밋으로 병합한다(squash 아님). 그래야 dev 의 커밋이 main 이력에 그대로 들어가 병합 뒤
+# dev 를 main 으로 fast-forward 할 수 있다(ci.yml 의 sync-dev). squash 면 dev 가 늘 '뒤처짐'이 된다.
+#
 # 실제 병합은 GitHub 의 auto-merge 가 한다. 직접 merge 를 부르면 필수 체크가 끝나기 전에
 # 병합될 수 있다. auto-merge 로 예약해두면 main 보호 규칙의 필수 체크(기본검증)가 초록불이
 # 된 뒤에만 GitHub 이 병합한다 — 게이트를 우회할 방법이 없다.
@@ -30,5 +33,5 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ github.event.pull_request.number }}
         run: |
-          gh pr merge "$PR" --auto --squash --repo "$GITHUB_REPOSITORY"
+          gh pr merge "$PR" --auto --merge --repo "$GITHUB_REPOSITORY"
           echo "기본검증이 통과하면 자동 병합됩니다 (PR #$PR). 실패하면 병합되지 않습니다." >> "$GITHUB_STEP_SUMMARY"

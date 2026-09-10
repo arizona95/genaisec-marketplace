@@ -110,3 +110,18 @@ jobs:
             tail -n 14 deep.log
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+
+  # 병합 뒤 dev 를 main 으로 fast-forward 한다. 브랜치는 main·dev 둘뿐이고 dev→main 만 병합하므로,
+  # merge 커밋 병합이면 dev 는 항상 main 의 조상이라 fast-forward 가 된다(force 아님).
+  # dev 에 그 사이 새 커밋이 있으면 그냥 실패하고 넘어간다 — 다음 PR 이 알아서 따라잡는다.
+  sync-dev:
+    name: dev ← main fast-forward
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: fast-forward
+        continue-on-error: true
+        run: |
+          git push origin HEAD:dev && echo "dev 를 main($(git rev-parse --short HEAD))으로 맞췄다" >> "$GITHUB_STEP_SUMMARY"             || echo "dev 에 새 커밋이 있어 fast-forward 하지 않았다" >> "$GITHUB_STEP_SUMMARY"
