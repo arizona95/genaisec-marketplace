@@ -45,6 +45,18 @@ UPLOAD_EXT = (".zip", ".skill", ".mcpb")
 UPLOAD_MAX = 50 * 1024 * 1024
 UPLOAD_LOCK = threading.Lock()     # 업로드는 한 번에 하나 — 같은 클론에서 fetch·worktree 가 겹치지 않게
 REPO_API = "https://api.github.com/repos/arizona95/genaisec-marketplace"
+GH_REPO = "arizona95/genaisec-marketplace"
+SWEEP_INTERVAL = 60            # 업로드 브랜치 뒷정리 주기(초)
+
+
+def gh_json(*args: str, timeout: int = 60):
+    """gh <args> 의 JSON 출력. 실패하면 None."""
+    try:
+        r = subprocess.run(["gh", *args, "--repo", GH_REPO], capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", timeout=timeout)
+        return json.loads(r.stdout) if r.returncode == 0 and r.stdout.strip() else None
+    except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError):
+        return None
 
 
 def sh(repo: Path, *args: str, timeout: int = 60) -> tuple[int, str]:
@@ -116,12 +128,65 @@ class Repo:
 
     def loop(self) -> None:
         last_ci = 0.0
+        last_sweep = 0.0
         while True:
             self.fetch()
             if time.time() - last_ci >= self._ci_interval:
                 self.poll_ci()
                 last_ci = time.time()
+            if time.time() - last_sweep >= SWEEP_INTERVAL:
+                try:
+                    self.sweep_uploads()
+                except Exception as e:  # noqa: BLE001 — 청소가 대시보드를 죽이면 안 된다
+                    sys.stderr.write(f"[ui] sweep 오류: {e}\n")
+                last_sweep = time.time()
             time.sleep(self.interval)
+
+    def sweep_uploads(self) -> None:
+        """업로드 브랜치 뒷정리. 워크플로가 못 하는 일이라 여기서 한다.
+
+        auto-merge 를 GITHUB_TOKEN 이 예약하면 병합 주체가 github-actions[bot] 이 되고, 그 병합은
+        `pull_request: closed` 를 **발생시키지 않는다**(토큰이 일으킨 이벤트는 워크플로를 안 깨운다).
+        그래서 delete_branch_on_merge 도 cleanup-branch.yml 도 안 돈다 — 2026-09-10 PR #8·#9·#11 실측.
+        또 게이트가 걸린 자산을 빼면 업로드 PR(자산 하나)은 비게 되는데, 그 커밋의 재검사 run 은
+        action_required 로 멈춰 PR 이 영원히 열려 있다(PR #12 실측). 둘 다 이 호스트의 gh(소유자
+        자격)로 정리한다: 병합됨 → 브랜치 삭제, 열려 있는데 main 대비 변경이 없음 → 닫고 삭제.
+        """
+        code, out = sh(self.path, "ls-remote", "--heads", "origin", "upload/*", timeout=60)
+        if code != 0:
+            return
+        for line in out.splitlines():
+            _sha, _, ref = line.partition("\t")
+            branch = ref.removeprefix("refs/heads/")
+            prs = gh_json("pr", "list", "--head", branch, "--state", "all", "--limit", "1",
+                          "--json", "number,state,mergedAt")
+            if not prs:
+                continue                      # 방금 push 됐고 PR 은 아직 — 다음 바퀴에 본다
+            pr = prs[0]
+            if pr["state"] == "MERGED":
+                self._delete_branch(branch, f"PR #{pr['number']} 병합됨")
+            elif pr["state"] == "CLOSED":
+                self._delete_branch(branch, f"PR #{pr['number']} 닫힘")
+            elif pr["state"] == "OPEN":
+                # 브랜치가 main 대비 아무것도 더하지 않으면(게이트가 자산을 뺀 뒤) 닫는다.
+                if sh(self.path, "fetch", "-q", "origin", branch, timeout=60)[0] != 0:
+                    continue
+                empty = sh(self.path, "diff", "--quiet", "origin/main...FETCH_HEAD", timeout=60)[0] == 0
+                if not empty:
+                    continue
+                msg = sh(self.path, "log", "-1", "--format=%s", "FETCH_HEAD")[1]
+                why = ("기본검증에 걸려 게이트가 자산을 뺐고, 남은 변경이 없어 닫는다."
+                       if msg.startswith("[gate]") else "main 대비 변경이 없어 닫는다.")
+                r = subprocess.run(["gh", "pr", "close", str(pr["number"]), "--repo", GH_REPO, "--comment",
+                                    f"자동 정리: {why} (마지막 커밋: {msg})"],
+                                   capture_output=True, text=True, timeout=60)
+                sys.stderr.write(f"[ui] sweep: PR #{pr['number']} 닫음 — {why} rc={r.returncode}\n")
+                self._delete_branch(branch, f"PR #{pr['number']} 닫음")
+
+    def _delete_branch(self, branch: str, why: str) -> None:
+        r = subprocess.run(["gh", "api", "-X", "DELETE", f"repos/{GH_REPO}/git/refs/heads/{branch}"],
+                           capture_output=True, text=True, timeout=60)
+        sys.stderr.write(f"[ui] sweep: 브랜치 {branch} 삭제({why}) rc={r.returncode}\n")
 
     def wait_change(self, since: int, timeout: float) -> int:
         with self._cond:
@@ -196,7 +261,7 @@ def pr_status(number: int) -> tuple[int, dict]:
     """gh 로 PR 상태 + 체크 롤업. 사람이 보는 건 이것뿐이라 gh 의 JSON 을 얇게 추린다."""
     try:
         r = subprocess.run(["gh", "pr", "view", str(number), "--repo", "arizona95/genaisec-marketplace",
-                            "--json", "number,state,mergedAt,url,headRefName,title,statusCheckRollup,autoMergeRequest"],
+                            "--json", "number,state,mergedAt,url,headRefName,title,statusCheckRollup,autoMergeRequest,commits"],
                            capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)
     except (OSError, subprocess.TimeoutExpired) as e:
         return 502, {"error": str(e)}
@@ -208,7 +273,9 @@ def pr_status(number: int) -> tuple[int, dict]:
               for c in d.get("statusCheckRollup") or []]
     # 브랜치가 아직 있는지 — 병합 뒤 저장소 설정(delete_branch_on_merge)이 지우는 걸 눈으로 확인시킨다.
     code, _ = sh(REPO.path, "ls-remote", "--exit-code", "--heads", "origin", d.get("headRefName", ""), timeout=60)
+    last = ((d.get("commits") or [{}])[-1]).get("messageHeadline", "")
     return 200, {"number": d.get("number"), "state": d.get("state"), "merged_at": d.get("mergedAt"),
+                 "last_commit": last, "gated": last.startswith("[gate]"),
                  "url": d.get("url"), "branch": d.get("headRefName"), "branch_exists": code == 0,
                  "title": d.get("title"), "auto_merge": bool(d.get("autoMergeRequest")), "checks": checks}
 
