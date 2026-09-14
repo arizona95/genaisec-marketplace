@@ -4,31 +4,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": true,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": true,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "skills/probe-skill-norm-2": {
@@ -36,31 +24,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": false,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": true,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "skills/probe-skill-norm-3": {
@@ -68,31 +44,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": false,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": true,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "plugins/probe-plugin-desktop-local-norm-1": {
@@ -100,31 +64,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": false,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": true,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "plugins/probe-plugin-localhost-external-norm-1": {
@@ -132,31 +84,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": true,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": true,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "plugins/probe-plugin-localhost-internal-norm-1": {
@@ -164,31 +104,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": true,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": false,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "plugins/probe-plugin-localhost-local-norm-1": {
@@ -196,31 +124,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": false,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": true,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "plugins/probe-plugin-localhost-loopback-norm-1": {
@@ -228,31 +144,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": true,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": true,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "plugins/probe-plugin-norm-1": {
@@ -260,31 +164,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": true,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": true,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "plugins/probe-plugin-norm-2": {
@@ -292,31 +184,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": true,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": true,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "plugins/probe-plugin-norm-3": {
@@ -324,31 +204,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": true,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": true,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "plugins/probe-plugin-remotehost-external-norm-1": {
@@ -356,31 +224,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": true,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": true,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "plugins/probe-plugin-remotehost-internal-norm-1": {
@@ -388,31 +244,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": true,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": false,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "mcp/probe-desktop-local-norm-1": {
@@ -420,31 +264,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": false,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": true,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "mcp/probe-localhost-external-norm-1": {
@@ -452,31 +284,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": true,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": true,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "mcp/probe-localhost-internal-norm-1": {
@@ -484,31 +304,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": true,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": false,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "mcp/probe-localhost-local-norm-1": {
@@ -516,31 +324,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": false,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": true,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "mcp/probe-localhost-local-norm-2": {
@@ -548,31 +344,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": false,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": true,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "mcp/probe-localhost-local-norm-3": {
@@ -580,31 +364,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": false,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": true,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "mcp/probe-localhost-loopback-norm-1": {
@@ -612,31 +384,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": true,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": true,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "mcp/probe-remotehost-external-norm-1": {
@@ -644,31 +404,19 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
-      "ok": true,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
-    },
-    "skillspector": {
-      "ok": true,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     }
   },
   "mcp/probe-remotehost-internal-norm-1": {
@@ -676,31 +424,59 @@
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "code-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
+      "sha": "80b72bd"
     },
     "leak-scan": {
       "ok": true,
       "version": "1.0.0",
       "tier": "basic",
-      "sha": "b7e93a9"
-    },
-    "black": {
+      "sha": "80b72bd"
+    }
+  },
+  "skills/hello-upload-skill": {
+    "inst-scan": {
       "ok": true,
-      "version": "26.5.1",
-      "tier": "deep",
-      "sha": "b7e93a9"
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "80b72bd"
     },
-    "skillspector": {
-      "ok": false,
-      "version": "skillspector 504+clawvet 57",
-      "tier": "deep",
-      "sha": "b7e93a9"
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "80b72bd"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "80b72bd"
+    }
+  },
+  "mcp/echo-upload-mcp": {
+    "inst-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "80b72bd"
+    },
+    "code-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "80b72bd"
+    },
+    "leak-scan": {
+      "ok": true,
+      "version": "1.0.0",
+      "tier": "basic",
+      "sha": "80b72bd"
     }
   }
 }
