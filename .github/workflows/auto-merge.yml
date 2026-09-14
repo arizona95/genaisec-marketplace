@@ -30,7 +30,9 @@ jobs:
     steps:
       - name: auto-merge 예약
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GH_PAT(사용자 토큰)이 있으면 그걸로 예약한다. GITHUB_TOKEN 이 예약한 병합은 push 이벤트를
+          # 일으키지 않아 sync-dev·main 이력 갱신이 병합 뒤에 안 돈다. PAT 이면 정상적으로 돈다.
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
           PR: ${{ github.event.pull_request.number }}
         run: |
           gh pr merge "$PR" --auto --merge --repo "$GITHUB_REPOSITORY"
