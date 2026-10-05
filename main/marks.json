@@ -20,7 +20,7 @@
     },
     "black": {
       "ok": true,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -52,7 +52,7 @@
     },
     "black": {
       "ok": false,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -84,7 +84,7 @@
     },
     "black": {
       "ok": false,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -116,7 +116,7 @@
     },
     "black": {
       "ok": false,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -148,7 +148,7 @@
     },
     "black": {
       "ok": true,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -180,7 +180,7 @@
     },
     "black": {
       "ok": true,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -212,7 +212,7 @@
     },
     "black": {
       "ok": false,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -244,7 +244,7 @@
     },
     "black": {
       "ok": true,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -276,7 +276,7 @@
     },
     "black": {
       "ok": true,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -308,7 +308,7 @@
     },
     "black": {
       "ok": true,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -340,7 +340,7 @@
     },
     "black": {
       "ok": true,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -372,7 +372,7 @@
     },
     "black": {
       "ok": true,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -404,7 +404,7 @@
     },
     "black": {
       "ok": true,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -436,7 +436,7 @@
     },
     "black": {
       "ok": false,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -468,7 +468,7 @@
     },
     "black": {
       "ok": true,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -500,7 +500,7 @@
     },
     "black": {
       "ok": true,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -532,7 +532,7 @@
     },
     "black": {
       "ok": false,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -564,7 +564,7 @@
     },
     "black": {
       "ok": false,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -596,7 +596,7 @@
     },
     "black": {
       "ok": false,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -628,7 +628,7 @@
     },
     "black": {
       "ok": true,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -660,7 +660,7 @@
     },
     "black": {
       "ok": true,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -692,7 +692,7 @@
     },
     "black": {
       "ok": true,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -724,7 +724,7 @@
     },
     "black": {
       "ok": true,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
@@ -756,7 +756,7 @@
     },
     "black": {
       "ok": true,
-      "version": "26.5.1",
+      "version": "26.10.0",
       "tier": "deep",
       "sha": "1691e8e"
     },
